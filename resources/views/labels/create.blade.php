@@ -5,8 +5,7 @@
 <div class="container">
     <h1>Create label</h1>
     <div class="mb-4">
-        {{-- TODO: Link --}}
-        <a href="{{ url('/') }}"><i class="fas fa-long-arrow-alt-left"></i> Back to the homepage</a>
+        <a href="{{ route('items.index') }}"><i class="fas fa-long-arrow-alt-left"></i> Back to all jewelry</a>
     </div>
 
     @if (Session::has('label_created'))

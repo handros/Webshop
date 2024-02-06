@@ -9,15 +9,17 @@
         </div>
         <div class="col-12 col-md-4">
             <div class="float-lg-end">
-                {{-- TODO: Links, policy --}}
-
-                <a href="#" role="button" class="btn btn-sm btn-success mb-1"><i class="fas fa-plus-circle"></i> Create item</a>
-
-                <a href="{{ route('labels.create') }}" role="button" class="btn btn-sm btn-success mb-1"><i class="fas fa-plus-circle"></i> Create label</a>
-
+                <a href="{{ route('items.create') }}" role="button" class="btn btn-sm btn-success mb-1"><i class="fas fa-plus-circle"></i> New jewellery</a>
+                <a href="{{ route('labels.create') }}" role="button" class="btn btn-sm btn-success mb-1"><i class="fas fa-plus-circle"></i> New label</a>
             </div>
         </div>
     </div>
+
+    @if (Session::has('item_created'))
+        <div class="alert alert-success" role="alert">
+            {{ Session::get('item_created')->name }} created.
+        </div>
+    @endif
 
     {{-- TODO: Session flashes --}}
 
