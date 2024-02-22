@@ -41,15 +41,6 @@ class LabelController extends Controller
             ],
             'color'=>'required',
         ],
-        // //hibaüzenetek
-        // [
-        //     'required' => 'A(z) ":attribute" nevű mező kitöltése kitelező',
-        // ]
-        );
-        error_log(
-            json_encode(
-                $data,
-            )
         );
 
         $label = Label::create($data);
@@ -64,7 +55,10 @@ class LabelController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return view('labels.show', [
+            'label' => Label::find($id),
+            'labels' => Label::all(),
+        ]);
     }
 
     /**

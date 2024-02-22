@@ -5,7 +5,7 @@
 <div class="container">
     <div class="row justify-content-between">
         <div class="col-12 col-md-8">
-            <h1>All items</h1>
+            <h1>All jewelry</h1>
         </div>
         <div class="col-12 col-md-4">
             <div class="float-lg-end">
@@ -50,7 +50,7 @@
                                 </p>
 
                                 @foreach ($item->labels as $label)
-                                    <a href="#" class="text-decoration-none">
+                                    <a href="{{ route('labels.show', $label) }}" class="text-decoration-none">
                                         <span style="background-color: {{ $label->color }}; color: #ffffff; border-radius: 6px; padding: 1px;">{{ $label->name }}</span>
                                     </a>
                                 @endforeach
@@ -92,9 +92,8 @@
                             Labels
                         </div>
                         <div class="card-body">
-                            {{-- TODO: Read labels from DB --}}
                             @foreach ($labels as $label)
-                                <a href="#" class="text-decoration-none">
+                                <a href="{{ route('labels.show', $label) }}" class="text-decoration-none">
                                     <span style="background-color: {{ $label->color }}; color: #ffffff; border-radius: 6px; padding: 1px;">{{ $label->name }}</span>
                                 </a>
                             @endforeach

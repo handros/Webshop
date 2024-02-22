@@ -1,5 +1,4 @@
 @extends('layouts.app')
-{{-- TODO: Post title --}}
 @section('title', 'View jewellery: ')
 
 @section('content')
@@ -9,8 +8,8 @@
 
     <div class="row justify-content-between">
         <div class="col-12 col-md-8">
-            <a href="{{ route('items.index') }}"><i class="fas fa-long-arrow-alt-left"></i> Back to all jewelry</a>
-            
+            <a href="{{ route('items.index') }}"><i class="fas fa-long-arrow-alt-left"></i> All jewelry</a>
+
             <h1>{{ $item->name }}</h1>
 
             <p class="small text-secondary mb-0">
@@ -21,7 +20,7 @@
 
             <div class="mb-2">
                 @foreach ($item->labels as $label)
-                    <a href="#" class="text-decoration-none">
+                    <a href="{{ route('labels.show', $label) }}" class="text-decoration-none">
                         <span style="background-color: {{ $label->color }}; color: #ffffff; border-radius: 6px; padding: 1px;">{{ $label->name }}</span>
                     </a>
                 @endforeach
@@ -76,8 +75,9 @@
             </div>
         </div>
     </div>
+    </br>
 
-    <div class="d-flex justify-content-center">
+    <div class="d-flex justify-content-left">
         <img
         src="{{
             asset(

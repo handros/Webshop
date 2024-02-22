@@ -77,12 +77,6 @@ class ItemController extends Controller
             $image = $file->store('images', ['disk' => 'public']);
         }
 
-        error_log(
-            json_encode(
-                $data,
-            )
-        );
-
         $item = new Item;
         $item->name = $data['name'];
         $item->made_in = $data['made_in'];
