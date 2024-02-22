@@ -62,12 +62,12 @@ class ItemController extends Controller
                 'integer',
                 'exists:labels,id'
             ],
-            // 'image' => [
-            //     'required',
-            //     'file',
-            //     'image',
-            //     'max:5120'
-            // ],
+            'image' => [
+                'required',
+                'file',
+                'image',
+                'max:5120'
+            ],
         ]);
 
         $image = null;
@@ -87,7 +87,7 @@ class ItemController extends Controller
         $item->name = $data['name'];
         $item->made_in = $data['made_in'];
         $item->description = $data['description'];
-        // $item->image = $image;
+        $item->image = $image;
 
         $item->save();
 

@@ -80,7 +80,7 @@
             </div>
         </div>
 
-        {{-- <div class="form-group row mb-3">
+        <div class="form-group row mb-3">
             <label for="image" class="col-sm-2 col-form-label">Image*</label>
             <div class="col-sm-10">
                 <div class="form-group">
@@ -99,7 +99,7 @@
             @error('image')
                 <p class="text-danger">{{ $message }}</p>
             @enderror
-        </div> --}}
+        </div>
 
         <div class="text-center">
             <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Store</button>
