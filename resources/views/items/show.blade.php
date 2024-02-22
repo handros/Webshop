@@ -1,6 +1,6 @@
 @extends('layouts.app')
 {{-- TODO: Post title --}}
-@section('title', 'View post: ')
+@section('title', 'View jewellery: ')
 
 @section('content')
 <div class="container">
@@ -9,31 +9,26 @@
 
     <div class="row justify-content-between">
         <div class="col-12 col-md-8">
-            {{-- TODO: Title --}}
-            <h1>Post title</h1>
+            <a href="{{ route('items.index') }}"><i class="fas fa-long-arrow-alt-left"></i> Back to all jewelry</a>
+            
+            <h1>{{ $item->name }}</h1>
 
-            <p class="small text-secondary mb-0">
-                <i class="fas fa-user"></i>
-                {{-- TODO: Author --}}
-                <span>By Author</span>
-            </p>
             <p class="small text-secondary mb-0">
                 <i class="far fa-calendar-alt"></i>
-                {{-- TODO: Date --}}
-                <span>01/01/2022</span>
+                <span>{{ $item->made_in }}</span>
             </p>
+            </br>
 
             <div class="mb-2">
-                {{-- TODO: Read post categories from DB --}}
-                @foreach (['primary', 'secondary','danger', 'warning', 'info', 'dark'] as $category)
+                @foreach ($item->labels as $label)
                     <a href="#" class="text-decoration-none">
-                        <span class="badge bg-{{ $category }}">{{ $category }}</span>
+                        <span style="background-color: {{ $label->color }}; color: #ffffff; border-radius: 6px; padding: 1px;">{{ $label->name }}</span>
                     </a>
                 @endforeach
             </div>
 
-            {{-- TODO: Link --}}
-            <a href="#"><i class="fas fa-long-arrow-alt-left"></i> Back to the homepage</a>
+            <p class="card-text mt-1"> {{ $item->description }} </p>
+
 
         </div>
 
@@ -82,17 +77,19 @@
         </div>
     </div>
 
-    <img
-        id="cover_preview_image"
-        {{-- TODO: Cover --}}
-        src="{{ asset('images/default_post_cover.jpg') }}"
-        alt="Cover preview"
-        class="my-3"
-    >
-
-    <div class="mt-3">
-        {{-- TODO: Post paragraphs --}}
-         Lorem ipsum
+    <div class="d-flex justify-content-center">
+        <img
+        src="{{
+            asset(
+                $item->image
+                    ? 'storage/' . $item->image
+                    : 'images/no_product_image.png'
+            )
+        }}"
+            class="card-img-top img-fluid"
+            alt="Vehicle cover"
+            style="max-width: 400px;"
+        >
     </div>
 </div>
 @endsection
