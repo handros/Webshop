@@ -105,7 +105,9 @@ class ItemController extends Controller
      */
     public function show(string $id)
     {
-        return view('items.show');
+        return view('items.show', [
+            'item' => Item::find($id),
+        ]);
     }
 
     /**
