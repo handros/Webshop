@@ -3,17 +3,22 @@
 
 @section('content')
 <div class="container">
-    <div class="row justify-content-between">
-        <div class="col-12 col-md-8">
-            <h1>All jewelry</h1>
-        </div>
-        <div class="col-12 col-md-4">
-            <div class="float-lg-end">
-                <a href="{{ route('items.create') }}" role="button" class="btn btn-sm btn-success mb-1"><i class="fas fa-plus-circle"></i> New jewellery</a>
-                <a href="{{ route('labels.create') }}" role="button" class="btn btn-sm btn-success mb-1"><i class="fas fa-plus-circle"></i> New label</a>
+    @auth
+        @if(auth()->user()->is_admin)
+            <div class="row justify-content-between">
+                <div class="col-12 col-md-8">
+                    <h1>All jewelry</h1>
+                </div>
+                <div class="col-12 col-md-4">
+                    <div class="float-lg-end">
+                        <a href="{{ route('items.create') }}" role="button" class="btn btn-sm btn-success mb-1"><i class="fas fa-plus-circle"></i> New jewellery</a>
+                        <a href="{{ route('labels.create') }}" role="button" class="btn btn-sm btn-success mb-1"><i class="fas fa-plus-circle"></i> New label</a>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
+        @endif
+    @endauth
+
 
     @if (Session::has('item_created'))
         <div class="alert alert-success" role="alert">
@@ -101,22 +106,26 @@
                     </div>
                 </div>
 
-                <div class="col-12 mb-3">
-                    <div class="card bg-light">
-                        <div class="card-header">
-                            Statistics
-                        </div>
-                        <div class="card-body">
-                            <div class="small">
-                                <ul class="fa-ul">
-                                    <li><span class="fa-li"><i class="fas fa-user"></i></span>Users: {{ $user_count }}</li>
-                                    <li><span class="fa-li"><i class="fas fa-layer-group"></i></span>Labels: {{ $label_count }}</li>
-                                    <li><span class="fa-li"><i class="fas fa-file-alt"></i></span>Items: {{ $item_count }}</li>
-                                </ul>
+                @auth
+                    @if(auth()->user()->is_admin)
+                        <div class="col-12 mb-3">
+                            <div class="card bg-light">
+                                <div class="card-header">
+                                    Statistics
+                                </div>
+                                <div class="card-body">
+                                    <div class="small">
+                                        <ul class="fa-ul">
+                                            <li><span class="fa-li"><i class="fas fa-user"></i></span>Users: {{ $user_count }}</li>
+                                            <li><span class="fa-li"><i class="fas fa-layer-group"></i></span>Labels: {{ $label_count }}</li>
+                                            <li><span class="fa-li"><i class="fas fa-file-alt"></i></span>Items: {{ $item_count }}</li>
+                                        </ul>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
+                    @endif
+                @endauth
             </div>
 
         </div>

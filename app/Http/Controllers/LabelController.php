@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Label;
 
 class LabelController extends Controller
@@ -24,6 +25,9 @@ class LabelController extends Controller
      */
     public function create()
     {
+        if(Auth::user() == null or !Auth::user()->is_admin) {
+            abort(401);
+        }
         return view('labels.create');
     }
 
