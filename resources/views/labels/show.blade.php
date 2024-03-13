@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Jewelry: ' . $label->id)
+@section('title', $label->name)
 
 @section('content')
 <div class="container">
