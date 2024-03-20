@@ -45,6 +45,9 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
+        if(Auth::user() == null or !Auth::user()->is_admin) {
+            abort(401);
+        }
         $data = $request->validate([
             'name'=>'required',
             'made_in'=> [
@@ -113,7 +116,13 @@ class ItemController extends Controller
      */
     public function edit(string $id)
     {
-        return view('items.edit');
+        if(Auth::user() == null or !Auth::user()->is_admin) {
+            abort(401);
+        }
+        return view('items.edit', [
+            'item' => Item::find($id),
+            'labels' => Label::all(),
+        ]);
     }
 
     /**
@@ -121,7 +130,60 @@ class ItemController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        if(Auth::user() == null or !Auth::user()->is_admin) {
+            abort(401);
+        }
+
+        $item = Item::find($id);
+        $data = $request->validate([
+            'name'=>'required',
+            'made_in'=> [
+                'required',
+                'numeric',
+                'before_or_equal:' . now()->format('Y'),
+            ],
+            'description'=> [
+                'required',
+                'string',
+                'max:1000',
+            ],
+            'labels' => [
+                'nullable',
+                'array',
+            ],
+            'labels.*' => [
+                'numeric',
+                'integer',
+                'exists:labels,id'
+            ],
+            // 'image' => [
+            //     'required',
+            //     'file',
+            //     'image',
+            //     'max:5120'
+            // ],
+        ]);
+
+        // $image = null;
+
+        // if ($request->hasFile('image')) {
+        //     $file = $request->file('image');
+        //     $image = $file->store('images', ['disk' => 'public']);
+        // }
+
+        // $item->name = $data['name'];
+        // $item->made_in = $data['made_in'];
+        // $item->description = $data['description'];
+        // $item->image = $image;
+
+        $item->update($data);
+
+        if(isset($data['labels'])) {
+            $item->labels()->sync($data['labels']);
+        }
+
+        Session::flash('item_updated', $item);
+        return Redirect::route('items.show', $item);
     }
 
     /**

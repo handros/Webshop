@@ -3,6 +3,12 @@
 
 @section('content')
 <div class="container">
+    @if (Session::has('item_updated'))
+        <div class="alert alert-success" role="alert">
+            {{ Session::get('item_updated')->name }} updated.
+        </div>
+    @endif
+
 
     {{-- TODO: Session flashes --}}
 
@@ -35,11 +41,15 @@
             <div class="float-lg-end">
 
                 {{-- TODO: Links, policy --}}
-                <a role="button" class="btn btn-sm btn-primary" href="#"><i class="far fa-edit"></i> Edit post</a>
+                @auth
+                    @if(auth()->user()->is_admin)
+                        <a role="button" class="btn btn-sm btn-primary" href="{{ route('items.edit', ['item' => $item->id]) }}"><i class="far fa-edit"></i> Edit post</a>
 
-                <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#delete-confirm-modal"><i class="far fa-trash-alt">
-                    <span></i> Delete post</span>
-                </button>
+                        <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#delete-confirm-modal"><i class="far fa-trash-alt">
+                            <span></i> Delete post</span>
+                        </button>
+                    @endif
+                @endauth
 
             </div>
         </div>
