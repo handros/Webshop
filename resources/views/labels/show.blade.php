@@ -3,6 +3,13 @@
 
 @section('content')
 <div class="container">
+
+    @if (Session::has('label_updated'))
+        <div class="alert alert-success" role="alert">
+            {{ Session::get('label_updated')->name }} updated.
+        </div>
+    @endif
+
     <div class="row justify-content-between">
         <div class="col-12 col-md-8">
             <h1>Jewelry for <span  style="background-color: {{ $label->color }}; color: #ffffff; border-radius: 6px; padding: 1px;">{{ $label->name }}</span></h1>
@@ -11,13 +18,15 @@
             <div class="float-lg-end">
                 {{-- TODO: Links, policy --}}
 
-                <a href="#" role="button" class="btn btn-sm btn-primary">
-                    <i class="far fa-edit"></i> Edit category
-                </a>
+                @auth
+                    @if(auth()->user()->is_admin)
+                        <a role="button" class="btn btn-sm btn-primary" href="{{ route('labels.edit', ['label' => $label->id]) }}"><i class="far fa-edit"></i> Edit label</a>
 
-                <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#delete-confirm-modal">
-                    <i class="far fa-trash-alt"></i> Delete category
-                </button>
+                        <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#delete-confirm-modal"><i class="far fa-trash-alt">
+                            <span></i> Delete label</span>
+                        </button>
+                    @endif
+                @endauth
 
             </div>
         </div>

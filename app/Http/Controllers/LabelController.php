@@ -36,6 +36,10 @@ class LabelController extends Controller
      */
     public function store(Request $request)
     {
+        if(Auth::user() == null or !Auth::user()->is_admin) {
+            abort(401);
+        }
+
         $names = Label::pluck('name')->toArray();
 
         $data = $request->validate([
@@ -44,8 +48,7 @@ class LabelController extends Controller
                 Rule::notIn($names),
             ],
             'color'=>'required',
-        ],
-        );
+        ]);
 
         $label = Label::create($data);
 
@@ -70,7 +73,12 @@ class LabelController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        if(Auth::user() == null or !Auth::user()->is_admin) {
+            abort(401);
+        }
+        return view('labels.edit', [
+            'label' => Label::find($id),
+        ]);
     }
 
     /**
@@ -78,7 +86,26 @@ class LabelController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        if(Auth::user() == null or !Auth::user()->is_admin) {
+            abort(401);
+        }
+
+        $label = Label::find($id);
+        $temp_names = Label::pluck('name')->toArray();
+        $names = array_values(array_diff($temp_names, [$label->name]));
+
+        $data = $request->validate([
+            'name'=>[
+                'required',
+                Rule::notIn($names),
+            ],
+            'color'=>'required',
+        ]);
+
+        $label->update($data);
+
+        Session::flash('label_updated', $label);
+        return Redirect::route('labels.show', $label);
     }
 
     /**

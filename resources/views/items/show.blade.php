@@ -9,9 +9,6 @@
         </div>
     @endif
 
-
-    {{-- TODO: Session flashes --}}
-
     <div class="row justify-content-between">
         <div class="col-12 col-md-8">
             <a href="{{ route('items.index') }}"><i class="fas fa-long-arrow-alt-left"></i> All jewelry</a>
