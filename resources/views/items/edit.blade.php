@@ -1,9 +1,9 @@
 @extends('layouts.app')
-@section('title', 'Update' . $item->name)
+@section('title', 'Edit' . $item->name)
 
 @section('content')
 <div class="container">
-    <h1>Update {{ $item->name }}</h1>
+    <h1>Edit {{ $item->name }}</h1>
     <div class="mb-4">
         <a href="{{ route('items.show', $item) }}"><i class="fas fa-long-arrow-alt-left"></i> Cancel</a>
     </div>
@@ -76,10 +76,6 @@
                             value="{{ $label->id }}"
                             id="label-{{ $label->id }}"
                             name="labels[]"
-                            {{-- @if((is_array(old('labels')) && in_array($label->id, old('labels'))) && (in_array($label->id, $item->labels->pluck('id')->toArray())))
-                                checked
-                            @endif --}}
-                            {{-- @checked(is_array(old('labels')) && in_array($label->id, old('labels'))) --}}
                             @checked(
                                 in_array(
                                     $label->id,
