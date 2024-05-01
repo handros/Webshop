@@ -34,8 +34,9 @@
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sit amet enim ac nunc fermentum varius.</p>
 
                     <h2>Contact Us</h2>
+                    <p>Név: Example X</p>
                     <p>Email: example@example.com</p>
-                    <p>Phone: 123-456-789</p>
+                    <p>Város: Budapest</p>
                 </div>
             </div>
         </div>

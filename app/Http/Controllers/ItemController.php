@@ -33,7 +33,7 @@ class ItemController extends Controller
     public function create()
     {
         if(Auth::user() == null or !Auth::user()->is_admin) {
-            abort(401);
+            abort(403);
         }
         return view('items.create', [
             'labels' => Label::all(),
@@ -47,7 +47,7 @@ class ItemController extends Controller
     {
         // $this->authorize('store', $post);
         if(Auth::user() == null or !Auth::user()->is_admin) {
-            abort(401);
+            abort(403);
         }
         $data = $request->validate([
             'name'=>'required',
@@ -107,9 +107,10 @@ class ItemController extends Controller
      */
     public function show(string $id)
     {
-        return view('items.show', [
-            'item' => Item::find($id),
-        ]);
+        $item = Item::findOrFail($id);
+        $comments = $item->comments()->orderBy('created_at', 'desc')->get();
+
+        return view('items.show', compact('item', 'comments'));
     }
 
     /**
@@ -118,7 +119,7 @@ class ItemController extends Controller
     public function edit(string $id)
     {
         if(Auth::user() == null or !Auth::user()->is_admin) {
-            abort(401);
+            abort(403);
         }
         return view('items.edit', [
             'item' => Item::find($id),
@@ -132,7 +133,7 @@ class ItemController extends Controller
     public function update(Request $request, string $id)
     {
         if(Auth::user() == null or !Auth::user()->is_admin) {
-            abort(401);
+            abort(403);
         }
 
         $item = Item::find($id);

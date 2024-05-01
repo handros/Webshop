@@ -9,6 +9,18 @@
         </div>
     @endif
 
+    @if (Session::has('comment_created'))
+        <div class="alert alert-success" role="alert">
+            Ön létrehozott egy kommentet.
+        </div>
+    @endif
+
+    @if (Session::has('comment_deleted'))
+        <div class="alert alert-success" role="alert">
+            Komment sikeresen törölve.
+        </div>
+    @endif
+
     <div class="row justify-content-between">
         <div class="col-12 col-md-8">
             <a href="{{ route('items.index') }}"><i class="fas fa-long-arrow-alt-left"></i> All jewelry</a>
@@ -29,7 +41,40 @@
                 @endforeach
             </div>
 
+
+            <div class="d-flex justify-content-left">
+                <img src="{{
+                        asset(
+                            $item->image
+                                ? 'storage/' . $item->image
+                                : 'images/no_product_image.png'
+                        )
+                    }}"
+                    class="card-img-top img-fluid"
+                    alt="Item cover"
+                    style="max-width: 400px;"
+                >
+            </div>
+
+
             <p class="card-text mt-1"> {{ $item->description }} </p>
+
+            <div class="mt-3">
+                <div class="col-12 col-md-8">
+                    <h2>Új Komment</h2>
+                </div>
+
+                @include('comments.create')
+            </div>
+
+            <div class="mt-3">
+                <div class="col-12 col-md-8">
+                    <h2>Kommentek:</h2>
+                </div>
+
+                @include('comments.show')
+            </div>
+
 
 
         </div>
@@ -42,10 +87,10 @@
                     @if(auth()->user()->is_admin)
                         {{-- @can('update', $item) --}}
                             <a role="button" class="btn btn-sm btn-primary" href="{{ route('items.edit', ['item' => $item->id]) }}"><i class="far fa-edit"></i> Edit jewellery</a>
-                        {{-- @endcan --}} 
+                        {{-- @endcan --}}
 
-                        <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#delete-confirm-modal"><i class="far fa-trash-alt">
-                            <span></i> Delete jewellery</span>
+                        <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#delete-confirm-modal"><i class="far fa-trash-alt"></i>
+                            <span> Delete jewellery</span>
                         </button>
                     @endif
                 @endauth
@@ -86,19 +131,6 @@
     </div>
     </br>
 
-    <div class="d-flex justify-content-left">
-        <img
-        src="{{
-            asset(
-                $item->image
-                    ? 'storage/' . $item->image
-                    : 'images/no_product_image.png'
-            )
-        }}"
-            class="card-img-top img-fluid"
-            alt="Item cover"
-            style="max-widjewelleryth: 400px;"
-        >
-    </div>
+
 </div>
 @endsection

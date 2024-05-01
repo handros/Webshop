@@ -109,7 +109,6 @@
                                 @endif
                             </div>
                             <div class="card-footer">
-                                {{-- TODO: Link --}}
                                 <a href="{{ route('items.show', $item) }}" class="btn btn-primary">
                                     <span>View jewellery</span> <i class="fas fa-angle-right"></i>
                                 </a>
