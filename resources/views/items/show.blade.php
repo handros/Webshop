@@ -40,10 +40,12 @@
                 {{-- TODO: Links, policy --}}
                 @auth
                     @if(auth()->user()->is_admin)
-                        <a role="button" class="btn btn-sm btn-primary" href="{{ route('items.edit', ['item' => $item->id]) }}"><i class="far fa-edit"></i> Edit post</a>
+                        {{-- @can('update', $item) --}}
+                            <a role="button" class="btn btn-sm btn-primary" href="{{ route('items.edit', ['item' => $item->id]) }}"><i class="far fa-edit"></i> Edit jewellery</a>
+                        {{-- @endcan --}} 
 
                         <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#delete-confirm-modal"><i class="far fa-trash-alt">
-                            <span></i> Delete post</span>
+                            <span></i> Delete jewellery</span>
                         </button>
                     @endif
                 @endauth
@@ -62,7 +64,7 @@
                 </div>
                 <div class="modal-body">
                     {{-- TODO: Title --}}
-                    Are you sure you want to delete post <strong>N/A</strong>?
+                    Are you sure you want to delete jewellery <strong>N/A</strong>?
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -71,7 +73,7 @@
                         class="btn btn-danger"
                         onclick="document.getElementById('delete-post-form').submit();"
                     >
-                        Yes, delete this post
+                        Yes, delete this jewellery
                     </button>
 
                     {{-- TODO: Route, directives --}}
@@ -94,8 +96,8 @@
             )
         }}"
             class="card-img-top img-fluid"
-            alt="Vehicle cover"
-            style="max-width: 400px;"
+            alt="Item cover"
+            style="max-widjewelleryth: 400px;"
         >
     </div>
 </div>

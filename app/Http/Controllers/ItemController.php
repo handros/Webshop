@@ -45,6 +45,7 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
+        // $this->authorize('store', $post);
         if(Auth::user() == null or !Auth::user()->is_admin) {
             abort(401);
         }

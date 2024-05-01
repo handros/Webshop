@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\LabelController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,7 +17,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Route::redirect('/', '/items');
-Route::get('/', [ItemController::class, 'index']);
+//Route::get('/', [ItemController::class, 'index']);
+Route::get('/', [HomeController::class, 'index']);
 
 
 // -----------------------------------------
