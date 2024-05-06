@@ -104,26 +104,25 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">Confirm delete</h5>
+                    <h5 class="modal-title" id="staticBackdropLabel">Törlés megerősítése</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    {{-- TODO: Title --}}
-                    Are you sure you want to delete jewellery <strong>N/A</strong>?
+                    Biztosan törölni akarja ezt az ékszert <strong>{{ $item->name }}</strong>?
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Mégse</button>
                     <button
                         type="button"
                         class="btn btn-danger"
                         onclick="document.getElementById('delete-post-form').submit();"
                     >
-                        Yes, delete this jewellery
+                        Igen, biztosan törölje
                     </button>
 
-                    {{-- TODO: Route, directives --}}
-                    <form id="delete-post-form" action="#" method="POST" class="d-none">
-
+                    <form id="delete-post-form" action="{{ route('items.destroy', $item) }}" method="POST" class="d-none">
+                        @method('DELETE')
+                        @csrf
                     </form>
                 </div>
             </div>

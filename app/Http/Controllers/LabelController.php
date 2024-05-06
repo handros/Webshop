@@ -26,7 +26,7 @@ class LabelController extends Controller
     public function create()
     {
         if(Auth::guest() or !Auth::user()->is_admin) {
-            abort(403);
+            abort(401);
         }
         return view('labels.create');
     }
@@ -37,7 +37,7 @@ class LabelController extends Controller
     public function store(Request $request)
     {
         if(Auth::guest() or !Auth::user()->is_admin) {
-            abort(403);
+            abort(401);
         }
 
         $names = Label::pluck('name')->toArray();
@@ -74,7 +74,7 @@ class LabelController extends Controller
     public function edit(string $id)
     {
         if(Auth::guest() or !Auth::user()->is_admin) {
-            abort(403);
+            abort(401);
         }
         return view('labels.edit', [
             'label' => Label::find($id),
@@ -87,7 +87,7 @@ class LabelController extends Controller
     public function update(Request $request, string $id)
     {
         if(Auth::guest() or !Auth::user()->is_admin) {
-            abort(403);
+            abort(401);
         }
 
         $label = Label::find($id);
@@ -113,6 +113,16 @@ class LabelController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        if(Auth::guest() or !Auth::user()->is_admin) {
+            abort(401);
+        }
+
+        $label = Label::findOrFail($id);
+
+        $label->delete();
+
+        Session::flash('label_deleted', $label);
+
+        return Redirect::route('items.index');
     }
 }

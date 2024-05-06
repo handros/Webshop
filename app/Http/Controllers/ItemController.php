@@ -32,8 +32,8 @@ class ItemController extends Controller
      */
     public function create()
     {
-        if(Auth::user() == null or !Auth::user()->is_admin) {
-            abort(403);
+        if(Auth::guest() or !Auth::user()->is_admin) {
+            abort(401);
         }
         return view('items.create', [
             'labels' => Label::all(),
@@ -46,8 +46,8 @@ class ItemController extends Controller
     public function store(Request $request)
     {
         // $this->authorize('store', $post);
-        if(Auth::user() == null or !Auth::user()->is_admin) {
-            abort(403);
+        if(Auth::guest() or !Auth::user()->is_admin) {
+            abort(401);
         }
         $data = $request->validate([
             'name'=>'required',
@@ -118,8 +118,8 @@ class ItemController extends Controller
      */
     public function edit(string $id)
     {
-        if(Auth::user() == null or !Auth::user()->is_admin) {
-            abort(403);
+        if(Auth::guest() or !Auth::user()->is_admin) {
+            abort(401);
         }
         return view('items.edit', [
             'item' => Item::find($id),
@@ -132,8 +132,8 @@ class ItemController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        if(Auth::user() == null or !Auth::user()->is_admin) {
-            abort(403);
+        if(Auth::guest() or !Auth::user()->is_admin) {
+            abort(401);
         }
 
         $item = Item::find($id);
@@ -193,6 +193,16 @@ class ItemController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        if(Auth::guest() or !Auth::user()->is_admin) {
+            abort(401);
+        }
+        
+        $item = Item::findOrFail($id);
+
+        $item->delete();
+
+        Session::flash('item_deleted', $item);
+
+        return Redirect::route('items.index');
     }
 }

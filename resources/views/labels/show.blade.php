@@ -40,33 +40,30 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">Confirm delete</h5>
+                    <h5 class="modal-title" id="staticBackdropLabel">Törlés megerősítése</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    {{-- TODO: name --}}
-                    Are you sure you want to delete category <strong>N/A</strong>?
+                    Biztosan törölni akarja ezt a címkét <strong>{{ $label->name }}</strong>?
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Mégse</button>
                     <button
                         type="button"
                         class="btn btn-danger"
                         onclick="document.getElementById('delete-category-form').submit();"
                     >
-                        Yes, delete this category
+                        Igen, biztosan törölje
                     </button>
 
-                    {{-- TODO: Route, directives --}}
-                    <form id="delete-category-form" action="#" method="POST" class="d-none">
-
+                    <form id="delete-category-form" action="{{ route('labels.destroy', $label) }}" method="POST" class="d-none">
+                        @method('DELETE')
+                        @csrf
                     </form>
                 </div>
             </div>
         </div>
     </div>
-
-    {{-- TODO: Session flashes --}}
 
     <div class="row mt-3">
         <div class="col-12 col-lg-9">

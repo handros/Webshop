@@ -22,11 +22,21 @@
 
     @if (Session::has('item_created'))
         <div class="alert alert-success" role="alert">
-            {{ Session::get('item_created')->name }} created.
+            {{ Session::get('item_created')->name }} létrehozva.
         </div>
     @endif
 
-    {{-- TODO: Session flashes --}}
+    @if (Session::has('item_deleted'))
+        <div class="alert alert-success" role="alert">
+            {{ Session::get('item_deleted')->name }} törölve.
+        </div>
+    @endif
+
+    @if (Session::has('label_created'))
+        <div class="alert alert-success" role="alert">
+            {{ Session::get('label_created')->name }} törölve.
+        </div>
+    @endif
 
     <div class="row mt-3">
         <div class="col-12 col-lg-9">
