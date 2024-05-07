@@ -3,6 +3,7 @@
 
 @section('content')
 <div class="container">
+
     <h1>Create post</h1>
     <div class="mb-4">
         <a href="{{ route('items.index') }}"><i class="fas fa-long-arrow-alt-left"></i> All jewelry</a>
@@ -98,6 +99,32 @@
 
             @error('image')
                 <p class="text-danger">{{ $message }}</p>
+            @enderror
+        </div>
+
+        <div class="form-group row mb-3">
+            <label for="images" class="col-sm-2 col-form-label">További képek kiválasztása</label>
+
+            <div class="col-sm-10">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-12 mb-3">
+                            <input type="file" class="form-control-file" id="images" name="images[]" multiple>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            @foreach ($errors->get('images.*') as $message)
+                <p>{{ json_encode($message) }}</p>
+            @endforeach
+
+            @error('images')
+                <p class="text-danger">
+                    {{ $message }}
+                </p>
             @enderror
         </div>
 

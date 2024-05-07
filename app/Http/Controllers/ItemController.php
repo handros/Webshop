@@ -7,9 +7,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use App\Models\Item;
 use App\Models\User;
 use App\Models\Label;
+use App\Models\Image;
 
 class ItemController extends Controller
 {
@@ -72,10 +74,11 @@ class ItemController extends Controller
             ],
             'image' => [
                 'required',
-                'file',
                 'image',
+                'mimes:jpeg,png,jpg',
                 'max:5120'
             ],
+            'images.*' => 'nullable|image|mimes:jpeg,png,jpg|max:5120',
         ]);
 
         $image = null;
@@ -95,6 +98,30 @@ class ItemController extends Controller
 
         if(isset($data['labels'])) {
             $item->labels()->sync($data['labels']);
+        }
+
+        if ($request->hasFile('images')) {
+                // $totalSize = 0;
+                // foreach ($request->file('images') as $image) {
+                //     $totalSize += $image->getSize();
+                // }
+
+                // if ($totalSize > (24*1024*1024)) { // 24 MB
+                //     Session::flash('upload_error', $item);
+
+                //     return Redirect::route('items.create');
+                //     // return redirect()->back()->with('upload_error', 'A képek összmérete meghaladja a maximális engedélyezett méretet (25 MB).');
+                // }
+
+            foreach ($request->file('images') as $image) {
+                $imageName = time() . '_' . $image->getClientOriginalName();
+                $image->move(public_path('images'), $imageName);
+
+                $newImage = new Image();
+                $newImage->item_id = $item->id;
+                $newImage->path = $imageName;
+                $newImage->save();
+            }
         }
 
         Session::flash('item_created', $item);
@@ -196,8 +223,16 @@ class ItemController extends Controller
         if(Auth::guest() or !Auth::user()->is_admin) {
             abort(401);
         }
-        
+
         $item = Item::findOrFail($id);
+
+        foreach ($item->images as $image) {
+            $filePath = public_path('images/' . $image->path);
+
+            if (File::exists($filePath)) {
+                File::delete($filePath);
+            }
+        }
 
         $item->delete();
 

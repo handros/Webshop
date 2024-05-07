@@ -20,6 +20,7 @@ class ItemFactory extends Factory
             'name' => fake()->word(),
             'description' => implode(' ',fake()->sentences(10)),
             'made_in' => fake()->year(),
+            'auction' => false,
             // 'image' => fake()->imageUrl(),
             // 'other_images' => ???,
         ];

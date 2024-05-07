@@ -19,6 +19,10 @@ class Item extends Model
         return $this->hasMany(Comment::class);
     }
 
+    public function images() {
+        return $this->hasMany(Image::class);
+    }
+
     public function labels() {
         return $this->belongsToMany(Label::class)->withTimestamps();
     }

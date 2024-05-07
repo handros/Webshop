@@ -31,7 +31,9 @@
                 <i class="far fa-calendar-alt"></i>
                 <span>{{ $item->made_in }}</span>
             </p>
-            </br>
+
+            <p class="card-text mt-1"> {{ $item->description }} </p>
+
 
             <div class="mb-2">
                 @foreach ($item->labels as $label)
@@ -56,8 +58,21 @@
                 >
             </div>
 
+            @if ($item->images && count($item->images) > 0)
+            <div class="mt-3">
+                <div class="col-12 col-md-8">
+                    <h2>További képek:</h2>
+                </div>
 
-            <p class="card-text mt-1"> {{ $item->description }} </p>
+                <div class="row">
+                    @foreach($item->images as $image)
+                        <div class="col-md-4">
+                            <img src="{{ asset('images/' . $image->path) }}" alt="Kép" class="img-fluid img-thumbnail" style="height: auto; max-height: 200px;">
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+            @endif
 
             <div class="mt-3">
                 <div class="col-12 col-md-8">
@@ -71,8 +86,11 @@
                 <div class="col-12 col-md-8">
                     <h2>Kommentek:</h2>
                 </div>
-
-                @include('comments.show')
+                @if ($item->comments && count($item->comments) > 0)
+                    @include('comments.show')
+                @else
+                    <p><em>Még nincsenek kommentek.</em></p>
+                @endif
             </div>
 
 
