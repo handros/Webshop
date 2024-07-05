@@ -1,16 +1,16 @@
 @extends('layouts.app')
-@section('title', 'Create label')
+@section('title', 'Címke létrehozása')
 
 @section('content')
 <div class="container">
-    <h1>Create label</h1>
+    <h1>Címke létrehozása</h1>
     <div class="mb-4">
-        <a href="{{ route('items.index') }}"><i class="fas fa-long-arrow-alt-left"></i> All jewelry</a>
+        <a href="{{ route('items.index') }}"><i class="fas fa-long-arrow-alt-left"></i> Ékszerek</a>
     </div>
 
     @if (Session::has('label_created'))
         <div class="alert alert-success" role="alert">
-            {{ Session::get('label_created')->name }} label succesfully created.
+            {{ Session::get('label_created')->name }} nevű címke létrehozva.
         </div>
     @endif
 
@@ -19,7 +19,7 @@
         @csrf
 
         <div class="form-group row mb-3">
-            <label for="name" class="col-sm-2 col-form-label">Name*</label>
+            <label for="name" class="col-sm-2 col-form-label">Név*</label>
             <div class="col-sm-10">
                 <input
                     type="text"
@@ -37,7 +37,7 @@
         </div>
 
         <div class="form-group row mb-3">
-            <label for="color" class="col-sm-2 col-form-label py-0">Color*</label>
+            <label for="color" class="col-sm-2 col-form-label py-0">Szín*</label>
             <div class="col-sm-10">
                 <input
                     type="color"
@@ -49,7 +49,7 @@
         </div>
 
         <div class="text-center">
-            <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Store</button>
+            <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Mentés</button>
         </div>
 
     </form>

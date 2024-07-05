@@ -38,7 +38,7 @@
                             <a class="nav-link" href="{{ route('items.index') }}">Ékszerek</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Kapcsolat</a>
+                            <a class="nav-link" href="{{ url('/about') }}">Kapcsolat</a>
                         </li>
                     </ul>
 
@@ -48,13 +48,13 @@
                         @guest
                             @if (Route::has('login'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Bejelentkezés') }}</a>
                                 </li>
                             @endif
 
                             @if (Route::has('register'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Regisztráció') }}</a>
                                 </li>
                             @endif
                         @else
@@ -67,7 +67,7 @@
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
+                                        {{ __('Kijelentkezés') }}
                                     </a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
@@ -90,7 +90,7 @@
                 <hr>
                 <div class="d-flex flex-column align-items-center">
                     <div>
-                        <span class="small">Basic blog</span>
+                        <span class="small">Jewelry</span>
                         <span class="mx-1">·</span>
                         <span class="small">Laravel {{ app()->version() }}</span>
                         <span class="mx-1">·</span>
@@ -98,7 +98,7 @@
                     </div>
 
                     <div>
-                        <span class="small"><a href="https://github.com/szerveroldali">ELTE Server-side programming</a></span>
+                        <span class="small"><a href="https://github.com/handros">GitHub repom</a></span>
                     </div>
                 </div>
             </div>

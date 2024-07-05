@@ -1,19 +1,19 @@
 @extends('layouts.app')
-@section('title', 'Create post')
+@section('title', 'Ékszer létrehozása')
 
 @section('content')
 <div class="container">
 
-    <h1>Create post</h1>
+    <h1>Ékszer létrehozása</h1>
     <div class="mb-4">
-        <a href="{{ route('items.index') }}"><i class="fas fa-long-arrow-alt-left"></i> All jewelry</a>
+        <a href="{{ route('items.index') }}"><i class="fas fa-long-arrow-alt-left"></i> Ékszerek</a>
     </div>
 
     <form action="{{ route('items.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
 
         <div class="form-group row mb-3">
-            <label for="name" class="col-sm-2 col-form-label">Name*</label>
+            <label for="name" class="col-sm-2 col-form-label">Név*</label>
             <div class="col-sm-10">
                 <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ old('name') }}">
                 @error('name')
@@ -25,7 +25,7 @@
         </div>
 
         <div class="form-group row mb-3">
-            <label for="made_in" class="col-sm-2 col-form-label">Manufactured*</label>
+            <label for="made_in" class="col-sm-2 col-form-label">Gyártási év*</label>
             <div class="col-sm-4">
                 <input type="number" class="form-control @error('made_in') is-invalid @enderror" id="made_in" name="made_in" placeholder="YYYY" min="2000" max="{{ date('Y') }}" pattern="[0-9]{4}" value="{{ old('made_in') }}">
                 @error('made_in')
@@ -37,7 +37,7 @@
         </div>
 
         <div class="form-group row mb-3">
-            <label for="description" class="col-sm-2 col-form-label">Description*</label>
+            <label for="description" class="col-sm-2 col-form-label">Leírás*</label>
             <div class="col-sm-10">
                 <input type="text" class="form-control @error('description') is-invalid @enderror" id="description" name="description" value="{{ old('description') }}">
                 @error('description')
@@ -49,7 +49,7 @@
         </div>
 
         <div class="form-group row mb-3">
-            <label for="labels" class="col-sm-2 col-form-label py-0">Labels</label>
+            <label for="labels" class="col-sm-2 col-form-label py-0">Címkék</label>
             <div class="col-sm-10">
                 @forelse ($labels as $label)
                     <div class="form-check">
@@ -66,7 +66,7 @@
                         </label>
                     </div>
                 @empty
-                    <p>No labels found</p>
+                    <p>Nem találhatóak címkék.</p>
                 @endforelse
 
                 @foreach ($errors->get('labels.*') as $message)
@@ -82,7 +82,7 @@
         </div>
 
         <div class="form-group row mb-3">
-            <label for="image" class="col-sm-2 col-form-label">Image*</label>
+            <label for="image" class="col-sm-2 col-form-label">Kép*</label>
             <div class="col-sm-10">
                 <div class="form-group">
                     <div class="row">
@@ -90,7 +90,7 @@
                             <input type="file" class="form-control-file" id="image" name="image">
                         </div>
                         <div id="cover_preview" class="col-12 d-none">
-                            <p>Cover preview:</p>
+                            <p>Borítókép előnézet:</p>
                             <img id="cover_preview_image" src="#" alt="Cover preview" width="200px">
                         </div>
                     </div>
@@ -129,7 +129,7 @@
         </div>
 
         <div class="text-center">
-            <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Store</button>
+            <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Mentés</button>
         </div>
     </form>
 </div>

@@ -26,6 +26,7 @@ class ItemController extends Controller
             'user_count' => User::count(),
             'label_count' => Label::count(),
             'item_count' => Item::count(), //Item::total()  ??
+            'auction_count' => Item::where('auction', true)->count(),
         ]);
     }
 

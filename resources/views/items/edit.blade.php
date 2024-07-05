@@ -1,11 +1,11 @@
 @extends('layouts.app')
-@section('title', 'Edit' . $item->name)
+@section('title', $item->name . ' szerkesztése')
 
 @section('content')
 <div class="container">
-    <h1>Edit {{ $item->name }}</h1>
+    <h1>{{ $item->name }} szerkesztése</h1>
     <div class="mb-4">
-        <a href="{{ route('items.show', $item) }}"><i class="fas fa-long-arrow-alt-left"></i> Cancel</a>
+        <a href="{{ route('items.show', $item) }}"><i class="fas fa-long-arrow-alt-left"></i> Mégse</a>
     </div>
 
     <form action="{{ route('items.update', $item) }}" method="POST" enctype="multipart/form-data">
@@ -13,7 +13,7 @@
         @csrf
 
         <div class="form-group row mb-3">
-            <label for="name" class="col-sm-2 col-form-label">Name*</label>
+            <label for="name" class="col-sm-2 col-form-label">Név*</label>
             <div class="col-sm-10">
                 <input
                     type="text"
@@ -31,7 +31,7 @@
         </div>
 
         <div class="form-group row mb-3">
-            <label for="made_in" class="col-sm-2 col-form-label">Manufactured*</label>
+            <label for="made_in" class="col-sm-2 col-form-label">Gyártási év*</label>
             <div class="col-sm-4">
                 <input
                     type="number"
@@ -49,7 +49,7 @@
         </div>
 
         <div class="form-group row mb-3">
-            <label for="description" class="col-sm-2 col-form-label">Description*</label>
+            <label for="description" class="col-sm-2 col-form-label">Leírás*</label>
             <div class="col-sm-10">
                 <input
                     type="text"
@@ -66,7 +66,7 @@
         </div>
 
         <div class="form-group row mb-3">
-            <label for="labels" class="col-sm-2 col-form-label py-0">Labels</label>
+            <label for="labels" class="col-sm-2 col-form-label py-0">Címkék</label>
             <div class="col-sm-10">
                 @forelse ($labels as $label)
                     <div class="form-check">
@@ -88,7 +88,7 @@
                         </label>
                     </div>
                 @empty
-                    <p>No labels found</p>
+                    <p>Nem találhatóak címkék.</p>
                 @endforelse
 
                 @foreach ($errors->get('labels.*') as $message)
@@ -104,7 +104,7 @@
         </div>
 
         <div class="text-center">
-            <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Store</button>
+            <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Mentés</button>
         </div>
     </form>
 </div>

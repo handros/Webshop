@@ -5,7 +5,7 @@
 <div class="container">
     @if (Session::has('item_updated'))
         <div class="alert alert-success" role="alert">
-            {{ Session::get('item_updated')->name }} updated.
+            {{ Session::get('item_updated')->name }} frissítve.
         </div>
     @endif
 
@@ -23,7 +23,8 @@
 
     <div class="row justify-content-between">
         <div class="col-12 col-md-8">
-            <a href="{{ route('items.index') }}"><i class="fas fa-long-arrow-alt-left"></i> All jewelry</a>
+            <div><a href="{{ url('/') }}"><i class="fas fa-long-arrow-alt-left"></i> Főoldal</a></div>
+            <div><a href="{{ route('items.index') }}"><i class="fas fa-long-arrow-alt-left"></i> Ékszerek</a></div>
 
             <h1>{{ $item->name }}</h1>
 
@@ -104,11 +105,11 @@
                 @auth
                     @if(auth()->user()->is_admin)
                         {{-- @can('update', $item) --}}
-                            <a role="button" class="btn btn-sm btn-primary" href="{{ route('items.edit', ['item' => $item->id]) }}"><i class="far fa-edit"></i> Edit jewellery</a>
+                            <a role="button" class="btn btn-sm btn-primary" href="{{ route('items.edit', ['item' => $item->id]) }}"><i class="far fa-edit"></i> Szerkesztés</a>
                         {{-- @endcan --}}
 
                         <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#delete-confirm-modal"><i class="far fa-trash-alt"></i>
-                            <span> Delete jewellery</span>
+                            <span> Törlés</span>
                         </button>
                     @endif
                 @endauth

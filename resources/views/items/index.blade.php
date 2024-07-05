@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Jewelry')
+@section('title', 'Ékszerek')
 
 @section('content')
 <div class="container">
@@ -7,12 +7,12 @@
         @if(auth()->user()->is_admin)
             <div class="row justify-content-between">
                 <div class="col-12 col-md-8">
-                    <h1>All jewelry</h1>
+                    <h1>Ékszerek</h1>
                 </div>
                 <div class="col-12 col-md-4">
                     <div class="float-lg-end">
-                        <a href="{{ route('items.create') }}" role="button" class="btn btn-sm btn-success mb-1"><i class="fas fa-plus-circle"></i> New jewellery</a>
-                        <a href="{{ route('labels.create') }}" role="button" class="btn btn-sm btn-success mb-1"><i class="fas fa-plus-circle"></i> New label</a>
+                        <a href="{{ route('items.create') }}" role="button" class="btn btn-sm btn-success mb-1"><i class="fas fa-plus-circle"></i> Ékszer létrehozása</a>
+                        <a href="{{ route('labels.create') }}" role="button" class="btn btn-sm btn-success mb-1"><i class="fas fa-plus-circle"></i> Címke létrehozása</a>
                     </div>
                 </div>
             </div>
@@ -80,7 +80,7 @@
                             <div class="card-footer">
                                 {{-- TODO: Link --}}
                                 <a href="{{ route('items.show', $item) }}" class="btn btn-primary">
-                                    <span>View jewellery</span> <i class="fas fa-angle-right"></i>
+                                    <span>Részletek</span> <i class="fas fa-angle-right"></i>
                                 </a>
                             </div>
                         </div>
@@ -88,7 +88,7 @@
                 @empty
                     <div class="col-12">
                         <div class="alert alert-warning" role="alert">
-                            No items found!
+                            Nem találhatóak ékszerek.
                         </div>
                     </div>
                 @endforelse
@@ -104,7 +104,7 @@
                 <div class="col-12 mb-3">
                     <div class="card bg-light">
                         <div class="card-header">
-                            Labels
+                            Címkék
                         </div>
                         <div class="card-body">
                             @foreach ($labels as $label)
@@ -121,14 +121,15 @@
                         <div class="col-12 mb-3">
                             <div class="card bg-light">
                                 <div class="card-header">
-                                    Statistics
+                                    Statisztika
                                 </div>
                                 <div class="card-body">
                                     <div class="small">
                                         <ul class="fa-ul">
-                                            <li><span class="fa-li"><i class="fas fa-user"></i></span>Users: {{ $user_count }}</li>
-                                            <li><span class="fa-li"><i class="fas fa-layer-group"></i></span>Labels: {{ $label_count }}</li>
-                                            <li><span class="fa-li"><i class="fas fa-file-alt"></i></span>Items: {{ $item_count }}</li>
+                                            <li><span class="fa-li"><i class="fas fa-user"></i></span>Felhasználók: {{ $user_count }}</li>
+                                            <li><span class="fa-li"><i class="fas fa-layer-group"></i></span>Címkék: {{ $label_count }}</li>
+                                            <li><span class="fa-li"><i class="fas fa-file-alt"></i></span>Ékszerek: {{ $item_count }}</li>
+                                            <li><span class="fa-li"><i class="fas fa-fire"></i></span>Aukción: {{ $auction_count }}</li>
                                         </ul>
                                     </div>
                                 </div>
@@ -137,7 +138,6 @@
                     @endif
                 @endauth
             </div>
-
         </div>
     </div>
 </div>

@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Item;
+use App\Models\User;
+use App\Models\Label;
+use App\Models\Image;
 
 class HomeController extends Controller
 {
@@ -23,6 +27,14 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        // return view('home');
+        return view('home', [
+            'auction_items' => Item::where('auction', true)->get(),
+            'labels' => Label::all(),
+            'user_count' => User::count(),
+            'label_count' => Label::count(),
+            'item_count' => Item::count(), //Item::total()  ??
+            'auction_count' => Item::where('auction', true)->count(),
+        ]);
     }
 }

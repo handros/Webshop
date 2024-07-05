@@ -22,6 +22,12 @@ use App\Http\Middleware\CheckUploadSize;
 //Route::get('/', [ItemController::class, 'index']);
 Route::get('/', [HomeController::class, 'index']);
 
+
+Route::get('/about', function () { //Elrejteni?
+    return view('about');
+});
+
+
 // -----------------------------------------
 
 

@@ -6,24 +6,23 @@
 
     @if (Session::has('label_updated'))
         <div class="alert alert-success" role="alert">
-            {{ Session::get('label_updated')->name }} updated.
+            {{ Session::get('label_updated')->name }} frissítve.
         </div>
     @endif
 
     <div class="row justify-content-between">
         <div class="col-12 col-md-8">
-            <h1>Jewelry for <span  style="background-color: {{ $label->color }}; color: #ffffff; border-radius: 6px; padding: 1px;">{{ $label->name }}</span></h1>
+            <h1>Ékszerek: <span  style="background-color: {{ $label->color }}; color: #ffffff; border-radius: 6px; padding: 1px;">{{ $label->name }}</span></h1>
         </div>
         <div class="col-12 col-md-4">
             <div class="float-lg-end">
-                {{-- TODO: Links, policy --}}
 
                 @auth
                     @if(auth()->user()->is_admin)
-                        <a role="button" class="btn btn-sm btn-primary" href="{{ route('labels.edit', ['label' => $label->id]) }}"><i class="far fa-edit"></i> Edit label</a>
+                        <a role="button" class="btn btn-sm btn-primary" href="{{ route('labels.edit', ['label' => $label->id]) }}"><i class="far fa-edit"></i> Szerkesztés</a>
 
                         <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#delete-confirm-modal"><i class="far fa-trash-alt">
-                            <span></i> Delete label</span>
+                            <span></i> Törlés</span>
                         </button>
                     @endif
                 @endauth
@@ -31,7 +30,7 @@
             </div>
         </div>
         <div class="mb-4">
-            <a href="{{ route('items.index') }}"><i class="fas fa-long-arrow-alt-left"></i> All jewelry</a>
+            <a href="{{ route('items.index') }}"><i class="fas fa-long-arrow-alt-left"></i> Ékszerek</a>
         </div>
     </div>
 
@@ -107,7 +106,7 @@
                             </div>
                             <div class="card-footer">
                                 <a href="{{ route('items.show', $item) }}" class="btn btn-primary">
-                                    <span>View jewellery</span> <i class="fas fa-angle-right"></i>
+                                    <span>Részletek</span> <i class="fas fa-angle-right"></i>
                                 </a>
                             </div>
                         </div>
@@ -131,7 +130,7 @@
                 <div class="col-12 mb-3">
                     <div class="card bg-light">
                         <div class="card-header">
-                            Labels
+                            Címkék
                         </div>
                         <div class="card-body">
                             @foreach ($labels as $label)
