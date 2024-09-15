@@ -26,4 +26,8 @@ class Item extends Model
     public function labels() {
         return $this->belongsToMany(Label::class)->withTimestamps();
     }
+
+    public function auction() {
+        return $this->hasOne(Auction::class);
+    }
 }

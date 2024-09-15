@@ -21,8 +21,6 @@ class ItemFactory extends Factory
             'description' => implode(' ',fake()->sentences(10)),
             'made_in' => fake()->year(),
             'auction' => fake()->boolean(),
-            // 'image' => fake()->imageUrl(),
-            // 'other_images' => ???,
         ];
     }
 }

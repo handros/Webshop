@@ -88,6 +88,7 @@
                                     <a href="{{ route('items.show', $item) }}" class="btn btn-info">
                                         <span>Részletek</span> <i class="fas fa-angle-right"></i>
                                     </a>
+                                    {{-- TODO: Ár megjelnítése --}}
                                     <a href="{{ route('items.show', $item) }}" class="btn btn-outline-primary">
                                         <span>Licitálok</span> <i class="fas fa-angle-right"></i>
                                     </a>

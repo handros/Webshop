@@ -11,18 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('comments', function (Blueprint $table) {
+        Schema::create('auction_user', function (Blueprint $table) {
             $table->id();
-
-            $table->text('text');
-            $table->integer('rating')->nullable();
-
+            $table->unsignedBigInteger('auction_id');
+            $table->unsignedBigInteger('user_id');
             $table->timestamps();
 
-            $table->unsignedBigInteger('item_id');
-            $table->foreign('item_id')->references('id')->on('items')->onDelete('cascade');
-
-            $table->unsignedBigInteger('user_id');
+            $table->unique(['auction_id', 'user_id']);
+            $table->foreign('auction_id')->references('id')->on('auctions')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
@@ -32,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('comments');
+        Schema::dropIfExists('auction_user');
     }
 };

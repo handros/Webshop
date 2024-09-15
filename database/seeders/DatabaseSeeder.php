@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
             ItemSeeder::class,
             LabelSeeder::class,
             CommentSeeder::class,
+            AuctionSeeder::class,
         ]);
     }
 }
