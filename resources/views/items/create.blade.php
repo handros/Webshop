@@ -26,7 +26,7 @@
 
         <div class="form-group row mb-3">
             <label for="made_in" class="col-sm-2 col-form-label">Gyártási év*</label>
-            <div class="col-sm-4">
+            <div class="col-sm-3">
                 <input type="number" class="form-control @error('made_in') is-invalid @enderror" id="made_in" name="made_in" placeholder="YYYY" min="2000" max="{{ date('Y') }}" pattern="[0-9]{4}" value="{{ old('made_in') }}">
                 @error('made_in')
                     <div class="invalid-feedback">
@@ -82,6 +82,22 @@
         </div>
 
         <div class="form-group row mb-3">
+            <label for="auction" class="col-sm-2 col-form-label">Aukcióra bocsát</label>
+            <div class="col-sm-4">
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="auction" name="auction" value="1" {{ old('auction', $item->auction ?? 0) ? 'checked' : '' }}>
+
+                    @error('auction')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                    @enderror
+                </div>
+
+            </div>
+        </div>
+
+        <div class="form-group row mb-3">
             <label for="image" class="col-sm-2 col-form-label">Kép*</label>
             <div class="col-sm-10">
                 <div class="form-group">
@@ -114,8 +130,6 @@
                     </div>
                 </div>
             </div>
-
-
 
             @foreach ($errors->get('images.*') as $message)
                 <p>{{ json_encode($message) }}</p>

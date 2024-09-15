@@ -29,7 +29,7 @@
             </div>
 
             <div >
-                <button type="submit" class="btn btn-primary"><i class="fas fa-plus"></i> Küldés</button>
+                <button type="submit" class="btn btn-primary"><i class="fa-solid fa-paper-plane"></i> Küldés</button>
             </div>
         </form>
     @else

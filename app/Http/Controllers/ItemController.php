@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use App\Models\Item;
@@ -79,6 +80,7 @@ class ItemController extends Controller
                 'mimes:jpeg,png,jpg',
                 'max:5120'
             ],
+            'auction' => 'nullable|boolean',
             'images.*' => 'nullable|image|mimes:jpeg,png,jpg|max:5120',
         ]);
 
@@ -93,6 +95,7 @@ class ItemController extends Controller
         $item->name = $data['name'];
         $item->made_in = $data['made_in'];
         $item->description = $data['description'];
+        $item->auction = $request->has('auction');
         $item->image = $image;
 
         $item->save();
@@ -186,6 +189,7 @@ class ItemController extends Controller
                 'integer',
                 'exists:labels,id'
             ],
+            'auction' => 'nullable|boolean',
             // 'image' => [
             //     'required',
             //     'file',
@@ -199,14 +203,16 @@ class ItemController extends Controller
         // if ($request->hasFile('image')) {
         //     $file = $request->file('image');
         //     $image = $file->store('images', ['disk' => 'public']);
+        //     $item->image = $image; // Ha az adatbázisban van egy 'image' mező
         // }
 
-        // $item->name = $data['name'];
-        // $item->made_in = $data['made_in'];
-        // $item->description = $data['description'];
-        // $item->image = $image;
+        $item->name = $data['name'];
+        $item->made_in = $data['made_in'];
+        $item->description = $data['description'];
+        $item->auction = $data['auction'] ?? false;
+        $item->save();
 
-        $item->update($data);
+        // $item->update($data);
 
         if(isset($data['labels'])) {
             $item->labels()->sync($data['labels']);
@@ -227,12 +233,17 @@ class ItemController extends Controller
 
         $item = Item::findOrFail($id);
 
+        //TODO:: TEST Storage delete
         foreach ($item->images as $image) {
             $filePath = public_path('images/' . $image->path);
 
             if (File::exists($filePath)) {
                 File::delete($filePath);
             }
+        }
+
+        if ($item->image) {
+            Storage::disk('public')->delete($item->image);
         }
 
         $item->delete();
