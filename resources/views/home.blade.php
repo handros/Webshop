@@ -24,9 +24,29 @@
 
 @section('content')
     <div class="container">
+        <div class="col-12 col-md-8 mb-5">
+            <h1>Aukció</h1>
+            <p>Ezen az oldalon betekintést nyerhetnek az összes termékemre, ami alatt találhatják majd az aukcióra bocsátottakat is.</p>
+        </div>
+        <div class="mb-5">
+            <div class="gallery js-flickity" data-flickity-options='{ "wrapAround": true }'>
+                @foreach($items as $item)
+                    <div class="gallery-cell">
+                        <img src="{{
+                            asset(
+                                $item->image
+                                    ? 'storage/' . $item->image
+                                    : 'images/no_product_image.png'
+                            )
+                        }}" alt="Gallery Image" class="img-fluid gallery-img">
+                    </div>
+                @endforeach
+            </div>
+        </div>
         <div class="row mt-3">
-            <div class="col-12 col-lg-9">
+            <div class="col-12">
                 <div class="row">
+                    <h2>Jelenleg <b>{{ $auction_count }} ékszer</b> van aukcióra bocsátva</h2>
                     @forelse ($auction_items as $item)
                         <div class="col-12 col-md-6 col-lg-4 mb-3 d-flex align-self-stretch">
                             <div class="card w-100">
@@ -65,8 +85,11 @@
                                 </div>
                                 <div class="card-footer">
                                     {{-- TODO: Link --}}
-                                    <a href="{{ route('items.show', $item) }}" class="btn btn-primary">
+                                    <a href="{{ route('items.show', $item) }}" class="btn btn-info">
                                         <span>Részletek</span> <i class="fas fa-angle-right"></i>
+                                    </a>
+                                    <a href="{{ route('items.show', $item) }}" class="btn btn-outline-primary">
+                                        <span>Licitálok</span> <i class="fas fa-angle-right"></i>
                                     </a>
                                 </div>
                             </div>
@@ -82,34 +105,6 @@
 
                 <div class="d-flex justify-content-center">
                     {{-- TODO: Pagination --}}
-                </div>
-
-            </div>
-            <div class="col-12 col-lg-3">
-                <div class="row">
-                    {{-- TODO: Filtering --}}
-
-                    @auth
-                        @if(auth()->user()->is_admin)
-                            <div class="col-12 mb-3">
-                                <div class="card bg-light">
-                                    <div class="card-header">
-                                        Statisztika
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="small">
-                                            <ul class="fa-ul">
-                                                <li><span class="fa-li"><i class="fas fa-user"></i></span>Felhasználók: {{ $user_count }}</li>
-                                                <li><span class="fa-li"><i class="fas fa-layer-group"></i></span>Címkék: {{ $label_count }}</li>
-                                                <li><span class="fa-li"><i class="fas fa-file-alt"></i></span>Ékszerek: {{ $item_count }}</li>
-                                                <li><span class="fa-li"><i class="fas fa-fire"></i></span>Aukción: {{ $auction_count }}</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        @endif
-                    @endauth
                 </div>
 
             </div>

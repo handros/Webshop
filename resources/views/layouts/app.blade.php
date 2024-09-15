@@ -32,7 +32,7 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url('/') }}">Főoldal</a>
+                            <a class="nav-link" href="{{ url('/') }}">Aukció</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('items.index') }}">Ékszerek</a>
@@ -105,6 +105,9 @@
         </footer>
 
         @yield('scripts')
+
+        <!-- Your custom JS file -->
+        <script src="{{ asset('js/app.js') }}"></script>
     </div>
 </body>
 </html>

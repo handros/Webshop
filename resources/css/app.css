@@ -1,0 +1,15 @@
+.gallery-cell {
+    display: flex;
+    justify-content: center; /* Vízszintes középre igazítás */
+    align-items: center; /* Függőleges középre igazítás */
+    width: 100%;
+    max-width: 300px; /* Állítsd be a kívánt maximális szélességet */
+    height: 300px; /* Állítsd be a kívánt magasságot */
+    overflow: hidden; /* Biztosítja, hogy a kép ne lógjon ki */
+}
+
+.gallery-img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover; /* Ez biztosítja, hogy a kép arányosan legyen méretezve */
+}
