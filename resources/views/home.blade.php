@@ -47,7 +47,7 @@
             <div class="col-12">
                 <div class="row">
                     <h2>Jelenleg <b>{{ $auction_count }} ékszer</b> van aukcióra bocsátva</h2>
-                    @forelse ($auction_items as $item)
+                    @forelse ($auction_items as $item) {{-- TODO: auctionsön végigmenni --}}
                         <div class="col-12 col-md-6 col-lg-4 mb-3 d-flex align-self-stretch">
                             <div class="card w-100">
                                 <img
@@ -78,20 +78,21 @@
 
                                     {{-- TODO: can be a link --}}
                                     @if ( strlen($item->description) > 100 )
-                                        <p class="card-text mt-1"> {{ substr($item->description, 0, 100) }}... </p>
+                                        <p class="card-text mt-1"> {{-- substr($auctions[$loop->iteration-1]->description, 0, 100) --}}... </p> {{-- TODO: LEÍRÁST! --}}
                                     @else
                                         <p class="card-text mt-1"> {{ substr($item->description, 0, 100) }} </p>
                                     @endif
                                 </div>
                                 <div class="card-footer">
                                     {{-- TODO: Link --}}
-                                    <a href="{{ route('items.show', $item) }}" class="btn btn-info">
+                                    <a href="#{{-- {{ route('auctions.show', $loop->iteration) }} --}}" class="btn btn-info">
                                         <span>Részletek</span> <i class="fas fa-angle-right"></i>
                                     </a>
                                     {{-- TODO: Ár megjelnítése --}}
-                                    <a href="{{ route('items.show', $item) }}" class="btn btn-outline-primary">
+
+                                    {{-- <a href="{{ route('items.show', $item) }}" class="btn btn-outline-primary">
                                         <span>Licitálok</span> <i class="fas fa-angle-right"></i>
-                                    </a>
+                                    </a> --}}
                                 </div>
                             </div>
                         </div>

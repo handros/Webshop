@@ -128,6 +128,12 @@ class ItemController extends Controller
             }
         }
 
+        if($item->auction == false) {
+
+            $item->auction->opened= false;
+            $item->auction->save();
+        }
+
         Session::flash('item_created', $item);
 
         return Redirect::route('items.index');

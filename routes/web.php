@@ -3,6 +3,7 @@
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\LabelController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\AuctionController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\CheckUploadSize;
@@ -34,6 +35,7 @@ Route::get('/about', function () { //Elrejteni?
 Route::resource('items', ItemController::class);
 Route::resource('labels', LabelController::class);
 Route::resource('comments', CommentController::class);
+Route::resource('auctions', AuctionController::class);
 
 // -----------------------------------------
 

@@ -4,9 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Item;
-use App\Models\User;
 use App\Models\Label;
-use App\Models\Image;
+use App\Models\Auction;
 
 class HomeController extends Controller
 {
@@ -30,6 +29,7 @@ class HomeController extends Controller
         // return view('home');
         return view('home', [
             'items' => Item::all(),
+            'auctions' => Auction::all(),
             'auction_items' => Item::where('auction', true)->get(),
             'labels' => Label::all(),
             'auction_count' => Item::where('auction', true)->count(),
