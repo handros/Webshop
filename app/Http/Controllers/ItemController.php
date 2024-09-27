@@ -128,11 +128,13 @@ class ItemController extends Controller
             }
         }
 
-        if($item->auction == false) {
+        //TODO: Meghívni az auction::create-et itt
+        
+        // if($item->auction == false) {
 
-            $item->auction->opened= false;
-            $item->auction->save();
-        }
+        //     $item->auction->opened = false;
+        //     $item->auction->save();
+        // }
 
         Session::flash('item_created', $item);
 
@@ -239,7 +241,6 @@ class ItemController extends Controller
 
         $item = Item::findOrFail($id);
 
-        //TODO:: TEST Storage delete
         foreach ($item->images as $image) {
             $filePath = public_path('images/' . $image->path);
 

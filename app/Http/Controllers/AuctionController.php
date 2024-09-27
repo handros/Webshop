@@ -44,7 +44,7 @@ class AuctionController extends Controller
             'price' => 'required|integer|min:0',
             'description' => 'required|string|max:1000',
             'deadline' => 'required|date|after_or_equal:today',
-            'opened' => 'required|boolean',
+            'opened' => 'nullable|boolean',
         ]);
 
         $auction = new Auction;
@@ -98,10 +98,14 @@ class AuctionController extends Controller
             'price' => 'required|integer|min:0',
             'description' => 'required|string|max:1000',
             'deadline' => 'required|date',
-            'opened' => 'boolean',
+            'opened' => 'nullable|boolean',
         ]);
 
-        $auction->update($data);
+        $auction->price = $data['price'];
+        $auction->description = $data['description'];
+        $auction->deadline = $data['deadline'];
+        $auction->opened = $data['opened'] ?? false;
+        $auction->save();
 
         Session::flash('auction_updated', $auction);
         return Redirect::route('auctions.show', $auction);

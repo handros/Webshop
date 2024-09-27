@@ -47,14 +47,14 @@
             <div class="col-12">
                 <div class="row">
                     <h2>Jelenleg <b>{{ $auction_count }} ékszer</b> van aukcióra bocsátva</h2>
-                    @forelse ($auction_items as $item) {{-- TODO: auctionsön végigmenni --}}
+                    @forelse ($auctions as $auction) {{-- TODO: auctionsön végigmenni --}}
                         <div class="col-12 col-md-6 col-lg-4 mb-3 d-flex align-self-stretch">
                             <div class="card w-100">
                                 <img
                                 src="{{
                                     asset(
-                                        $item->image
-                                            ? 'storage/' . $item->image
+                                        $auction->item->image
+                                            ? 'storage/' . $auction->item->image
                                             : 'images/no_product_image.png'
                                     )
                                 }}"
@@ -62,30 +62,37 @@
                                     alt="Item cover"
                                 >
                                 <div class="card-body">
-                                    <h5 class="card-title mb-0"> {{ $item->name }} </h5>
+                                    @if ( $auction->opened )
+                                        <h5 class="card-title mb-0"> Nyitva eddig: {{ $auction->deadline }} </h5>
+                                    @else
+                                        <h5 class="card-title mb-0"> Véget ért: {{ $auction->deadline }} </h5>
+                                    @endif
+
+                                    <h5 class="card-title mb-0"> {{ $auction->item->name }} </h5>
+
                                     <p class="small mb-0">
                                         <span>
                                             <i class="far fa-calendar-alt"></i>
-                                            <span> {{ $item->made_in }} </span>
+                                            <span> {{ $auction->item->made_in }} </span>
                                         </span>
                                     </p>
 
-                                    @foreach ($item->labels as $label)
+                                    @foreach ($auction->item->labels as $label)
                                         <a href="{{ route('labels.show', $label) }}" class="text-decoration-none">
                                             <span style="background-color: {{ $label->color }}; color: #ffffff; border-radius: 6px; padding: 1px;">{{ $label->name }}</span>
                                         </a>
                                     @endforeach
 
                                     {{-- TODO: can be a link --}}
-                                    @if ( strlen($item->description) > 100 )
-                                        <p class="card-text mt-1"> {{-- substr($auctions[$loop->iteration-1]->description, 0, 100) --}}... </p> {{-- TODO: LEÍRÁST! --}}
+                                    @if ( strlen($auction->description) > 100 )
+                                        <p class="card-text mt-1"> {{ substr($auction->description, 0, 100) }}... </p> {{-- TODO: LEÍRÁST! --}}
                                     @else
-                                        <p class="card-text mt-1"> {{ substr($item->description, 0, 100) }} </p>
+                                        <p class="card-text mt-1"> {{ substr($auction->description, 0, 100) }} </p>
                                     @endif
                                 </div>
                                 <div class="card-footer">
                                     {{-- TODO: Link --}}
-                                    <a href="#{{-- {{ route('auctions.show', $loop->iteration) }} --}}" class="btn btn-info">
+                                    <a href="{{ route('auctions.show', $auction) }}" class="btn btn-info">
                                         <span>Részletek</span> <i class="fas fa-angle-right"></i>
                                     </a>
                                     {{-- TODO: Ár megjelnítése --}}

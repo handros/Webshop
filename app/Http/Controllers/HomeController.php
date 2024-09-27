@@ -29,7 +29,7 @@ class HomeController extends Controller
         // return view('home');
         return view('home', [
             'items' => Item::all(),
-            'auctions' => Auction::all(),
+            'auctions' => Auction::with('item')->get(),
             'auction_items' => Item::where('auction', true)->get(),
             'labels' => Label::all(),
             'auction_count' => Item::where('auction', true)->count(),
