@@ -23,20 +23,25 @@
 
     <div class="row justify-content-between">
         <div class="col-12 col-md-8">
-            <div><a href="{{ url('/') }}"><i class="fas fa-long-arrow-alt-left"></i> Főoldal</a></div>
-            <div><a href="{{ route('items.index') }}"><i class="fas fa-long-arrow-alt-left"></i> Ékszerek</a></div>
 
-            <h1>{{ $item->name }}</h1>
+            <h1 class="text-center">
+                {{ $item->name }}
+                @if($item->on_auction)
+                    <a href="{{ route('auctions.show', $item->auction) }}" class="btn btn-outline-info"><strong>Aukcióra bocsátva</strong></a>
+                @endif
+            </h1>
 
-            <p class="small text-secondary mb-0">
+
+
+            <p class="text-center">
                 <i class="far fa-calendar-alt"></i>
                 <span>{{ $item->made_in }}</span>
             </p>
 
-            <p class="card-text mt-1"> {{ $item->description }} </p>
+            <p class="text-center"> {{ $item->description }} </p>
 
 
-            <div class="mb-2">
+            <div class="mb-2 text-center">
                 @foreach ($item->labels as $label)
                     <a href="{{ route('labels.show', $label) }}" class="text-decoration-none">
                         <span style="background-color: {{ $label->color }}; color: #ffffff; border-radius: 6px; padding: 1px;">{{ $label->name }}</span>
@@ -45,7 +50,7 @@
             </div>
 
 
-            <div class="d-flex justify-content-left">
+            <div class="d-flex justify-content-center">
                 <img src="{{
                         asset(
                             $item->image
@@ -59,7 +64,7 @@
                 >
             </div>
 
-            @if ($item->images && count($item->images) > 0)
+            {{-- @if ($item->images and count($item->images) > 0)
             <div class="mt-3">
                 <div class="col-12 col-md-8">
                     <h2>További képek:</h2>
@@ -73,7 +78,25 @@
                     @endforeach
                 </div>
             </div>
+            @endif --}}
+
+            @if ($item->images and count($item->images) > 0)
+            <div class="mt-3 mb-5">
+                <div class="col-12 col-md-8">
+                    <h2>További képek:</h2>
+                </div>
+
+                <div class="gallery js-flickity" data-flickity-options='{ "wrapAround": true }'>
+                    @foreach($item->images as $image)
+                        <div class="gallery-cell">
+                            <img src="{{ asset('images/' . $image->path) }}" alt="Kép" class="img-fluid gallery-img">
+                        </div>
+                    @endforeach
+                </div>
+            </div>
             @endif
+
+            <hr>
 
             <div class="mt-3">
                 <div class="col-12 col-md-8">
@@ -83,11 +106,13 @@
                 @include('comments.create')
             </div>
 
+            <hr>
+
             <div class="mt-3">
                 <div class="col-12 col-md-8">
                     <h2>Kommentek:</h2>
                 </div>
-                @if ($item->comments && count($item->comments) > 0)
+                @if ($item->comments and count($item->comments) > 0)
                     @include('comments.show')
                 @else
                     <p><em>Még nincsenek kommentek.</em></p>
@@ -104,8 +129,14 @@
                 {{-- TODO: Links, policy --}}
                 @auth
                     @if(auth()->user()->is_admin)
+                        @if (!$item->on_auction)
+                            <a href="{{ route('auctions.create', ['item' => $item->id]) }}" role="button" class="btn btn-sm btn-warning"><i class="fas fa-fire"></i> Aukcióra bocsát</a>
+                        @else
+                            <a href="{{ route('auctions.edit', ['auction' => $item->auction->id]) }}" role="button" class="btn btn-sm btn-warning"><i class="fas fa-fire"></i> Aukció szerkesztése</a>
+                        @endif
+
                         {{-- @can('update', $item) --}}
-                            <a role="button" class="btn btn-sm btn-primary" href="{{ route('items.edit', ['item' => $item->id]) }}"><i class="far fa-edit"></i> Szerkesztés</a>
+                            <a href="{{ route('items.edit', ['item' => $item->id]) }}" role="button" class="btn btn-sm btn-primary"><i class="far fa-edit"></i> Szerkesztés</a>
                         {{-- @endcan --}}
 
                         <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#delete-confirm-modal"><i class="far fa-trash-alt"></i>

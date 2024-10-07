@@ -82,12 +82,12 @@
         </div>
 
         <div class="form-group row mb-3">
-            <label for="auction" class="col-sm-2 col-form-label">Aukcióra bocsát</label>
+            <label for="on_auction" class="col-sm-2 col-form-label">Aukcióra bocsát</label>
             <div class="col-sm-4">
                 <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" id="auction" name="auction" value="1" {{ old('auction', $item->auction ?? 0) ? 'checked' : '' }}>
+                    <input class="form-check-input" type="checkbox" id="on_auction" name="on_auction" value="1" {{ old('on_auction', $item->on_auction ?? 0) ? 'checked' : '' }}>
 
-                    @error('auction')
+                    @error('on_auction')
                         <div class="invalid-feedback">
                             {{ $message }}
                         </div>

@@ -19,14 +19,10 @@ use App\Http\Middleware\CheckUploadSize;
 |
 */
 
-// Route::redirect('/', '/items');
-//Route::get('/', [ItemController::class, 'index']);
-Route::get('/', [HomeController::class, 'index']);
-
-
-Route::get('/about', function () { //Elrejteni?
-    return view('about');
-});
+// Route::get('/', [ItemController::class, 'index'])->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/about', [HomeController::class, 'about'])->name('about');
+Route::get('/search', [ItemController::class, 'search'])->name('items.search');
 
 
 // -----------------------------------------
@@ -36,6 +32,7 @@ Route::resource('items', ItemController::class);
 Route::resource('labels', LabelController::class);
 Route::resource('comments', CommentController::class);
 Route::resource('auctions', AuctionController::class);
+Route::get('/auctions/create/{item}', [AuctionController::class, 'create'])->name('auctions.create');
 
 // -----------------------------------------
 

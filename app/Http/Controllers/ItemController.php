@@ -22,13 +22,28 @@ class ItemController extends Controller
     public function index()
     {
         return view('items.index', [
-            'items' => Item::all(),
+            'items' => Item::paginate(9),
             'labels' => Label::all(),
             'user_count' => User::count(),
             'label_count' => Label::count(),
             'item_count' => Item::count(), //Item::total()  ??
-            'auction_count' => Item::where('auction', true)->count(),
+            'auction_count' => Item::where('on_auction', true)->count(),
         ]);
+    }
+
+    /**
+     * Search based on name of the Item or Label.
+     */
+    public function search(Request $request) {
+        $query = $request->input('query');
+
+        $items = Item::where('name', 'like', '%' . $query . '%')
+            ->orWhereHas('labels', function ($q) use ($query) {
+                $q->where('name', 'like', '%' . $query . '%');
+            })
+            ->get();
+
+        return view('items.search', compact('items'));
     }
 
     /**
@@ -80,7 +95,7 @@ class ItemController extends Controller
                 'mimes:jpeg,png,jpg',
                 'max:5120'
             ],
-            'auction' => 'nullable|boolean',
+            'on_auction' => 'nullable|boolean',
             'images.*' => 'nullable|image|mimes:jpeg,png,jpg|max:5120',
         ]);
 
@@ -95,7 +110,8 @@ class ItemController extends Controller
         $item->name = $data['name'];
         $item->made_in = $data['made_in'];
         $item->description = $data['description'];
-        $item->auction = $request->has('auction');
+        $item->on_auction = false;
+        // $item->on_auction = $request->has('on_auction');
         $item->image = $image;
 
         $item->save();
@@ -129,7 +145,7 @@ class ItemController extends Controller
         }
 
         //TODO: Meghívni az auction::create-et itt
-        
+
         // if($item->auction == false) {
 
         //     $item->auction->opened = false;
@@ -197,7 +213,7 @@ class ItemController extends Controller
                 'integer',
                 'exists:labels,id'
             ],
-            'auction' => 'nullable|boolean',
+            'on_auction' => 'nullable|boolean',
             // 'image' => [
             //     'required',
             //     'file',
@@ -217,7 +233,7 @@ class ItemController extends Controller
         $item->name = $data['name'];
         $item->made_in = $data['made_in'];
         $item->description = $data['description'];
-        $item->auction = $data['auction'] ?? false;
+        // $item->on_auction = $data['on_auction'] ?? false;
         $item->save();
 
         // $item->update($data);

@@ -15,7 +15,7 @@ class AuctionSeeder extends Seeder
      */
     public function run(): void
     {
-        $items = Item::where('auction', true)->get();
+        $items = Item::where('on_auction', true)->get();
 
         foreach ($items as $item) {
             $buyers = User::inRandomOrder()->take(rand(2, 4))->get();

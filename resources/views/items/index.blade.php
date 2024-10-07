@@ -3,7 +3,7 @@
 
 @section('content')
 <div class="container">
-    @auth
+    @auth {{-- TODO: KELL? --}}
         @if(auth()->user()->is_admin)
             <div class="row justify-content-between">
                 <div class="col-12 col-md-8">
@@ -38,6 +38,20 @@
         </div>
     @endif
 
+    <div class="container d-flex justify-content-center mt-5">
+        <form action="{{ route('items.search') }}" method="GET" class="d-flex w-50">
+            <input
+                type="text"
+                name="query"
+                class="form-control me-2"
+                placeholder="Keresés név vagy címke szerint"
+                value="{{ request('query') }}"
+                style="min-width: 300px;"
+            >
+            <button type="submit" class="btn btn-primary">Keresés</button>
+        </form>
+    </div>
+
     <div class="row mt-3">
         <div class="col-12 col-lg-9">
             <div class="row">
@@ -70,7 +84,6 @@
                                     </a>
                                 @endforeach
 
-                                {{-- TODO: can be a link --}}
                                 @if ( strlen($item->description) > 100 )
                                     <p class="card-text mt-1"> {{ substr($item->description, 0, 100) }}... </p>
                                 @else
@@ -78,7 +91,6 @@
                                 @endif
                             </div>
                             <div class="card-footer">
-                                {{-- TODO: Link --}}
                                 <a href="{{ route('items.show', $item) }}" class="btn btn-primary">
                                     <span>Részletek</span> <i class="fas fa-angle-right"></i>
                                 </a>
@@ -95,7 +107,7 @@
             </div>
 
             <div class="d-flex justify-content-center">
-                {{-- TODO: Pagination --}}
+                {{ $items->links() }}
             </div>
 
         </div>

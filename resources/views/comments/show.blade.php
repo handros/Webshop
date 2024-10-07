@@ -13,7 +13,7 @@
                         </td>
                         <td>
                             @auth
-                                @if($comment->user_id === auth()->id())
+                                @if(auth()->user()->is_admin or $comment->user_id === auth()->id())
                                     <div class="btn-group float-right">
                                         {{-- <a href="{{ route('comments.edit', $comment) }}" class="btn btn-primary"><i class="far fa-edit"></i></a> --}}
                                         <form method="POST" action="{{ route('comments.destroy', $comment) }}">

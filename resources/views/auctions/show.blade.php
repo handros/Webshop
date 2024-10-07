@@ -17,28 +17,74 @@
 
     <div class="row justify-content-between">
         <div class="col-12 col-md-8">
-            <div><a href="{{ url('/') }}"><i class="fas fa-long-arrow-alt-left"></i> Főoldal</a></div>
-            <div><a href="{{ url('/') }}"><i class="fas fa-long-arrow-alt-left"></i> Aukciók</a></div> {{-- might be auction.index later --}}
+            <h1 class="text-center mb-4">Aukció adatai</h1>
+            <h2 class="text-center mb-4">Név: <strong>{{ $auction->item->name }}</strong></h2>
 
-            <h1>Aukció {{ $auction->item->name }}</h1>
+            @if ($auction->opened)
+                <h3 class="text-center">Határidő: <span class="badge bg-success"> {{ $auction->deadline }} </span></h3>
 
-            <p class="small text-secondary mb-0">
-                <i class="far fa-calendar-alt"></i>
-                <span>Határidő: {{ $auction->deadline }}</span>
-            </p>
+                <h3 class="text-center mb-4">Jelenlegi ár: <strong>{{ $auction->price }} Ft*</strong></h3>
+                <p class="text-center">* Mindig frissítse az oldalt az aktuális árért!</p>
+            @else
+                <h3 class="text-center"><span class="badge bg-danger"> Eladva </span></h3>
 
-            <p class="card-text mt-1"><strong>Ár:</strong> {{ $auction->price }} Ft</p>
-            <p class="card-text"><strong>Leírás:</strong> {{ $auction->description }}</p>
+                <h3 class="text-center mb-4"><strong>{{ $auction->price }} Ft</strong></h3>
+            @endif
+
+            <p class="text-center"> {{ $auction->description }} </p>
 
             <hr>
 
-            <h2>Kapcsolódó termék</h2>
-            <p><strong>Név:</strong> {{ $auction->item->name }}</p>
-            <p><strong>Gyártási év:</strong> {{ $auction->item->made_in }}</p>
-            <p><strong>Termékleírás:</strong> {{ Str::limit($auction->item->description, 100) }} <a href="{{ route('items.show', $auction->item->id) }}">Tovább...</a></p> {{-- TODO: ÉRTELMES MEGJELENÉS! --}}
+            <h1 class="text-center mb-4">Kapcsolódó termék adatai</h1>
 
-            <div class="d-flex justify-content-left mt-3">
-                <img src="{{ asset($auction->item->image ? 'storage/' . $auction->item->image : 'images/no_product_image.png') }}" class="card-img-top img-fluid" alt="Item cover" style="max-width: 200px;">
+            <p class="text-center small text-secondary mb-2">
+                <i class="far fa-calendar-alt"></i>
+                <span>{{ $auction->item->made_in }}</span>
+            </p>
+
+            <div class="text-center mb-4">
+                Címkék:
+                @foreach ($auction->item->labels as $label)
+                    <a href="{{ route('labels.show', $label) }}" class="text-decoration-none">
+                        <span style="background-color: {{ $label->color }}; color: #ffffff; border-radius: 6px; padding: 1px;">{{ $label->name }}</span>
+                    </a>
+                @endforeach
+            </div>
+
+            <div class="d-flex justify-content-center mb-4">
+                <img src="{{
+                        asset(
+                            $auction->item->image
+                                ? 'storage/' . $auction->item->image
+                                : 'images/no_product_image.png'
+                        )
+                    }}"
+                    class="card-img-top img-fluid"
+                    alt="Item cover"
+                    style="max-width: 400px;"
+                >
+            </div>
+
+            @if ($auction->item->images and count($auction->item->images) > 0)
+            <div class="mt-3 mb-4">
+                <div class="col-12 col-md-8">
+                    <h2>További képek:</h2>
+                </div>
+
+                <div class="row">
+                    @foreach($auction->item->images as $image)
+                        <div class="col-md-4">
+                            <img src="{{ asset('images/' . $image->path) }}" alt="Kép" class="img-fluid img-thumbnail" style="height: auto; max-height: 200px;">
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+            @endif
+
+            <p class="text-center mb-4"> {{ $auction->item->description }} </p>
+
+            <div class="text-center">
+                <a href="{{ route('items.show', ['item' => $auction->item->id]) }}" role="button" class="btn btn-sm btn-primary"></i> Részletesebben <i class="fas fa-angle-right"></i></a>
             </div>
 
             <hr>
@@ -50,7 +96,7 @@
                 <div class="col-12 col-md-8">
                     <h2>Licit Történet:</h2>
                 </div>
-                @if ($auction->bids && count($auction->bids) > 0)
+                @if ($auction->bids and count($auction->bids) > 0)
                     @foreach ($auction->bids as $bid)
                         <p>{{ $bid->user->name }} licitált: {{ $bid->amount }} Ft</p>
                     @endforeach
@@ -65,7 +111,7 @@
             <div class="float-lg-end">
                 @auth
                     @if(auth()->user()->is_admin)
-                        <a role="button" class="btn btn-sm btn-primary" href="{{ route('auctions.edit', ['auction' => $auction->id]) }}"><i class="far fa-edit"></i> Szerkesztés</a>
+                        <a href="{{ route('auctions.edit', ['auction' => $auction->id]) }}" role="button" class="btn btn-sm btn-primary"><i class="far fa-edit"></i> Szerkesztés</a>
 
                         <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#delete-confirm-modal"><i class="far fa-trash-alt"></i>
                             <span> Törlés</span>

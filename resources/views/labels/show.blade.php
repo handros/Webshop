@@ -11,8 +11,8 @@
     @endif
 
     <div class="row justify-content-between">
-        <div class="col-12 col-md-8">
-            <h1>Ékszerek: <span  style="background-color: {{ $label->color }}; color: #ffffff; border-radius: 6px; padding: 1px;">{{ $label->name }}</span></h1>
+        <div class="col-12 col-md-8 text-center">
+            <h1>Szűrés: <span  style="background-color: {{ $label->color }}; color: #ffffff; border-radius: 6px; padding: 1px;">{{ $label->name }}</span></h1>
         </div>
         <div class="col-12 col-md-4">
             <div class="float-lg-end">
@@ -27,39 +27,6 @@
                     @endif
                 @endauth
 
-            </div>
-        </div>
-        <div class="mb-4">
-            <a href="{{ route('items.index') }}"><i class="fas fa-long-arrow-alt-left"></i> Ékszerek</a>
-        </div>
-    </div>
-
-    <!-- Modal -->
-    <div class="modal fade" id="delete-confirm-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">Törlés megerősítése</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    Biztosan törölni akarja ezt a címkét <strong>{{ $label->name }}</strong>?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Mégse</button>
-                    <button
-                        type="button"
-                        class="btn btn-danger"
-                        onclick="document.getElementById('delete-category-form').submit();"
-                    >
-                        Igen, biztosan törölje
-                    </button>
-
-                    <form id="delete-category-form" action="{{ route('labels.destroy', $label) }}" method="POST" class="d-none">
-                        @method('DELETE')
-                        @csrf
-                    </form>
-                </div>
             </div>
         </div>
     </div>
@@ -140,6 +107,36 @@
                             @endforeach
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="delete-confirm-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Törlés megerősítése</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Biztosan törölni akarja ezt a címkét <strong>{{ $label->name }}</strong>?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Mégse</button>
+                    <button
+                        type="button"
+                        class="btn btn-danger"
+                        onclick="document.getElementById('delete-category-form').submit();"
+                    >
+                        Igen, biztosan törölje
+                    </button>
+
+                    <form id="delete-category-form" action="{{ route('labels.destroy', $label) }}" method="POST" class="d-none">
+                        @method('DELETE')
+                        @csrf
+                    </form>
                 </div>
             </div>
         </div>

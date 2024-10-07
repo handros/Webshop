@@ -32,13 +32,13 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url('/') }}">Aukció</a>
+                            <a class="nav-link" href="{{ route('home') }}">Aukció</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('items.index') }}">Ékszerek</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url('/about') }}">Kapcsolat</a>
+                            <a class="nav-link" href="{{ route('about') }}">Kapcsolat</a>
                         </li>
                     </ul>
 
@@ -106,8 +106,7 @@
 
         @yield('scripts')
 
-        <!-- Your custom JS file -->
-        <script src="{{ asset('js/app.js') }}"></script>
+        <script src="{{ asset('js/app.js') }}"></script> {{-- TODO: kell?--}}
     </div>
 </body>
 </html>

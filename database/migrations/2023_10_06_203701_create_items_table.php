@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('name');
             $table->text('description');
             $table->date('made_in')->format('Y');
-            $table->boolean('auction')->default(false);
+            $table->boolean('on_auction')->default(false);
             $table->string('image')->nullable(); // NOT NULLABLE
 
             $table->timestamps();

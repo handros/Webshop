@@ -4,13 +4,14 @@
 @section('content')
 <div class="container">
 
-    <h1>Aukció létrehozása</h1>
-    <div class="mb-4">
-        <a href="{{ route('items.index') }}"><i class="fas fa-long-arrow-alt-left"></i> Ékszerek</a>
-    </div>
+    <h1>Aukció létrehozása: {{ $item->name }}</h1>
+    {{-- <div class="mb-4">
+        <a href="{{ route('items.show', $item->id) }}"><i class="fas fa-long-arrow-alt-left"></i> Ékszerek</a>
+    </div> --}}
 
-    <form action="{{ route('items.store') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('auctions.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
+        <input type="hidden" name="item_id" value="{{ $item->id }}">
 
         <div class="form-group row mb-3">
             <label for="price" class="col-sm-2 col-form-label">Ár*</label>
