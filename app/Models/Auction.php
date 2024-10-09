@@ -22,4 +22,8 @@ class Auction extends Model
     public function users() {
         return $this->belongsToMany(User::class)->withTimestamps();
     }
+
+    public function bids() {
+        return $this->hasMany(Bid::class);
+    }
 }

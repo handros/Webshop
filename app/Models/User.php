@@ -51,4 +51,8 @@ class User extends Authenticatable
     public function auctions() {
         return $this->belongsToMany(Auction::class)->withTimestamps();
     }
+
+    public function bids() {
+        return $this->hasMany(Bid::class);
+    }
 }
