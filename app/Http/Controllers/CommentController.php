@@ -32,6 +32,9 @@ class CommentController extends Controller
      */
     public function store(Request $request)
     {
+        if(Auth::guest()) {
+            abort(401);
+        }
         $request->validate([
             'text' => 'required|string',
             'rating' => 'nullable|integer|min:1|max:5',

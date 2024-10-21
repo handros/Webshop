@@ -3,7 +3,7 @@
 
 @section('content')
 <div class="container">
-    <h1>{{ $item->name }} szerkesztése</h1>
+    <h1>Termék: <i>{{ $item->name }}</i> szerkesztése</h1>
     <div class="mb-4">
         <a href="{{ route('items.show', $item) }}"><i class="fas fa-long-arrow-alt-left"></i> Mégse</a>
     </div>

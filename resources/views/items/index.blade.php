@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Ékszerek')
+@section('title', 'Termékek')
 
 @section('content')
 <div class="container">
@@ -7,7 +7,7 @@
         @if(auth()->user()->is_admin)
             <div class="row justify-content-between">
                 <div class="col-12 col-md-8">
-                    <h1>Ékszerek</h1>
+                    <h1>Termékek</h1>
                 </div>
                 <div class="col-12 col-md-4">
                     <div class="float-lg-end">
@@ -58,8 +58,7 @@
                 @forelse ($items as $item)
                     <div class="col-12 col-md-6 col-lg-4 mb-3 d-flex align-self-stretch">
                         <div class="card w-100">
-                            <img
-                            src="{{
+                            <img src="{{
                                 asset(
                                     $item->image
                                         ? 'storage/' . $item->image
@@ -70,7 +69,16 @@
                                 alt="Item cover"
                             >
                             <div class="card-body">
-                                <h5 class="card-title mb-0"> {{ $item->name }} </h5>
+                                <h5 class="card-title mb-1"> {{ $item->name }} </h5>
+
+                                @if ($item->on_auction)
+
+                                        <p class="small mb-0">
+                                            <span>
+                                                <i class="fas fa-fire"></i> Aukción
+                                            </span>
+                                        </p>
+                                @endif
                                 <p class="small mb-0">
                                     <span>
                                         <i class="far fa-calendar-alt"></i>

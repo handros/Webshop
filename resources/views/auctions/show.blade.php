@@ -9,11 +9,17 @@
         </div>
     @endif
 
-    {{-- @if (Session::has('bid_created'))
+    @if (Session::has('bid_created'))
         <div class="alert alert-success" role="alert">
-            Licit sikeresen létrehozva.
+            Ön {{ Session::get('bid_created')->amount }} Ft értékben licitált.
         </div>
-    @endif --}}
+    @endif
+
+    @if (Session::has('bid_deleted'))
+        <div class="alert alert-success" role="alert">
+            Licit sikeresen törölve.
+        </div>
+    @endif
 
     <div class="row justify-content-between">
         <div class="col-12 col-md-8">
@@ -89,20 +95,20 @@
 
             <hr>
 
-            <h2>Új licit</h2>
-            {{-- @include('bids.create') --}}
+            <div class="mt-3">
+                <div class="col-12 col-md-8">
+                    <h2>Licitálás:</h2>
+                </div>
+                <div id="bid-form">
+                    @include('bids.create', ['auction' => $auction])
+                </div>
+            </div>
 
             <div class="mt-3">
                 <div class="col-12 col-md-8">
                     <h2>Licit Történet:</h2>
                 </div>
-                @if ($auction->bids and count($auction->bids) > 0)
-                    @foreach ($auction->bids as $bid)
-                        <p>{{ $bid->user->name }} licitált: {{ $bid->amount }} Ft</p>
-                    @endforeach
-                @else
-                    <p><em>Még nincsenek licitek.</em></p>
-                @endif
+                @include('bids.show')
             </div>
 
         </div>
@@ -110,6 +116,9 @@
         <div class="col-12 col-md-4">
             <div class="float-lg-end">
                 @auth
+                    <a href="#bid-form" class="btn btn-sm btn-warning">
+                        <i class="fas fa-fire"></i> Licitálok
+                    </a>
                     @if(auth()->user()->is_admin)
                         <a href="{{ route('auctions.edit', ['auction' => $auction->id]) }}" role="button" class="btn btn-sm btn-primary"><i class="far fa-edit"></i> Szerkesztés</a>
 

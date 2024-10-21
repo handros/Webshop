@@ -35,7 +35,7 @@
                             <a class="nav-link" href="{{ route('home') }}">Aukció</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('items.index') }}">Ékszerek</a>
+                            <a class="nav-link" href="{{ route('items.index') }}">Termékek</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('about') }}">Kapcsolat</a>

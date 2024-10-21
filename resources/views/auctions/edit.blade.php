@@ -3,7 +3,7 @@
 
 @section('content')
 <div class="container">
-    <h1>{{ $auction->item->name }} szerkesztése</h1>
+    <h1>Aukció: <i>{{ $auction->item->name }}</i> szerkesztése</h1>
     <div class="mb-4">
         <a href="{{ route('auctions.show', $auction) }}"><i class="fas fa-long-arrow-alt-left"></i> Mégse</a>
     </div>
@@ -13,8 +13,8 @@
         @csrf
 
         <div class="form-group row mb-3">
-            <label for="price" class="col-sm-2 col-form-label">Ár*</label>
-            <div class="col-sm-10">
+            <label for="price" class="col-sm-2 col-form-label">Ár (Ft)*</label>
+            <div class="col-sm-3">
                 <input
                     type="number"
                     class="form-control @error('price') is-invalid @enderror"

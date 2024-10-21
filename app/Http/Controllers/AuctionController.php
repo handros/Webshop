@@ -76,9 +76,17 @@ class AuctionController extends Controller
      */
     public function show(Auction $auction)
     {
+        $highestBid = $auction->bids()->max('amount') ?? $auction->price;
+        $minBid = intval($highestBid) + 500;
+
+        $bids = $auction->bids()->orderBy('created_at', 'desc')->get();
+
         return view('auctions.show', [
             'auction' => $auction,
             'auctions' => Auction::all(),
+            'highestBid' => $auction->max('amount'),
+            'minBid' => $minBid,
+            'bids' => $bids,
         ]);
     }
 

@@ -32,7 +32,7 @@
     <div class="row mt-3">
         <div class="col-12">
             <div class="row">
-                <h2>Jelenleg <b>{{ $auction_count }} ékszer</b> van aukcióra bocsátva</h2>
+                <h2>Jelenleg <b>{{ $auction_count }} termék</b> van aukcióra bocsátva</h2>
 
                 @forelse ($auctions as $auction)
                     <div class="col-12 col-md-6 col-lg-4 mb-3 d-flex align-self-stretch">

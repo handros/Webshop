@@ -27,11 +27,9 @@
             <h1 class="text-center">
                 {{ $item->name }}
                 @if($item->on_auction)
-                    <a href="{{ route('auctions.show', $item->auction) }}" class="btn btn-outline-info"><strong>Aukcióra bocsátva</strong></a>
+                    <a href="{{ route('auctions.show', $item->auction) }}" class="btn btn-warning"><strong>Aukcióra bocsátva <i class="fas fa-angle-double-right"></i></strong></a>
                 @endif
             </h1>
-
-
 
             <p class="text-center">
                 <i class="far fa-calendar-alt"></i>
@@ -40,7 +38,6 @@
 
             <p class="text-center"> {{ $item->description }} </p>
 
-
             <div class="mb-2 text-center">
                 @foreach ($item->labels as $label)
                     <a href="{{ route('labels.show', $label) }}" class="text-decoration-none">
@@ -48,7 +45,6 @@
                     </a>
                 @endforeach
             </div>
-
 
             <div class="d-flex justify-content-center">
                 <img src="{{
@@ -64,36 +60,20 @@
                 >
             </div>
 
-            {{-- @if ($item->images and count($item->images) > 0)
-            <div class="mt-3">
-                <div class="col-12 col-md-8">
-                    <h2>További képek:</h2>
-                </div>
-
-                <div class="row">
-                    @foreach($item->images as $image)
-                        <div class="col-md-4">
-                            <img src="{{ asset('images/' . $image->path) }}" alt="Kép" class="img-fluid img-thumbnail" style="height: auto; max-height: 200px;">
-                        </div>
-                    @endforeach
-                </div>
-            </div>
-            @endif --}}
-
             @if ($item->images and count($item->images) > 0)
-            <div class="mt-3 mb-5">
-                <div class="col-12 col-md-8">
-                    <h2>További képek:</h2>
-                </div>
+                <div class="mt-3 mb-5">
+                    <div class="col-12 col-md-8">
+                        <h2>További képek:</h2>
+                    </div>
 
-                <div class="gallery js-flickity" data-flickity-options='{ "wrapAround": true }'>
-                    @foreach($item->images as $image)
-                        <div class="gallery-cell">
-                            <img src="{{ asset('images/' . $image->path) }}" alt="Kép" class="img-fluid gallery-img">
-                        </div>
-                    @endforeach
+                    <div class="gallery js-flickity" data-flickity-options='{ "wrapAround": true }'>
+                        @foreach($item->images as $image)
+                            <div class="gallery-cell">
+                                <img src="{{ asset('images/' . $image->path) }}" alt="Kép" class="img-fluid gallery-img">
+                            </div>
+                        @endforeach
+                    </div>
                 </div>
-            </div>
             @endif
 
             <hr>
@@ -102,7 +82,6 @@
                 <div class="col-12 col-md-8">
                     <h2>Új Komment</h2>
                 </div>
-
                 @include('comments.create')
             </div>
 
@@ -112,15 +91,8 @@
                 <div class="col-12 col-md-8">
                     <h2>Kommentek:</h2>
                 </div>
-                @if ($item->comments and count($item->comments) > 0)
-                    @include('comments.show')
-                @else
-                    <p><em>Még nincsenek kommentek.</em></p>
-                @endif
+                @include('comments.show')
             </div>
-
-
-
         </div>
 
         <div class="col-12 col-md-4">
