@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Auction;
 use App\Models\Item;
+use App\Models\Message;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -17,13 +18,7 @@ class AuctionController extends Controller
      */
     public function index()
     {
-        // return view('auctions.index', [
-        //     'items' => Item::all(),
-        //     'auctions' => Auction::with('item')->orderBy('deadline', 'desc')->paginate(9),
-        //     'auction_items' => Item::where('on_auction', true)->get(),
-        //     'labels' => Label::all(),
-        //     'auction_count' => Item::where('on_auction', true)->count(),
-        // ]);
+        //
     }
 
     /**
@@ -81,12 +76,25 @@ class AuctionController extends Controller
 
         $bids = $auction->bids()->orderBy('created_at', 'desc')->get();
 
+        $messages = $auction->messages()
+            ->where(function ($query) {
+                $query->where('sender_id', auth()->id())
+                        ->orWhere('receiver_id', auth()->id());
+            })
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        $receiverId = null;
+
         return view('auctions.show', [
             'auction' => $auction,
             'auctions' => Auction::all(),
             'highestBid' => $auction->max('amount'),
             'minBid' => $minBid,
             'bids' => $bids,
+            'messages' => $messages,
+            'receiverId' => $receiverId,
+            'messageCount' => $messages->count(),
         ]);
     }
 

@@ -1,12 +1,12 @@
 @extends('layouts.app')
-@section('title', 'Ékszer létrehozása')
+@section('title', 'Termék létrehozása')
 
 @section('content')
 <div class="container">
 
-    <h1>Ékszer létrehozása</h1>
+    <h1>Termék létrehozása</h1>
     <div class="mb-4">
-        <a href="{{ route('items.index') }}"><i class="fas fa-long-arrow-alt-left"></i> Ékszerek</a>
+        <a href="{{ route('items.index') }}"><i class="fas fa-long-arrow-alt-left"></i> Termékek</a>
     </div>
 
     <form action="{{ route('items.store') }}" method="POST" enctype="multipart/form-data">
@@ -78,22 +78,6 @@
                         {{ $message }}
                     </p>
                 @enderror
-            </div>
-        </div>
-
-        <div class="form-group row mb-3">
-            <label for="on_auction" class="col-sm-2 col-form-label">Aukcióra bocsát</label>
-            <div class="col-sm-4">
-                <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" id="on_auction" name="on_auction" value="1" {{ old('on_auction', $item->on_auction ?? 0) ? 'checked' : '' }}>
-
-                    @error('on_auction')
-                        <div class="invalid-feedback">
-                            {{ $message }}
-                        </div>
-                    @enderror
-                </div>
-
             </div>
         </div>
 

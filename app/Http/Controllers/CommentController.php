@@ -65,11 +65,7 @@ class CommentController extends Controller
      */
     public function edit(Comment $comment)
     {
-        // if ($comment->user_id !== Auth::id()) {
-        //     abort(403);
-        // }
-
-        // return view('comments.edit', compact('comment'));
+        //
     }
 
     /**
@@ -77,22 +73,7 @@ class CommentController extends Controller
      */
     public function update(Request $request, Comment $comment)
     {
-        // if ($comment->user_id !== Auth::id()) {
-        //     abort(403);
-        // }
-
-        // $request->validate([
-        //     'text' => 'required|string',
-        //     'rating' => 'nullable|integer|min:1|max:5',
-        //     'item_id' => 'required|exists:items,id',
-        // ]);
-
-        // $comment->update([
-        //     'text' => $request->text,
-        //     'rating' => $request->rating,
-        // ]);
-
-        // return Redirect::route('items.show', $comment->item_id)->with('success', 'A komment sikeresen frissítve.');
+        //
     }
 
     /**
@@ -107,6 +88,6 @@ class CommentController extends Controller
         $comment->delete();
 
         Session::flash('comment_deleted', $comment);
-        return redirect()->back();
+        return Redirect()::back();
     }
 }

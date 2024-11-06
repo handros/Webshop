@@ -5,7 +5,7 @@
 <div class="container">
     <h1>Címke létrehozása</h1>
     <div class="mb-4">
-        <a href="{{ route('items.index') }}"><i class="fas fa-long-arrow-alt-left"></i> Ékszerek</a>
+        <a href="{{ route('items.index') }}"><i class="fas fa-long-arrow-alt-left"></i> Termékek</a>
     </div>
 
     @if (Session::has('label_created'))

@@ -6,7 +6,7 @@
 
     <h1>Aukció létrehozása: {{ $item->name }}</h1>
     {{-- <div class="mb-4">
-        <a href="{{ route('items.show', $item->id) }}"><i class="fas fa-long-arrow-alt-left"></i> Ékszerek</a>
+        <a href="{{ route('items.show', $item->id) }}"><i class="fas fa-long-arrow-alt-left"></i> Termékek</a>
     </div> --}}
 
     <form action="{{ route('auctions.store') }}" method="POST" enctype="multipart/form-data">

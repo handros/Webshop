@@ -10,6 +10,7 @@
             {{ Session::get('auction_deleted')->item->name }} nevű aukció törölve.
         </div>
     @endif
+
     <div class="col-12 col-md-8 mb-5">
         <h1>Aukció</h1>
         <p>Ezen az oldalon betekintést nyerhetnek az összes termékemre, ami alatt találhatják majd az aukcióra bocsátottakat is.</p>
@@ -18,13 +19,15 @@
         <div class="gallery js-flickity" data-flickity-options='{ "wrapAround": true }'>
             @foreach($items as $item)
                 <div class="gallery-cell">
-                    <img src="{{
-                        asset(
-                            $item->image
-                                ? 'storage/' . $item->image
-                                : 'images/no_product_image.png'
-                        )
-                    }}" alt="Kép" class="img-fluid gallery-img">
+                    <a href="{{ route('items.show', $item->id) }}">
+                        <img src="{{
+                            asset(
+                                $item->image
+                                    ? 'storage/' . $item->image
+                                    : 'images/no_product_image.png'
+                            )
+                        }}" alt="Kép" class="img-fluid gallery-img">
+                    </a>
                 </div>
             @endforeach
         </div>
@@ -49,10 +52,10 @@
                                 alt="Item cover"
                             >
                             <div class="card-body">
-                                @if ( $auction->opened )
-                                    <h5 class="card-title mb-0"> Nyitva eddig: {{ $auction->deadline }} </h5>
+                                @if ( $auction->opened && $auction->deadline->endOfDay() >= now())
+                                    <h5 class="card-title mb-0"> Nyitva eddig: {{ $auction->deadline->endOfDay() }} </h5>
                                 @else
-                                    <h5 class="card-title mb-0"> Véget ért: {{ $auction->deadline }} </h5>
+                                    <h5 class="card-title mb-0"> Véget ért: {{ $auction->deadline->endOfDay() }} </h5>
                                 @endif
 
                                 <h5 class="card-title mb-0"> {{ $auction->item->name }} </h5>
@@ -80,19 +83,14 @@
                                 <a href="{{ route('auctions.show', $auction) }}" class="btn btn-info">
                                     <span>Részletek</span> <i class="fas fa-angle-right"></i>
                                 </a>
-                                {{-- TODO: Ha a te licited van, akkor legyen zöld, egyébként piros --}}
-                                <a href="#" class="btn {{ $auction->opened ? 'btn-success' : 'btn-danger' }} disabled" aria-disabled="true"> {{ $auction->price }} Ft</a>
-
-                                {{-- <a href="{{ route('items.show', $item) }}" class="btn btn-outline-primary">
-                                    <span>Licitálok</span> <i class="fas fa-angle-right"></i>
-                                </a> --}}
+                                <a href="#" class="btn {{ $auction->opened && $auction->deadline->endOfDay() >= \Carbon\Carbon::now() ? 'btn-success' : 'btn-danger' }} disabled" aria-disabled="true"> {{ $auction->price }} Ft</a>
                             </div>
                         </div>
                     </div>
                 @empty
                     <div class="col-12">
                         <div class="alert alert-warning" role="alert">
-                            Nem találhatóak ékszerek.
+                            Nem találhatóak termékek.
                         </div>
                     </div>
                 @endforelse

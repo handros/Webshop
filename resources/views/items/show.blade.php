@@ -60,7 +60,7 @@
                 >
             </div>
 
-            @if ($item->images and count($item->images) > 0)
+            @if ($item->images && count($item->images) > 0)
                 <div class="mt-3 mb-5">
                     <div class="col-12 col-md-8">
                         <h2>További képek:</h2>
@@ -80,18 +80,21 @@
 
             <div class="mt-3">
                 <div class="col-12 col-md-8">
-                    <h2>Új Komment</h2>
+                    <h2><i class="fas fa-comment"></i> Új Komment</h2>
                 </div>
                 @include('comments.create')
             </div>
 
-            <hr>
-
             <div class="mt-3">
                 <div class="col-12 col-md-8">
-                    <h2>Kommentek:</h2>
+                    <h2><i class="fas fa-comments"></i> Kommentek ({{ $commentCount }})</h2>
                 </div>
-                @include('comments.show')
+                <details>
+                    <summary class="mb-3">
+                        Kommentek
+                    </summary>
+                    @include('comments.show')
+                </details>
             </div>
         </div>
 
@@ -130,7 +133,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    Biztosan törölni akarja ezt az ékszert <strong>{{ $item->name }}</strong>?
+                    Biztosan törölni akarja ezt az termékt <strong>{{ $item->name }}</strong>?
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Mégse</button>

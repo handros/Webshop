@@ -15,6 +15,12 @@
         </div>
     @endif
 
+    @if (Session::has('message_created'))
+        <div class="alert alert-success" role="alert">
+            Üzenet elküldve.
+        </div>
+    @endif
+
     @if (Session::has('bid_deleted'))
         <div class="alert alert-success" role="alert">
             Licit sikeresen törölve.
@@ -26,14 +32,16 @@
             <h1 class="text-center mb-4">Aukció adatai</h1>
             <h2 class="text-center mb-4">Név: <strong>{{ $auction->item->name }}</strong></h2>
 
-            @if ($auction->opened)
-                <h3 class="text-center">Határidő: <span class="badge bg-success"> {{ $auction->deadline }} </span></h3>
-
+            @if ($auction->opened && $auction->deadline->endOfDay() >= now() && $auction->bids()->exists())
+                <h3 class="text-center">Határidő: <span class="badge bg-success"> {{ $auction->deadline->endOfDay() }} </span></h3>
                 <h3 class="text-center mb-4">Jelenlegi ár: <strong>{{ $auction->price }} Ft*</strong></h3>
                 <p class="text-center">* Mindig frissítse az oldalt az aktuális árért!</p>
+            @elseif ((!$auction->opened || $auction->deadline->endOfDay() < now()) && !$auction->bids()->exists() )
+                <h3 class="text-center"><span class="badge bg-danger"> Vége az aukciónak* </span></h3>
+                <p class="text-center">* Licitáláshoz figyelje a főoldalt, vagy a hírleveleket, hogy mikor nyilik újra ez az aukció!</p> {{-- TODO: FELIRATKOZÁS HÍRLEVÉLRE BUTTON --}}
+                <h3 class="text-center mb-4"><strong>{{ $auction->price }} Ft</strong></h3>
             @else
                 <h3 class="text-center"><span class="badge bg-danger"> Eladva </span></h3>
-
                 <h3 class="text-center mb-4"><strong>{{ $auction->price }} Ft</strong></h3>
             @endif
 
@@ -71,7 +79,7 @@
                 >
             </div>
 
-            @if ($auction->item->images and count($auction->item->images) > 0)
+            @if ($auction->item->images && count($auction->item->images) > 0)
             <div class="mt-3 mb-4">
                 <div class="col-12 col-md-8">
                     <h2>További képek:</h2>
@@ -97,7 +105,7 @@
 
             <div class="mt-3">
                 <div class="col-12 col-md-8">
-                    <h2>Licitálás:</h2>
+                    <h2><i class="fas fa-fire"></i> Licitálás:</h2>
                 </div>
                 <div id="bid-form">
                     @include('bids.create', ['auction' => $auction])
@@ -106,11 +114,31 @@
 
             <div class="mt-3">
                 <div class="col-12 col-md-8">
-                    <h2>Licit Történet:</h2>
+                    <h2><i class="fas fa-book"></i> Licit Történet:</h2>
                 </div>
                 @include('bids.show')
             </div>
 
+            <hr>
+
+            <div class="mt-3" id="messageForm" style="display: none;">
+                <div class="col-12 col-md-8">
+                    <h2><i class="fas fa-paper-plane"></i> <span id="receiverLabel"> Üzenet:</span></h2>
+                </div>
+                @include('messages.create')
+            </div>
+
+            <div class="mt-3">
+                <div class="col-12 col-md-8">
+                    <h2><i class="fas fa-envelope-open"></i> Üzeneteim ({{ $messageCount }})</h2>
+                </div>
+                <details>
+                    <summary class="mb-3">
+                        Üzenetek
+                    </summary>
+                    @include('messages.show')
+                </details>
+            </div>
         </div>
 
         <div class="col-12 col-md-4">
@@ -164,4 +192,24 @@
 
 
 </div>
+@endsection
+
+@section('scripts')
+<script>
+    document.querySelectorAll('.reply-btn').forEach(button => {
+        button.addEventListener('click', function(event) {
+            event.preventDefault();
+
+            const receiverId = this.dataset.receiver;
+            const receiverName = this.dataset.receiverName;
+
+            document.querySelector('#receiver_id').value = receiverId;
+            document.querySelector('#receiverLabel').textContent = ` Üzenet: ${receiverName}`;
+
+            const messageForm = document.querySelector('#messageForm');
+            messageForm.style.display = 'block';
+            messageForm.scrollIntoView({ behavior: 'smooth' });
+        });
+    });
+</script>
 @endsection

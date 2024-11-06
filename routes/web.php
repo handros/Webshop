@@ -5,6 +5,7 @@ use App\Http\Controllers\LabelController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\AuctionController;
 use App\Http\Controllers\BidController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\CheckUploadSize;
@@ -34,6 +35,7 @@ Route::resource('labels', LabelController::class);
 Route::resource('comments', CommentController::class);
 Route::resource('auctions', AuctionController::class);
 Route::resource('bids', BidController::class);
+Route::resource('messages', MessageController::class);
 Route::get('/auctions/create/{item}', [AuctionController::class, 'create'])->name('auctions.create');
 
 // -----------------------------------------

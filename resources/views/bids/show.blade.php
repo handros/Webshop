@@ -1,5 +1,7 @@
 <div class="container">
     @if ($bids && count($bids))
+    <details open>
+        <summary  class="mb-3">Eddigi licitek</summary>
         <div class="table-responsive-md">
             <table class="table">
                 <tbody>
@@ -24,7 +26,15 @@
                             <td>
                                 {{ $bid->amount }} Ft
                             </td>
-                            <td>
+                            <td class="text-end">
+                                @if(auth()->id() !== $bid->user->id)
+                                    <a href="#messageForm" class="btn btn-primary reply-btn"
+                                        data-receiver="{{ $bid->user->id }}"
+                                        data-receiver-name="{{ $bid->user->name }}">
+                                        Üzenet <i class="fas fa-reply"></i>
+                                    </a>
+                                @endif
+
                                 @auth
                                     @if(auth()->user()->is_admin)
                                         <div class="btn-group float-right">
@@ -42,6 +52,7 @@
                 </tbody>
             </table>
         </div>
+    </details>
     @else
         <p><em>Még nincsenek licitek.</em></p>
     @endif

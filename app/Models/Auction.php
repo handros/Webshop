@@ -15,6 +15,10 @@ class Auction extends Model
         'deadline',
     ];
 
+    protected $casts = [
+        'deadline' => 'datetime',
+    ];
+
     public function item() {
         return $this->belongsTo(Item::class);
     }
@@ -25,5 +29,9 @@ class Auction extends Model
 
     public function bids() {
         return $this->hasMany(Bid::class);
+    }
+
+    public function messages() {
+        return $this->hasMany(Message::class);
     }
 }

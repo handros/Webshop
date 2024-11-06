@@ -29,10 +29,10 @@
             </div>
 
             <div >
-                <button type="submit" class="btn btn-primary"><i class="fa-solid fa-paper-plane"></i> Küldés</button>
+                <button type="submit" class="btn btn-primary">Küldés <i class="fas fa-paper-plane"></i></button>
             </div>
         </form>
     @else
-        <p>A kommenteléshez kérlek <a href="{{ route('login') }}">jelentkezz be</a>.</p>
+        <p>A kommenteléshez kérlek <a href="{{ route('login') }}">jelentkezzen be</a>.</p>
     @endauth
 </div>

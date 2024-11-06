@@ -53,7 +53,7 @@
                     class="form-control @error('deadline') is-invalid @enderror"
                     id="deadline"
                     name="deadline"
-                    value="{{ old('deadline') ?? $auction->deadline ?? '' }}"
+                    value="{{ old('deadline') ?? optional($auction->deadline)->format('Y-m-d')}}"
                 />
                 @error('deadline')
                     <div class="invalid-feedback">

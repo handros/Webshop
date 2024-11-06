@@ -1,5 +1,5 @@
 <div class="container">
-    @if ($item->comments and count($item->comments) > 0)
+    @if ($item->comments && count($item->comments) > 0)
         <div class="table-responsive-md">
             <table class="table">
                 <tbody>
@@ -16,7 +16,6 @@
                                 @auth
                                     @if(auth()->user()->is_admin or $comment->user_id === auth()->id())
                                         <div class="btn-group float-right">
-                                            {{-- <a href="{{ route('comments.edit', $comment) }}" class="btn btn-primary"><i class="far fa-edit"></i></a> --}}
                                             <form method="POST" action="{{ route('comments.destroy', $comment) }}">
                                                 @csrf
                                                 @method('DELETE')

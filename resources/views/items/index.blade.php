@@ -11,7 +11,7 @@
                 </div>
                 <div class="col-12 col-md-4">
                     <div class="float-lg-end">
-                        <a href="{{ route('items.create') }}" role="button" class="btn btn-sm btn-success mb-1"><i class="fas fa-plus-circle"></i> Ékszer létrehozása</a>
+                        <a href="{{ route('items.create') }}" role="button" class="btn btn-sm btn-success mb-1"><i class="fas fa-plus-circle"></i> Termék létrehozása</a>
                         <a href="{{ route('labels.create') }}" role="button" class="btn btn-sm btn-success mb-1"><i class="fas fa-plus-circle"></i> Címke létrehozása</a>
                     </div>
                 </div>
@@ -108,7 +108,7 @@
                 @empty
                     <div class="col-12">
                         <div class="alert alert-warning" role="alert">
-                            Nem találhatóak ékszerek.
+                            Nem találhatóak termékek.
                         </div>
                     </div>
                 @endforelse
@@ -148,7 +148,7 @@
                                         <ul class="fa-ul">
                                             <li><span class="fa-li"><i class="fas fa-user"></i></span>Felhasználók: {{ $user_count }}</li>
                                             <li><span class="fa-li"><i class="fas fa-layer-group"></i></span>Címkék: {{ $label_count }}</li>
-                                            <li><span class="fa-li"><i class="fas fa-file-alt"></i></span>Ékszerek: {{ $item_count }}</li>
+                                            <li><span class="fa-li"><i class="fas fa-file-alt"></i></span>Termékek: {{ $item_count }}</li>
                                             <li><span class="fa-li"><i class="fas fa-fire"></i></span>Aukción: {{ $auction_count }}</li>
                                         </ul>
                                     </div>

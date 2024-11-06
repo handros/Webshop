@@ -95,7 +95,6 @@ class ItemController extends Controller
                 'mimes:jpeg,png,jpg',
                 'max:5120'
             ],
-            'on_auction' => 'nullable|boolean',
             'images.*' => 'nullable|image|mimes:jpeg,png,jpg|max:5120',
         ]);
 
@@ -111,7 +110,6 @@ class ItemController extends Controller
         $item->made_in = $data['made_in'];
         $item->description = $data['description'];
         $item->on_auction = false;
-        // $item->on_auction = $request->has('on_auction');
         $item->image = $image;
 
         $item->save();
@@ -165,7 +163,9 @@ class ItemController extends Controller
         $item = Item::findOrFail($id);
         $comments = $item->comments()->orderBy('created_at', 'desc')->get();
 
-        return view('items.show', compact('item', 'comments'));
+        $commentCount = $comments->count();
+
+        return view('items.show', compact('item', 'comments', 'commentCount'));
     }
 
     /**

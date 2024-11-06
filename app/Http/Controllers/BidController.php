@@ -102,6 +102,6 @@ class BidController extends Controller
         $bid->delete();
 
         Session::flash('bid_deleted', $bid);
-        return redirect()->back();
+        return Redirect::back();
     }
 }
