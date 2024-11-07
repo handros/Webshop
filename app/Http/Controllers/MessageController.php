@@ -15,7 +15,19 @@ class MessageController extends Controller
      * Display a listing of the resource.
      */
     public function index() {
-        //
+        if(Auth::guest()) {
+            abort(401);
+        }
+        $userId = Auth::id();
+        $messages = Message::where('sender_id', $userId)
+            ->orWhere('receiver_id', $userId)
+            ->orderBy('created_at', 'desc')
+            ->with(['sender', 'receiver', 'auction'])
+            ->get();
+
+        $messageCount = $messages->count();
+
+        return view('messages.index', compact('messages', 'messageCount'));
     }
 
     /**
@@ -34,7 +46,7 @@ class MessageController extends Controller
         $data = $request->validate([
             'receiver_id' => 'required|exists:users,id',
             'auction_id' => 'required|exists:auctions,id',
-            'text' => 'required|string',
+            'text' => 'required|string|max:500',
         ]);
 
         $message = new Message();

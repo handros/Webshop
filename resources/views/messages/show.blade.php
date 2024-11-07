@@ -4,7 +4,7 @@
             <p><em>Nincsenek üzeneteid az aukció kapcsán.</em></p>
         @else
             @foreach ($messages as $message)
-                <details class="mb-3" open>
+                <details id="message{{ $message->id }}" class="mb-3" open>
                     <summary>
                         <strong>{{ $message->sender_id === auth()->id() ? 'Ön' : $message->sender->name }} </strong>
                         <i class="fas fa-angle-right"></i> <strong>{{ $message->receiver_id === auth()->id() ? 'Ön' : $message->receiver->name }} </strong>

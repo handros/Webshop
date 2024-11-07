@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Item;
 use App\Models\Label;
 use App\Models\Auction;
+use App\Models\User;
 
 class HomeController extends Controller
 {
@@ -40,5 +42,17 @@ class HomeController extends Controller
 
     public function about() {
         return view('about');
+    }
+
+    public function users() {
+        if(Auth::guest() or !Auth::user()->is_admin) {
+            abort(401);
+        }
+
+        $users = User::orderBy('name')->get();
+
+        return view('users', [
+            'users' => $users,
+        ]);
     }
 }

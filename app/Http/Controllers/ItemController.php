@@ -68,7 +68,7 @@ class ItemController extends Controller
             abort(401);
         }
         $data = $request->validate([
-            'name' => 'required|string',
+            'name' => 'required|string|max:30',
             'made_in' => 'required|numeric|before_or_equal:' . now()->format('Y'),
             'description' => 'required|string|max:1000',
             'labels' => 'nullable|array',
@@ -163,7 +163,7 @@ class ItemController extends Controller
 
         $item = Item::find($id);
         $data = $request->validate([
-            'name' => 'required|string',
+            'name' => 'required|string|max:30',
             'made_in' => 'required|numeric|before_or_equal:' . now()->format('Y'),
             'description' => 'required|string|max:1000',
             'labels' => 'nullable|array',

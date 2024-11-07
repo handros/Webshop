@@ -73,11 +73,7 @@
                                     </a>
                                 @endforeach
 
-                                @if ( strlen($auction->description) > 100 )
-                                    <p class="card-text mt-1"> {{ substr($auction->description, 0, 100) }}... </p>
-                                @else
-                                    <p class="card-text mt-1"> {{ substr($auction->description, 0, 100) }} </p>
-                                @endif
+                                <p class="card-text mt-1">{{ \Illuminate\Support\Str::limit($auction->description, 100) }}</p>
                             </div>
                             <div class="card-footer">
                                 <a href="{{ route('auctions.show', $auction) }}" class="btn btn-info">

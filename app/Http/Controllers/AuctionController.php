@@ -71,22 +71,26 @@ class AuctionController extends Controller
      */
     public function show(Auction $auction)
     {
+        $userId = Auth::id();
         $highestBid = $auction->bids()->max('amount') ?? $auction->price;
         $minBid = intval($highestBid) + 500;
         $bids = $auction->bids()->orderBy('amount', 'desc')->get();
 
         $messages = $auction->messages()
-            ->where(function ($query) {
-                $query->where('sender_id', auth()->id())
-                        ->orWhere('receiver_id', auth()->id());
+            ->where(function ($query) use ($userId) {
+                $query->where('sender_id', $userId)
+                    ->orWhere('receiver_id', $userId);
             })
             ->orderBy('created_at', 'desc')
             ->get();
 
         $receiverId = null;
 
-        $open = $auction->opened && $auction->deadline->endOfDay() >= now() && $auction->bids()->exists();
-        $bought = !$auction->opened || $auction->deadline->endOfDay() < now() && $auction->bids()->exist();
+        $open = $auction->opened && $auction->deadline->endOfDay() >= now();
+        $bought = Auth::check()
+                && (!$auction->opened || $auction->deadline->endOfDay() < now())
+                && $auction->bids()->exists()
+                && $auction->bids()->where('amount', $highestBid)->first()->user_id === $userId;
         $no_bid_over = (!$auction->opened || $auction->deadline->endOfDay() < now()) && !$auction->bids()->exists();
 
         return view('auctions.show', [

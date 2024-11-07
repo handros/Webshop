@@ -36,7 +36,7 @@ class CommentController extends Controller
             abort(401);
         }
         $request->validate([
-            'text' => 'required|string',
+            'text' => 'required|string|max:500',
             'rating' => 'nullable|integer|min:1|max:5',
             'item_id' => 'required|exists:items,id',
         ]);

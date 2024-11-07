@@ -14,7 +14,7 @@
                             </td>
                             <td>
                                 @auth
-                                    @if(auth()->user()->is_admin or $comment->user_id === auth()->id())
+                                    @if(auth()->user()->is_admin || $comment->user_id === auth()->id())
                                         <div class="btn-group float-right">
                                             <form method="POST" action="{{ route('comments.destroy', $comment) }}">
                                                 @csrf

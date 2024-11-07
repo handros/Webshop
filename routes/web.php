@@ -24,6 +24,7 @@ use App\Http\Middleware\CheckUploadSize;
 // Route::get('/', [ItemController::class, 'index'])->name('home');
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/about', [HomeController::class, 'about'])->name('about');
+Route::get('/users', [HomeController::class, 'users'])->name('users');
 Route::get('/search', [ItemController::class, 'search'])->name('items.search');
 
 

@@ -42,7 +42,7 @@ class LabelController extends Controller
         $names = Label::pluck('name')->toArray();
 
         $data = $request->validate([
-            'name' => 'required|string|not_in:' . implode(',', $names),
+            'name' => 'required|string|max:30|not_in:' . implode(',', $names),
             'color' => 'required|regex:/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/',
         ]);
 
@@ -93,7 +93,7 @@ class LabelController extends Controller
         $names = array_values(array_diff($temp_names, [$label->name]));
 
         $data = $request->validate([
-            'name' => 'required|string|not_in:' . implode(',', $names),
+            'name' => 'required|string|max:30|not_in:' . implode(',', $names),
             'color' => 'required|regex:/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/',
         ]);
 
