@@ -18,18 +18,19 @@
                 </div>
 
                 <div class="mb-3">
-                    <em>A licitnek <strong>500 Ft</strong>-tal nagyobbnak kell lennie, mint a jelenlegi árnak <strong>({{$minBid}} Ft)</strong></em>
+                    <em>A licitnek <strong>500 Ft</strong>-tal nagyobbnak kell lennie, mint a jelenlegi árnak <strong>(min. {{$minBid}} Ft)</strong>.</em>
                 </div>
 
-                <div >
-                    <button type="submit" class="btn btn-warning"><i class="fas fa-handshake"></i> Licitálás</button>
+                <div class="mb-3">
+                    <button type="submit" class="btn btn-warning">Licitálás <i class="fas fa-handshake"></i></button>
                 </div>
+                <i class="fas fa-exclamation-triangle"></i><strong> Elfogadja</strong>, hogy a <em><strong>Licitálás</strong></em> gomb lenyomása esetleges fizetési kötelezettséggel jár (amennyiben Ön nyeri a licitet)!
             </form>
         @else
-            <p>Lejárt a határidő <b>({{ $auction->deadline->endOfDay() }})</b></p>
+            <p>Lejárt a határidő <strong>({{ $auction->deadline->endOfDay() }})</strong></p>
         @endif
 
     @else
-        <p>A licitáláshoz kérlek <a href="{{ route('login') }}">jelentkezzen be</a>.</p>
+        <p>A licitáláshoz kérlek <a href="{{ route('login') }}">jelentkezzen be</a> vagy <a href="{{ route('register') }}">regisztáljon</a>.</p>
     @endauth
 </div>

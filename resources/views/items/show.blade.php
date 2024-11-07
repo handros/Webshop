@@ -38,7 +38,7 @@
 
             <p class="text-center"> {{ $item->description }} </p>
 
-            <div class="mb-2 text-center">
+            <div class="mb-3 text-center">
                 @foreach ($item->labels as $label)
                     <a href="{{ route('labels.show', $label) }}" class="text-decoration-none">
                         <span style="background-color: {{ $label->color }}; color: #ffffff; border-radius: 6px; padding: 1px;">{{ $label->name }}</span>
@@ -46,30 +46,34 @@
                 @endforeach
             </div>
 
-            <div class="d-flex justify-content-center">
-                <img src="{{
-                        asset(
-                            $item->image
-                                ? 'storage/' . $item->image
-                                : 'images/no_product_image.png'
-                        )
-                    }}"
-                    class="card-img-top img-fluid"
-                    alt="Item cover"
-                    style="max-width: 400px;"
-                >
+            <div class="d-flex justify-content-center mb-3">
+                @if($item->image)
+                    <a href="{{ asset('storage/' . $item->image) }}" target="_blank">
+                        <img src="{{ asset('storage/' . $item->image) }}"
+                            class="card-img-top img-fluid"
+                            alt="Kép"
+                            style="max-width: 400px;">
+                    </a>
+                @else
+                    <img src="{{ asset('images/no_product_image.png') }}"
+                        class="card-img-top img-fluid"
+                        alt="No product image available"
+                        style="max-width: 400px;">
+                @endif
             </div>
 
             @if ($item->images && count($item->images) > 0)
                 <div class="mt-3 mb-5">
-                    <div class="col-12 col-md-8">
-                        <h2>További képek:</h2>
+                    <div class="col-12 col-md-8 mb-3">
+                        <h2><i class="fas fa-images"></i> További képek:</h2>
                     </div>
 
                     <div class="gallery js-flickity" data-flickity-options='{ "wrapAround": true }'>
                         @foreach($item->images as $image)
                             <div class="gallery-cell">
-                                <img src="{{ asset('images/' . $image->path) }}" alt="Kép" class="img-fluid gallery-img">
+                                <a href="{{ asset('images/' . $image->path) }}" target="_blank">
+                                    <img src="{{ asset('images/' . $image->path) }}" alt="Kép" class="img-fluid gallery-img">
+                                </a>
                             </div>
                         @endforeach
                     </div>

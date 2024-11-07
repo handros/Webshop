@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (elem) {
         new Flickity(elem, {
             wrapAround: true,
-            autoPlay: 3000, // Automatikus lejátszás 3 másodpercenként
+            autoPlay: 3000,
         });
     }
 });

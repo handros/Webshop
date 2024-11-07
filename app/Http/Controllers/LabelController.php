@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
@@ -43,17 +42,13 @@ class LabelController extends Controller
         $names = Label::pluck('name')->toArray();
 
         $data = $request->validate([
-            'name'=>[
-                'required',
-                Rule::notIn($names),
-            ],
-            'color'=>'required',
+            'name' => 'required|string|not_in:' . implode(',', $names),
+            'color' => 'required|regex:/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/',
         ]);
 
         $label = Label::create($data);
 
         Session::flash('label_created', $label);
-
         return Redirect::route('labels.create');
     }
 
@@ -62,8 +57,11 @@ class LabelController extends Controller
      */
     public function show(string $id)
     {
+        $label = Label::find($id);
+        $items = $label->items()->orderBy('created_at', 'desc')->paginate(9);
         return view('labels.show', [
-            'label' => Label::find($id),
+            'items' => $items,
+            'label' => $label,
             'labels' => Label::all(),
         ]);
     }
@@ -95,11 +93,8 @@ class LabelController extends Controller
         $names = array_values(array_diff($temp_names, [$label->name]));
 
         $data = $request->validate([
-            'name'=>[
-                'required',
-                Rule::notIn($names),
-            ],
-            'color'=>'required',
+            'name' => 'required|string|not_in:' . implode(',', $names),
+            'color' => 'required|regex:/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/',
         ]);
 
         $label->update($data);
@@ -122,7 +117,6 @@ class LabelController extends Controller
         $label->delete();
 
         Session::flash('label_deleted', $label);
-
         return Redirect::route('items.index');
     }
 }

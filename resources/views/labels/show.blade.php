@@ -35,7 +35,7 @@
         <div class="col-12 col-lg-9">
             <div class="row">
 
-                @forelse ($label->items as $item)
+                @forelse ($items as $item)
                     <div class="col-12 col-md-6 col-lg-4 mb-3 d-flex align-self-stretch">
                         <div class="card w-100">
                             <img
@@ -47,7 +47,7 @@
                                 )
                             }}"
                                 class="card-img-top"
-                                alt="Item cover"
+                                alt="Kép"
                             >
                             <div class="card-body">
                                 <h5 class="card-title mb-0"> {{ $item->name }} </h5>
@@ -64,7 +64,6 @@
                                     </a>
                                 @endforeach
 
-                                {{-- TODO: can be a link --}}
                                 @if ( strlen($item->description) > 100 )
                                     <p class="card-text mt-1"> {{ substr($item->description, 0, 100) }}... </p>
                                 @else
@@ -81,14 +80,14 @@
                 @empty
                     <div class="col-12">
                         <div class="alert alert-warning" role="alert">
-                            No items found!
+                            Nem található termék erre a címkére!
                         </div>
                     </div>
                 @endforelse
             </div>
 
             <div class="d-flex justify-content-center">
-                {{-- TODO: Pagination --}}
+                {{ $items->links() }}
             </div>
 
         </div>

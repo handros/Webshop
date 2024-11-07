@@ -15,6 +15,6 @@
             @endforeach
         @endif
     @else
-        <p>Az üzenetei eléréséhez kérlek <a href="{{ route('login') }}">jelentkezzen be</a>.</p>
+        <p>Az üzenetei eléréséhez kérlek <a href="{{ route('login') }}">jelentkezzen be</a> vagy <a href="{{ route('register') }}">regisztáljon</a>.</p>
     @endauth
 </div>

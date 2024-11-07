@@ -73,8 +73,7 @@ class AuctionController extends Controller
     {
         $highestBid = $auction->bids()->max('amount') ?? $auction->price;
         $minBid = intval($highestBid) + 500;
-
-        $bids = $auction->bids()->orderBy('created_at', 'desc')->get();
+        $bids = $auction->bids()->orderBy('amount', 'desc')->get();
 
         $messages = $auction->messages()
             ->where(function ($query) {
@@ -86,15 +85,22 @@ class AuctionController extends Controller
 
         $receiverId = null;
 
+        $open = $auction->opened && $auction->deadline->endOfDay() >= now() && $auction->bids()->exists();
+        $bought = !$auction->opened || $auction->deadline->endOfDay() < now() && $auction->bids()->exist();
+        $no_bid_over = (!$auction->opened || $auction->deadline->endOfDay() < now()) && !$auction->bids()->exists();
+
         return view('auctions.show', [
             'auction' => $auction,
             'auctions' => Auction::all(),
-            'highestBid' => $auction->max('amount'),
+            'highestBid' => $highestBid,
             'minBid' => $minBid,
             'bids' => $bids,
             'messages' => $messages,
             'receiverId' => $receiverId,
             'messageCount' => $messages->count(),
+            'open' => $open,
+            'bought' => $bought,
+            'no_bid_over' => $no_bid_over,
         ]);
     }
 

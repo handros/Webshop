@@ -5,9 +5,9 @@
 <div class="container">
 
     <h1>Aukció létrehozása: {{ $item->name }}</h1>
-    {{-- <div class="mb-4">
-        <a href="{{ route('items.show', $item->id) }}"><i class="fas fa-long-arrow-alt-left"></i> Termékek</a>
-    </div> --}}
+    <div class="mb-4">
+        <a class="btn btn-secondary" href="{{ route('items.show', $item->id) }}"><i class="fas fa-long-arrow-alt-left"></i> Termék: {{ $item->name }}</a>
+    </div>
 
     <form action="{{ route('auctions.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
@@ -15,7 +15,7 @@
 
         <div class="form-group row mb-3">
             <label for="price" class="col-sm-2 col-form-label">Ár*</label>
-            <div class="col-sm-10">
+            <div class="col-sm-3">
                 <input type="number" class="form-control @error('price') is-invalid @enderror" id="price" name="price" value="{{ old('price') }}">
                 @error('price')
                     <div class="invalid-feedback">

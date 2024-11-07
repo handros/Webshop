@@ -20,6 +20,6 @@
         <button type="submit" class="btn btn-primary">Küldés <i class="fas fa-paper-plane"></i></button>
     </form>
     @else
-        <p>Az üzenetküldéshez kérlek <a href="{{ route('login') }}">jelentkezzen be</a>.</p>
+        <p>Az üzenetküldéshez kérlek <a href="{{ route('login') }}">jelentkezzen be</a> vagy <a href="{{ route('register') }}">regisztáljon</a>.</p>
     @endauth
 </div>

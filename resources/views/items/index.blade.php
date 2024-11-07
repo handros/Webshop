@@ -3,7 +3,7 @@
 
 @section('content')
 <div class="container">
-    @auth {{-- TODO: KELL? --}}
+    @auth {{-- TODO: KELL? avagy middleware --}}
         @if(auth()->user()->is_admin)
             <div class="row justify-content-between">
                 <div class="col-12 col-md-8">
@@ -66,7 +66,7 @@
                                 )
                             }}"
                                 class="card-img-top"
-                                alt="Item cover"
+                                alt="Kép"
                             >
                             <div class="card-body">
                                 <h5 class="card-title mb-1"> {{ $item->name }} </h5>

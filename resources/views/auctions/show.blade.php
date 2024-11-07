@@ -32,17 +32,21 @@
             <h1 class="text-center mb-4">Aukció adatai</h1>
             <h2 class="text-center mb-4">Név: <strong>{{ $auction->item->name }}</strong></h2>
 
-            @if ($auction->opened && $auction->deadline->endOfDay() >= now() && $auction->bids()->exists())
+            @if ($open)
                 <h3 class="text-center">Határidő: <span class="badge bg-success"> {{ $auction->deadline->endOfDay() }} </span></h3>
-                <h3 class="text-center mb-4">Jelenlegi ár: <strong>{{ $auction->price }} Ft*</strong></h3>
+                <h3 class="text-center mb-4">Jelenlegi ár: <strong>{{ $highestBid }} Ft*</strong></h3>
                 <p class="text-center">* Mindig frissítse az oldalt az aktuális árért!</p>
-            @elseif ((!$auction->opened || $auction->deadline->endOfDay() < now()) && !$auction->bids()->exists() )
+            @elseif ($no_bid_over)
                 <h3 class="text-center"><span class="badge bg-danger"> Vége az aukciónak* </span></h3>
-                <p class="text-center">* Licitáláshoz figyelje a főoldalt, vagy a hírleveleket, hogy mikor nyilik újra ez az aukció!</p> {{-- TODO: FELIRATKOZÁS HÍRLEVÉLRE BUTTON --}}
-                <h3 class="text-center mb-4"><strong>{{ $auction->price }} Ft</strong></h3>
+                <p class="text-center">* Az aukció újranyitásáért figyelje a főoldalt, vagy iratkozzon fel a hírlevelekre!</p> {{-- TODO: FELIRATKOZÁS HÍRLEVÉLRE BUTTON --}}
+                <h3 class="text-center mb-4"><strong>{{ $highestBid }} Ft</strong></h3>
+            @elseif ($bought)
+                <h3 class="text-center"><span class="badge bg-success"> Öné a termék* </span></h3>
+                <p class="text-center">* Hamarosan felveszem Önnel a kapcsolatot a részletekért!</p>
+                <h3 class="text-center mb-4"><strong>{{ $highestBid }} Ft</strong></h3>
             @else
                 <h3 class="text-center"><span class="badge bg-danger"> Eladva </span></h3>
-                <h3 class="text-center mb-4"><strong>{{ $auction->price }} Ft</strong></h3>
+                <h3 class="text-center mb-4"><strong>{{ $highestBid }} Ft</strong></h3>
             @endif
 
             <p class="text-center"> {{ $auction->description }} </p>
@@ -51,13 +55,16 @@
 
             <h1 class="text-center mb-4">Kapcsolódó termék adatai</h1>
 
+            <div class="text-center mb-3">
+                <a href="{{ route('items.show', ['item' => $auction->item->id]) }}" role="button" class="btn btn-sm btn-primary"></i> Részletesebben <i class="fas fa-angle-right"></i></a>
+            </div>
+
             <p class="text-center small text-secondary mb-2">
                 <i class="far fa-calendar-alt"></i>
                 <span>{{ $auction->item->made_in }}</span>
             </p>
 
             <div class="text-center mb-4">
-                Címkék:
                 @foreach ($auction->item->labels as $label)
                     <a href="{{ route('labels.show', $label) }}" class="text-decoration-none">
                         <span style="background-color: {{ $label->color }}; color: #ffffff; border-radius: 6px; padding: 1px;">{{ $label->name }}</span>
@@ -65,41 +72,41 @@
                 @endforeach
             </div>
 
-            <div class="d-flex justify-content-center mb-4">
-                <img src="{{
-                        asset(
-                            $auction->item->image
-                                ? 'storage/' . $auction->item->image
-                                : 'images/no_product_image.png'
-                        )
-                    }}"
-                    class="card-img-top img-fluid"
-                    alt="Item cover"
-                    style="max-width: 400px;"
-                >
+            <p class="text-center mb-4"> {{ $auction->item->description }} </p>
+
+            <div class="d-flex justify-content-center mb-3">
+                @if($auction->item->image)
+                    <a href="{{ asset('storage/' . $auction->item->image) }}" target="_blank">
+                        <img src="{{ asset('storage/' . $auction->item->image) }}"
+                            class="card-img-top img-fluid"
+                            alt="Kép"
+                            style="max-width: 400px;">
+                    </a>
+                @else
+                    <img src="{{ asset('images/no_product_image.png') }}"
+                        class="card-img-top img-fluid"
+                        alt="Nem érhető el kép"
+                        style="max-width: 400px;">
+                @endif
             </div>
 
             @if ($auction->item->images && count($auction->item->images) > 0)
-            <div class="mt-3 mb-4">
+            <div class="mt-3 mb-5">
                 <div class="col-12 col-md-8">
-                    <h2>További képek:</h2>
+                    <h2><i class="fas fa-images"></i> További képek:</h2>
                 </div>
 
-                <div class="row">
+                <div class="gallery js-flickity" data-flickity-options='{ "wrapAround": true }'>
                     @foreach($auction->item->images as $image)
-                        <div class="col-md-4">
-                            <img src="{{ asset('images/' . $image->path) }}" alt="Kép" class="img-fluid img-thumbnail" style="height: auto; max-height: 200px;">
+                        <div class="gallery-cell">
+                            <a href="{{ asset('images/' . $image->path) }}" target="_blank">
+                                <img src="{{ asset('images/' . $image->path) }}" alt="Kép" class="img-fluid gallery-img">
+                            </a>
                         </div>
                     @endforeach
                 </div>
             </div>
             @endif
-
-            <p class="text-center mb-4"> {{ $auction->item->description }} </p>
-
-            <div class="text-center">
-                <a href="{{ route('items.show', ['item' => $auction->item->id]) }}" role="button" class="btn btn-sm btn-primary"></i> Részletesebben <i class="fas fa-angle-right"></i></a>
-            </div>
 
             <hr>
 

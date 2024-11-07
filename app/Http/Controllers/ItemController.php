@@ -22,11 +22,11 @@ class ItemController extends Controller
     public function index()
     {
         return view('items.index', [
-            'items' => Item::paginate(9),
+            'items' => Item::orderBy('created_at', 'desc')->paginate(9),
             'labels' => Label::all(),
             'user_count' => User::count(),
             'label_count' => Label::count(),
-            'item_count' => Item::count(), //Item::total()  ??
+            'item_count' => Item::count(),
             'auction_count' => Item::where('on_auction', true)->count(),
         ]);
     }
@@ -64,37 +64,16 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
-        // $this->authorize('store', $post);
         if(Auth::guest() or !Auth::user()->is_admin) {
             abort(401);
         }
         $data = $request->validate([
-            'name'=>'required',
-            'made_in'=> [
-                'required',
-                'numeric',
-                'before_or_equal:' . now()->format('Y'),
-            ],
-            'description'=> [
-                'required',
-                'string',
-                'max:1000',
-            ],
-            'labels' => [
-                'nullable',
-                'array',
-            ],
-            'labels.*' => [
-                'numeric',
-                'integer',
-                'exists:labels,id'
-            ],
-            'image' => [
-                'required',
-                'image',
-                'mimes:jpeg,png,jpg',
-                'max:5120'
-            ],
+            'name' => 'required|string',
+            'made_in' => 'required|numeric|before_or_equal:' . now()->format('Y'),
+            'description' => 'required|string|max:1000',
+            'labels' => 'nullable|array',
+            'labels.*' => 'numeric|integer|exists:labels,id',
+            'image' => 'required|image|mimes:jpeg,png,jpg|max:5120',
             'images.*' => 'nullable|image|mimes:jpeg,png,jpg|max:5120',
         ]);
 
@@ -142,16 +121,7 @@ class ItemController extends Controller
             }
         }
 
-        //TODO: Meghívni az auction::create-et itt
-
-        // if($item->auction == false) {
-
-        //     $item->auction->opened = false;
-        //     $item->auction->save();
-        // }
-
         Session::flash('item_created', $item);
-
         return Redirect::route('items.index');
     }
 
@@ -193,50 +163,17 @@ class ItemController extends Controller
 
         $item = Item::find($id);
         $data = $request->validate([
-            'name'=>'required',
-            'made_in'=> [
-                'required',
-                'numeric',
-                'before_or_equal:' . now()->format('Y'),
-            ],
-            'description'=> [
-                'required',
-                'string',
-                'max:1000',
-            ],
-            'labels' => [
-                'nullable',
-                'array',
-            ],
-            'labels.*' => [
-                'numeric',
-                'integer',
-                'exists:labels,id'
-            ],
-            'on_auction' => 'nullable|boolean',
-            // 'image' => [
-            //     'required',
-            //     'file',
-            //     'image',
-            //     'max:5120'
-            // ],
+            'name' => 'required|string',
+            'made_in' => 'required|numeric|before_or_equal:' . now()->format('Y'),
+            'description' => 'required|string|max:1000',
+            'labels' => 'nullable|array',
+            'labels.*' => 'numeric|integer|exists:labels,id',
         ]);
-
-        // $image = null;
-
-        // if ($request->hasFile('image')) {
-        //     $file = $request->file('image');
-        //     $image = $file->store('images', ['disk' => 'public']);
-        //     $item->image = $image; // Ha az adatbázisban van egy 'image' mező
-        // }
 
         $item->name = $data['name'];
         $item->made_in = $data['made_in'];
         $item->description = $data['description'];
-        // $item->on_auction = $data['on_auction'] ?? false;
         $item->save();
-
-        // $item->update($data);
 
         if(isset($data['labels'])) {
             $item->labels()->sync($data['labels']);
@@ -272,7 +209,6 @@ class ItemController extends Controller
         $item->delete();
 
         Session::flash('item_deleted', $item);
-
         return Redirect::route('items.index');
     }
 }

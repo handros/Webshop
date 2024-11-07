@@ -45,7 +45,7 @@
                                     )
                                 }}"
                                 class="img-fluid"
-                                alt="Item cover"
+                                alt="Kép"
                                 style="max-width: 100px;"
                             >
                         </td>

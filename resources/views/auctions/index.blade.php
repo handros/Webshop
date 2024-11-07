@@ -35,7 +35,7 @@
     <div class="row mt-3">
         <div class="col-12">
             <div class="row">
-                <h2>Jelenleg <b>{{ $auction_count }} termék</b> van aukcióra bocsátva</h2>
+                <h2>Jelenleg <strong>{{ $opened_auction_count }}/{{ $auction_count }} termék</strong> van aukcióra bocsátva</h2>
 
                 @forelse ($auctions as $auction)
                     <div class="col-12 col-md-6 col-lg-4 mb-3 d-flex align-self-stretch">
@@ -53,9 +53,9 @@
                             >
                             <div class="card-body">
                                 @if ( $auction->opened && $auction->deadline->endOfDay() >= now())
-                                    <h5 class="card-title mb-0"> Nyitva eddig: {{ $auction->deadline->endOfDay() }} </h5>
+                                    <h5 class="card-title mb-0"> Nyitva: {{ $auction->deadline->format('Y-m-d') }} </h5>
                                 @else
-                                    <h5 class="card-title mb-0"> Véget ért: {{ $auction->deadline->endOfDay() }} </h5>
+                                    <h5 class="card-title mb-0"> Vége: {{ $auction->deadline->format('Y-m-d') }} </h5>
                                 @endif
 
                                 <h5 class="card-title mb-0"> {{ $auction->item->name }} </h5>

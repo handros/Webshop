@@ -5,7 +5,7 @@
 <div class="container">
     <h1>Aukció: <i>{{ $auction->item->name }}</i> szerkesztése</h1>
     <div class="mb-4">
-        <a href="{{ route('auctions.show', $auction) }}"><i class="fas fa-long-arrow-alt-left"></i> Mégse</a>
+        <a class="btn btn-secondary" href="{{ route('auctions.show', $auction) }}"><i class="fas fa-long-arrow-alt-left"></i> Aukció: {{ $auction->item->name }}</a>
     </div>
 
     <form action="{{ route('auctions.update', $auction) }}" method="POST" enctype="multipart/form-data">

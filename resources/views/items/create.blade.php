@@ -91,7 +91,7 @@
                         </div>
                         <div id="cover_preview" class="col-12 d-none">
                             <p>Borítókép előnézet:</p>
-                            <img id="cover_preview_image" src="#" alt="Cover preview" width="200px">
+                            <img id="cover_preview_image" src="#" alt="Kép előnézet" width="200px">
                         </div>
                     </div>
                 </div>

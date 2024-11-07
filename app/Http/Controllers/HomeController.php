@@ -25,13 +25,16 @@ class HomeController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index() {
-        // return view('home');
         return view('home', [
             'items' => Item::all(),
             'auctions' => Auction::with('item')->orderBy('deadline', 'desc')->paginate(9),
             'auction_items' => Item::where('on_auction', true)->get(),
             'labels' => Label::all(),
             'auction_count' => Item::where('on_auction', true)->count(),
+            'opened_auction_count' => Item::where('on_auction', true)
+                ->whereHas('auction', function ($query) {
+                    $query->where('deadline', '>=', now()->startOfDay());
+                })->count(),
         ]);
     }
 

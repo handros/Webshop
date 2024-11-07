@@ -5,7 +5,7 @@
 <div class="container">
     <h1>Termék: <i>{{ $item->name }}</i> szerkesztése</h1>
     <div class="mb-4">
-        <a href="{{ route('items.show', $item) }}"><i class="fas fa-long-arrow-alt-left"></i> Mégse</a>
+        <a class="btn btn-secondary" href="{{ route('items.show', $item->id) }}"><i class="fas fa-long-arrow-alt-left"></i> Termék: {{ $item->name }}</a>
     </div>
 
     <form action="{{ route('items.update', $item) }}" method="POST" enctype="multipart/form-data">

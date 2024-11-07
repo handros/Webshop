@@ -62,7 +62,7 @@ class BidController extends Controller
 
         $auction->update(['price' => $data['amount']]);
 
-        Session::flash('bid_created', $bid); //TODO: Működjön
+        Session::flash('bid_created', $bid);
         return Redirect::route('auctions.show', $bid->auction_id);
     }
 
@@ -99,7 +99,11 @@ class BidController extends Controller
             abort(401);
         }
 
+        $highestBid = $bid->amount == $bid->auction->bids()->max('amount');
         $bid->delete();
+
+        $bid->auction->price = $bid->auction->bids()->max('amount');
+        $bid->auction->save();
 
         Session::flash('bid_deleted', $bid);
         return Redirect::back();
