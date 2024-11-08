@@ -13,11 +13,12 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
+
+            $table->string('description');
+            $table->boolean('ready')->default(false);
+
             $table->foreignId('orderer_id')->constrained('users')->onDelete('cascade');
             
-            $table->text('description')->nullable();
-            $table->boolean('completed')->default(false);
-
             $table->timestamps();
         });
     }

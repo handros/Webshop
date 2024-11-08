@@ -21,19 +21,34 @@
                                 <i class="fas fa-angle-right"></i>
                                 <strong>Címzett:</strong> {{ $message->receiver->name }}
                             </h5>
-                            <p class="card-text">
-                                <strong>Aukció:</strong>
-                                <a  class="btn btn-light" href="{{ route('auctions.show', $message->auction->id) }}">
-                                    {{ $message->auction->item->name }}
-                                </a>
-                            </p>
-                            <p class="card-text">
-                                <strong>Üzenet:</strong> {{ \Illuminate\Support\Str::limit($message->text, 100) }}
-                            </p>
-                            <p class="card-text">
-                                <small class="text-muted">Küldve: {{ $message->created_at->format('Y-m-d H:i') }}</small>
-                            </p>
-                            <a  class="btn btn-primary btn-sm" href="{{ route('auctions.show', ['auction' => $message->auction->id]) }}#message{{ $message->id }}">Részletek</a>
+                            @if($message->auction_id !== null)
+                                <p class="card-text">
+                                    <strong>Aukció:</strong>
+                                    <a  class="btn btn-light" href="{{ route('auctions.show', $message->auction->id) }}">
+                                        {{ $message->auction->item->name }}
+                                    </a>
+                                </p>
+                                <p class="card-text">
+                                    <strong>Üzenet:</strong> {{ \Illuminate\Support\Str::limit($message->text, 100) }}
+                                </p>
+                                <p class="card-text">
+                                    <small class="text-muted">Küldve: {{ $message->created_at->format('Y-m-d H:i') }}</small>
+                                </p>
+                                <a  class="btn btn-primary btn-sm" href="{{ route('auctions.show', ['auction' => $message->auction->id]) }}#message{{ $message->id }}">Részletek</a>
+                            @else
+                                <p class="card-text">
+                                    {{-- <a  class="btn btn-light" href="{{ route('orders.show', $message->order->id) }}"> --}} {{-- TODO --}}
+                                        <strong>Rendelés: {{ $message->order->id }}</strong>
+                                    {{-- </a> --}}
+                                </p>
+                                <p class="card-text">
+                                    <strong>Üzenet:</strong> {{ \Illuminate\Support\Str::limit($message->text, 100) }}
+                                </p>
+                                <p class="card-text">
+                                    <small class="text-muted">Küldve: {{ $message->created_at->format('Y-m-d H:i') }}</small>
+                                </p>
+                                {{-- <a  class="btn btn-primary btn-sm" href="{{ route('order.show', ['order' => $message->order->id]) }}#message{{ $message->id }}">Részletek</a> --}} {{-- TODO --}}
+                            @endif
                         </div>
                     </div>
                 </div>

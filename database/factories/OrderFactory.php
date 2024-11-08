@@ -17,7 +17,8 @@ class OrderFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'description' => implode(' ', fake()->sentences(4)),
+            'ready' => false,
         ];
     }
 }

@@ -12,8 +12,8 @@ class Message extends Model
     protected $fillable = [
         'sender_id',
         'receiver_id',
-        'auction_id',
-        'message'];
+        'message'
+    ];
 
     public function sender() {
         return $this->belongsTo(User::class, 'sender_id');
@@ -25,5 +25,9 @@ class Message extends Model
 
     public function auction() {
         return $this->belongsTo(Auction::class);
+    }
+
+    public function order() {
+        return $this->belongsTo(Order::class);
     }
 }

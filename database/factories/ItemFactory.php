@@ -18,7 +18,7 @@ class ItemFactory extends Factory
     {
         return [
             'name' => fake()->word(),
-            'description' => implode(' ',fake()->sentences(10)),
+            'description' => implode(' ', fake()->sentences(5)),
             'made_in' => fake()->year(),
             'on_auction' => fake()->boolean(),
         ];

@@ -17,8 +17,8 @@ return new class extends Migration
             $table->string('path');
             $table->boolean('cover')->default(false);
 
-            $table->unsignedBigInteger('item_id');
-            $table->foreign('item_id')->references('id')->on('items')->onDelete('cascade');
+            $table->foreignId('item_id')->nullable()->constrained('items')->onDelete('cascade')->nullable();
+            $table->foreignId('order_id')->nullable()->constrained('orders')->onDelete('cascade')->nullable();
 
             $table->timestamps();
         });

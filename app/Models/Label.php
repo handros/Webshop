@@ -17,4 +17,8 @@ class Label extends Model
     public function items() {
         return $this->belongsToMany(Item::class)->withTimestamps();
     }
+
+    public function orders() {
+        return $this->belongsToMany(Order::class)->withTimestamps();
+    }
 }

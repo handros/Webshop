@@ -13,10 +13,18 @@ return new class extends Migration
     {
         Schema::create('messages', function (Blueprint $table) {
             $table->id();
+
+            $table->text('text');
+
             $table->foreignId('sender_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('receiver_id')->constrained('users')->onDelete('cascade');
-            $table->foreignId('auction_id')->constrained('auctions')->onDelete('cascade');
-            $table->text('text');
+
+            $table->unsignedBigInteger('auction_id')->nullable();
+            $table->foreign('auction_id')->references('id')->on('auctions')->onDelete('cascade');
+
+            $table->unsignedBigInteger('order_id')->nullable();
+            $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
+            
             $table->timestamps();
         });
     }

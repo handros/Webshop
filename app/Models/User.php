@@ -63,4 +63,8 @@ class User extends Authenticatable
     public function receivedMessages() {
         return $this->hasMany(Message::class, 'receiver_id');
     }
+
+    public function orders() {
+        return $this->belongsToMany(Order::class)->withTimestamps();
+    }
 }
