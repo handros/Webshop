@@ -7,17 +7,17 @@
         <table class="table table-striped table-bordered">
             <thead>
                 <tr>
-                    <th>Név</th>
-                    <th>Email</th>
-                    <th>Admin</th>
+                    <th class="align-middle">Név</th>
+                    <th class="align-middle">Email</th>
+                    <th class="align-middle">Admin</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($users as $user)
                     <tr>
-                        <td>{{ $user->name }}</td>
-                        <td>{{ $user->email }}</td>
-                        <td>
+                        <td class="align-middle">{{ $user->name }}</td>
+                        <td class="align-middle">{{ $user->email }}</td>
+                        <td class="align-middle">
                             @if ($user->is_admin)
                                 <span class="badge bg-success"><i class="fas fa-check-circle"></i></span>
                             @else

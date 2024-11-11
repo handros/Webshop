@@ -84,7 +84,9 @@
                             )
                         >
                         <label for="{{ $label }}" class="form-check-label">
-                            <span style="background-color: {{ $label->color }}; color: #ffffff; border-radius: 6px; padding: 1px;">{{ $label->name }}</span>
+                            <span class="label-span label-span-background" style="--label-color: {{ $label->color }};">
+                        {{ $label->name }}
+                    </span>
                         </label>
                     </div>
                 @empty

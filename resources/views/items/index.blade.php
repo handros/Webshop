@@ -3,22 +3,21 @@
 
 @section('content')
 <div class="container">
-    @auth {{-- TODO: KELL? avagy middleware --}}
-        @if(auth()->user()->is_admin)
-            <div class="row justify-content-between">
-                <div class="col-12 col-md-8">
-                    <h1>Termékek</h1>
-                </div>
+    <div class="row justify-content-between">
+        <div class="col-12 col-md-8">
+            <h1>Termékek <span class="badge bg-info">{{ $itemCount }}</span></h1>
+        </div>
+        @auth
+            @if(Auth::user()->is_admin)
                 <div class="col-12 col-md-4">
                     <div class="float-lg-end">
                         <a href="{{ route('items.create') }}" role="button" class="btn btn-sm btn-success mb-1"><i class="fas fa-plus-circle"></i> Termék létrehozása</a>
                         <a href="{{ route('labels.create') }}" role="button" class="btn btn-sm btn-success mb-1"><i class="fas fa-plus-circle"></i> Címke létrehozása</a>
                     </div>
                 </div>
-            </div>
-        @endif
-    @endauth
-
+            @endif
+        @endauth
+    </div>
 
     @if (Session::has('item_created'))
         <div class="alert alert-success" role="alert">
@@ -39,17 +38,18 @@
     @endif
 
     <div class="container d-flex justify-content-center mt-5">
-        <form action="{{ route('items.search') }}" method="GET" class="d-flex w-50">
-            <input
-                type="text"
-                name="query"
-                class="form-control me-2"
-                placeholder="Keresés név vagy címke szerint"
-                value="{{ request('query') }}"
-                style="min-width: 300px;"
-            >
-            <button type="submit" class="btn btn-primary">Keresés</button>
-        </form>
+        <div class="col-12 col-lg-6">
+            <form action="{{ route('items.search') }}" method="GET" class="d-flex">
+                <input
+                    type="text"
+                    name="query"
+                    class="form-control me-2"
+                    placeholder="Keresés név vagy címke szerint"
+                    value="{{ request('query') }}"
+                >
+                <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button>
+            </form>
+        </div>
     </div>
 
     <div class="row mt-3">
@@ -88,14 +88,16 @@
 
                                 @foreach ($item->labels as $label)
                                     <a href="{{ route('labels.show', $label) }}" class="text-decoration-none">
-                                        <span style="background-color: {{ $label->color }}; color: #ffffff; border-radius: 6px; padding: 1px;">{{ $label->name }}</span>
+                                        <span class="label-span label-span-background" style="--label-color: {{ $label->color }};">
+                        {{ $label->name }}
+                    </span>
                                     </a>
                                 @endforeach
 
                                 <p class="card-text mt-1">{{ \Illuminate\Support\Str::limit($item->description, 100) }}</p>
                             </div>
                             <div class="card-footer">
-                                <a href="{{ route('items.show', $item) }}" class="btn btn-primary">
+                                <a href="{{ route('items.show', $item) }}" class="btn btn-info">
                                     <span>Részletek</span> <i class="fas fa-angle-right"></i>
                                 </a>
                             </div>
@@ -125,7 +127,9 @@
                         <div class="card-body">
                             @foreach ($labels as $label)
                                 <a href="{{ route('labels.show', $label) }}" class="text-decoration-none">
-                                    <span style="background-color: {{ $label->color }}; color: #ffffff; border-radius: 6px; padding: 1px;">{{ $label->name }}</span>
+                                    <span class="label-span label-span-background" style="--label-color: {{ $label->color }};">
+                        {{ $label->name }}
+                    </span>
                                 </a>
                             @endforeach
                         </div>
@@ -133,7 +137,7 @@
                 </div>
 
                 @auth
-                    @if(auth()->user()->is_admin)
+                    @if(Auth::user()->is_admin)
                         <div class="col-12 mb-3">
                             <div class="card bg-light">
                                 <div class="card-header">
@@ -142,10 +146,10 @@
                                 <div class="card-body">
                                     <div class="small">
                                         <ul class="fa-ul">
-                                            <li><span class="fa-li"><i class="fas fa-user"></i></span>Felhasználók: {{ $user_count }}</li>
-                                            <li><span class="fa-li"><i class="fas fa-layer-group"></i></span>Címkék: {{ $label_count }}</li>
-                                            <li><span class="fa-li"><i class="fas fa-file-alt"></i></span>Termékek: {{ $item_count }}</li>
-                                            <li><span class="fa-li"><i class="fas fa-fire"></i></span>Aukción: {{ $auction_count }}</li>
+                                            <li><span class="fa-li"><i class="fas fa-user"></i></span>Felhasználók: {{ $userCount }}</li>
+                                            <li><span class="fa-li"><i class="fas fa-layer-group"></i></span>Címkék: {{ $labelCount }}</li>
+                                            <li><span class="fa-li"><i class="fas fa-file-alt"></i></span>Termékek: {{ $itemCount }}</li>
+                                            <li><span class="fa-li"><i class="fas fa-fire"></i></span>Aukción: {{ $auctionCount }}</li>
                                         </ul>
                                     </div>
                                 </div>

@@ -24,15 +24,15 @@ class ItemController extends Controller
         return view('items.index', [
             'items' => Item::orderBy('created_at', 'desc')->paginate(9),
             'labels' => Label::all(),
-            'user_count' => User::count(),
-            'label_count' => Label::count(),
-            'item_count' => Item::count(),
-            'auction_count' => Item::where('on_auction', true)->count(),
+            'userCount' => User::count(),
+            'labelCount' => Label::count(),
+            'itemCount' => Item::count(),
+            'auctionCount' => Item::where('on_auction', true)->count(),
         ]);
     }
 
     /**
-     * Search based on name of the Item or Label.
+     * Search based on name of the Item || Label.
      */
     public function search(Request $request) {
         $query = $request->input('query');
@@ -41,9 +41,11 @@ class ItemController extends Controller
             ->orWhereHas('labels', function ($q) use ($query) {
                 $q->where('name', 'like', '%' . $query . '%');
             })
-            ->get();
+            ->paginate(9);
 
-        return view('items.search', compact('items'));
+            $labels = Label::all();
+
+        return view('items.search', compact('items', 'labels'));
     }
 
     /**
@@ -51,7 +53,7 @@ class ItemController extends Controller
      */
     public function create()
     {
-        if(Auth::guest() or !Auth::user()->is_admin) {
+        if(Auth::guest() || !Auth::user()->is_admin) {
             abort(401);
         }
         return view('items.create', [
@@ -64,7 +66,7 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
-        if(Auth::guest() or !Auth::user()->is_admin) {
+        if(Auth::guest() || !Auth::user()->is_admin) {
             abort(401);
         }
         $data = $request->validate([
@@ -98,18 +100,6 @@ class ItemController extends Controller
         }
 
         if ($request->hasFile('images')) {
-                // $totalSize = 0;
-                // foreach ($request->file('images') as $image) {
-                //     $totalSize += $image->getSize();
-                // }
-
-                // if ($totalSize > (24*1024*1024)) { // 24 MB
-                //     Session::flash('upload_error', $item);
-
-                //     return Redirect::route('items.create');
-                //     // return redirect()->back()->with('upload_error', 'A képek összmérete meghaladja a maximális engedélyezett méretet (25 MB).');
-                // }
-
             foreach ($request->file('images') as $image) {
                 $imageName = time() . '_' . $image->getClientOriginalName();
                 $image->move(public_path('images'), $imageName);
@@ -143,7 +133,7 @@ class ItemController extends Controller
      */
     public function edit(string $id)
     {
-        if(Auth::guest() or !Auth::user()->is_admin) {
+        if(Auth::guest() || !Auth::user()->is_admin) {
             abort(401);
         }
         return view('items.edit', [
@@ -157,7 +147,7 @@ class ItemController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        if(Auth::guest() or !Auth::user()->is_admin) {
+        if(Auth::guest() || !Auth::user()->is_admin) {
             abort(401);
         }
 
@@ -188,7 +178,7 @@ class ItemController extends Controller
      */
     public function destroy(string $id)
     {
-        if(Auth::guest() or !Auth::user()->is_admin) {
+        if(Auth::guest() || !Auth::user()->is_admin) {
             abort(401);
         }
 

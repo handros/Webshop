@@ -32,8 +32,8 @@ class HomeController extends Controller
             'auctions' => Auction::with('item')->orderBy('deadline', 'desc')->paginate(9),
             'auction_items' => Item::where('on_auction', true)->get(),
             'labels' => Label::all(),
-            'auction_count' => Item::where('on_auction', true)->count(),
-            'opened_auction_count' => Item::where('on_auction', true)
+            'auctionCount' => Item::where('on_auction', true)->count(),
+            'opened_auctionCount' => Item::where('on_auction', true)
                 ->whereHas('auction', function ($query) {
                     $query->where('deadline', '>=', now()->startOfDay());
                 })->count(),
@@ -45,7 +45,7 @@ class HomeController extends Controller
     }
 
     public function users() {
-        if(Auth::guest() or !Auth::user()->is_admin) {
+        if(Auth::guest() || !Auth::user()->is_admin) {
             abort(401);
         }
 

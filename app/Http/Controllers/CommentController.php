@@ -81,13 +81,13 @@ class CommentController extends Controller
      */
     public function destroy(Comment $comment)
     {
-        if (!Auth::user()->is_admin or $comment->user_id !== auth()->id()) {
+        if (Auth::guest() || (!Auth::user()->is_admin && $comment->user_id !== Auth::id())) {
             abort(401);
         }
 
         $comment->delete();
 
         Session::flash('comment_deleted', $comment);
-        return Redirect()::back();
+        return Redirect::back();
     }
 }

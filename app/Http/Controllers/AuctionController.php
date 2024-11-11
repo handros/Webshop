@@ -26,7 +26,7 @@ class AuctionController extends Controller
      */
     public function create(Item $item)
     {
-        if(Auth::guest() or !Auth::user()->is_admin) {
+        if(Auth::guest() || !Auth::user()->is_admin) {
             abort(401);
         }
         return view('auctions.create', ['item' => $item]);
@@ -39,7 +39,7 @@ class AuctionController extends Controller
     {
         $item = Item::findOrFail($request->item_id);
 
-        if(Auth::guest() or !Auth::user()->is_admin or $item->on_auction) {
+        if(Auth::guest() || !Auth::user()->is_admin || $item->on_auction) {
             abort(401);
         }
         $data = $request->validate([
@@ -113,7 +113,7 @@ class AuctionController extends Controller
      */
     public function edit(Auction $auction)
     {
-        if(Auth::guest() or !Auth::user()->is_admin) {
+        if(Auth::guest() || !Auth::user()->is_admin) {
             abort(401);
         }
         return view('auctions.edit', [
@@ -127,7 +127,7 @@ class AuctionController extends Controller
      */
     public function update(Request $request, Auction $auction)
     {
-        if(Auth::guest() or !Auth::user()->is_admin) {
+        if(Auth::guest() || !Auth::user()->is_admin) {
             abort(401);
         }
 
@@ -153,7 +153,7 @@ class AuctionController extends Controller
      */
     public function destroy(Auction $auction)
     {
-        if(Auth::guest() or !Auth::user()->is_admin) {
+        if(Auth::guest() || !Auth::user()->is_admin) {
             abort(401);
         }
 

@@ -2,11 +2,7 @@
 
 @section('content')
 <div class="container">
-    <h1 class="mb-4">Üzeneteim</h1>
-
-    <div class="mb-4">
-        <h5>Összes üzenet: <span class="badge bg-primary">{{ $messageCount }}</span></h5>
-    </div>
+    <h1 class="mb-4">Üzeneteim <span class="badge bg-info">{{ $messageCount }}</span></h1>
 
     @if($messages->isEmpty())
         <p>Nincs megjeleníthető üzenet.</p>
@@ -17,11 +13,11 @@
                     <div class="card mb-4 shadow-sm">
                         <div class="card-body">
                             <h5 class="card-title">
-                                <strong>Feladó:</strong> {{ $message->sender->name }}
+                                {{ $message->sender->name }}
                                 <i class="fas fa-angle-right"></i>
-                                <strong>Címzett:</strong> {{ $message->receiver->name }}
+                                {{ $message->receiver->name }}
                             </h5>
-                            @if($message->auction_id !== null)
+                            @if(isset($message->auction_id))
                                 <p class="card-text">
                                     <strong>Aukció:</strong>
                                     <a  class="btn btn-light" href="{{ route('auctions.show', $message->auction->id) }}">
@@ -31,23 +27,24 @@
                                 <p class="card-text">
                                     <strong>Üzenet:</strong> {{ \Illuminate\Support\Str::limit($message->text, 100) }}
                                 </p>
-                                <p class="card-text">
+                                <p class="card-text d-flex justify-content-between align-items-center">
                                     <small class="text-muted">Küldve: {{ $message->created_at->format('Y-m-d H:i') }}</small>
+                                    <a class="btn btn-info btn-sm" href="{{ route('auctions.show', ['auction' => $message->auction->id]) }}#message{{ $message->id }}">Részletek</a>
                                 </p>
-                                <a  class="btn btn-primary btn-sm" href="{{ route('auctions.show', ['auction' => $message->auction->id]) }}#message{{ $message->id }}">Részletek</a>
-                            @else
+
+                            @elseif(isset($message->order_id))
                                 <p class="card-text">
-                                    {{-- <a  class="btn btn-light" href="{{ route('orders.show', $message->order->id) }}"> --}} {{-- TODO --}}
+                                    <a  class="btn btn-light" href="{{ route('orders.show', $message->order->id) }}">
                                         <strong>Rendelés: {{ $message->order->id }}</strong>
-                                    {{-- </a> --}}
+                                    </a>
                                 </p>
                                 <p class="card-text">
                                     <strong>Üzenet:</strong> {{ \Illuminate\Support\Str::limit($message->text, 100) }}
                                 </p>
-                                <p class="card-text">
+                                <p class="card-text d-flex justify-content-between align-items-center">
                                     <small class="text-muted">Küldve: {{ $message->created_at->format('Y-m-d H:i') }}</small>
+                                    <a class="btn btn-info btn-sm" href="{{ route('orders.show', ['order' => $message->order->id]) }}#message{{ $message->id }}">Részletek</a>
                                 </p>
-                                {{-- <a  class="btn btn-primary btn-sm" href="{{ route('order.show', ['order' => $message->order->id]) }}#message{{ $message->id }}">Részletek</a> --}} {{-- TODO --}}
                             @endif
                         </div>
                     </div>

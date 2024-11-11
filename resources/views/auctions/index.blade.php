@@ -35,7 +35,7 @@
     <div class="row mt-3">
         <div class="col-12">
             <div class="row">
-                <h2>Jelenleg <strong>{{ $opened_auction_count }}/{{ $auction_count }} termék</strong> van aukcióra bocsátva</h2>
+                <h2>Jelenleg <strong>{{ $opened_auctionCount }}/{{ $auctionCount }} termék</strong> van aukcióra bocsátva</h2>
 
                 @forelse ($auctions as $auction)
                     <div class="col-12 col-md-6 col-lg-4 mb-3 d-flex align-self-stretch">
@@ -69,13 +69,15 @@
 
                                 @foreach ($auction->item->labels as $label)
                                     <a href="{{ route('labels.show', $label) }}" class="text-decoration-none">
-                                        <span style="background-color: {{ $label->color }}; color: #ffffff; border-radius: 6px; padding: 1px;">{{ $label->name }}</span>
+                                        <span class="label-span label-span-background" style="--label-color: {{ $label->color }};">
+                        {{ $label->name }}
+                    </span>
                                     </a>
                                 @endforeach
 
                                 <p class="card-text mt-1">{{ \Illuminate\Support\Str::limit($auction->description, 100) }}</p>
                             </div>
-                            <div class="card-footer">
+                            <div class="card-footer d-flex justify-content-between align-items-center">
                                 <a href="{{ route('auctions.show', $auction) }}" class="btn btn-info">
                                     <span>Részletek</span> <i class="fas fa-angle-right"></i>
                                 </a>

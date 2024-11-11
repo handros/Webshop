@@ -31,6 +31,7 @@
         @endif
 
     @else
-        <p>A licitáláshoz kérlek <a href="{{ route('login') }}">jelentkezzen be</a> vagy <a href="{{ route('register') }}">regisztáljon</a>.</p>
+        <p>A licitáláshoz kérem <a href="{{ route('login') }}">jelentkezzen be</a> vagy <a href="{{ route('register') }}">regisztáljon</a>.</p>
+        <p>A licitáláshoz kérem <a href="{{ route('login') }}">jelentkezzen be</a> vagy <a href="{{ route('register') }}">regisztáljon</a>.</p>
     @endauth
 </div>

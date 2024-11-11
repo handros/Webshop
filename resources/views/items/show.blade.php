@@ -41,7 +41,9 @@
             <div class="mb-3 text-center">
                 @foreach ($item->labels as $label)
                     <a href="{{ route('labels.show', $label) }}" class="text-decoration-none">
-                        <span style="background-color: {{ $label->color }}; color: #ffffff; border-radius: 6px; padding: 1px;">{{ $label->name }}</span>
+                        <span class="label-span label-span-background" style="--label-color: {{ $label->color }};">
+                        {{ $label->name }}
+                    </span>
                     </a>
                 @endforeach
             </div>
@@ -93,7 +95,7 @@
                 <div class="col-12 col-md-8">
                     <h2><i class="fas fa-comments"></i> Kommentek ({{ $commentCount }})</h2>
                 </div>
-                <details>
+                <details open>
                     <summary class="mb-3">
                         Kommentek
                     </summary>
@@ -105,18 +107,15 @@
         <div class="col-12 col-md-4">
             <div class="float-lg-end">
 
-                {{-- TODO: Links, policy --}}
                 @auth
-                    @if(auth()->user()->is_admin)
+                    @if(Auth::user()->is_admin)
                         @if (!$item->on_auction)
                             <a href="{{ route('auctions.create', ['item' => $item->id]) }}" role="button" class="btn btn-sm btn-warning"><i class="fas fa-fire"></i> Aukcióra bocsát</a>
                         @else
                             <a href="{{ route('auctions.edit', ['auction' => $item->auction->id]) }}" role="button" class="btn btn-sm btn-warning"><i class="fas fa-fire"></i> Aukció szerkesztése</a>
                         @endif
 
-                        {{-- @can('update', $item) --}}
-                            <a href="{{ route('items.edit', ['item' => $item->id]) }}" role="button" class="btn btn-sm btn-primary"><i class="far fa-edit"></i> Szerkesztés</a>
-                        {{-- @endcan --}}
+                        <a href="{{ route('items.edit', ['item' => $item->id]) }}" role="button" class="btn btn-sm btn-primary"><i class="far fa-edit"></i> Szerkesztés</a>
 
                         <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#delete-confirm-modal"><i class="far fa-trash-alt"></i>
                             <span> Törlés</span>

@@ -56,10 +56,10 @@
             <h1 class="text-center mb-4">Kapcsolódó termék adatai</h1>
 
             <div class="text-center mb-3">
-                <a href="{{ route('items.show', ['item' => $auction->item->id]) }}" role="button" class="btn btn-sm btn-primary"></i> Részletesebben <i class="fas fa-angle-right"></i></a>
+                <a href="{{ route('items.show', ['item' => $auction->item->id]) }}" role="button" class="btn btn btn-info"> Részletesebben <i class="fas fa-angle-right"></i></a>
             </div>
 
-            <p class="text-center small text-secondary mb-2">
+            <p class="text-center text-secondary mb-2">
                 <i class="far fa-calendar-alt"></i>
                 <span>{{ $auction->item->made_in }}</span>
             </p>
@@ -67,7 +67,9 @@
             <div class="text-center mb-4">
                 @foreach ($auction->item->labels as $label)
                     <a href="{{ route('labels.show', $label) }}" class="text-decoration-none">
-                        <span style="background-color: {{ $label->color }}; color: #ffffff; border-radius: 6px; padding: 1px;">{{ $label->name }}</span>
+                        <span class="label-span label-span-background" style="--label-color: {{ $label->color }};">
+                        {{ $label->name }}
+                    </span>
                     </a>
                 @endforeach
             </div>
@@ -123,7 +125,7 @@
                 <div class="col-12 col-md-8">
                     <h2><i class="fas fa-book"></i> Licit Történet:</h2>
                 </div>
-                @include('bids.show')
+                @include('bids.index')
             </div>
 
             <hr>
@@ -154,7 +156,7 @@
                     <a href="#bid-form" class="btn btn-sm btn-warning">
                         <i class="fas fa-fire"></i> Licitálok
                     </a>
-                    @if(auth()->user()->is_admin)
+                    @if(Auth::user()->is_admin)
                         <a href="{{ route('auctions.edit', ['auction' => $auction->id]) }}" role="button" class="btn btn-sm btn-primary"><i class="far fa-edit"></i> Szerkesztés</a>
 
                         <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#delete-confirm-modal"><i class="far fa-trash-alt"></i>
@@ -199,24 +201,4 @@
 
 
 </div>
-@endsection
-
-@section('scripts')
-<script>
-    document.querySelectorAll('.reply-btn').forEach(button => {
-        button.addEventListener('click', function(event) {
-            event.preventDefault();
-
-            const receiverId = this.dataset.receiver;
-            const receiverName = this.dataset.receiverName;
-
-            document.querySelector('#receiver_id').value = receiverId;
-            document.querySelector('#receiverLabel').textContent = ` Üzenet: ${receiverName}`;
-
-            const messageForm = document.querySelector('#messageForm');
-            messageForm.style.display = 'block';
-            messageForm.scrollIntoView({ behavior: 'smooth' });
-        });
-    });
-</script>
 @endsection

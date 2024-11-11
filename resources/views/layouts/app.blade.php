@@ -19,7 +19,7 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm fixed-top">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Jewelry') }}
@@ -64,6 +64,16 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                    @if (Auth::user()->is_admin)
+                                        <a class="dropdown-item" href="{{ route('orders.index') }}">
+                                            {{ __('Rendelések') }}
+                                        </a>
+                                    @else
+                                        <a class="dropdown-item" href="{{ route('orders.index') }}">
+                                            {{ __('Rendeléseim') }}
+                                        </a>
+                                    @endif
+
                                     <a class="dropdown-item" href="{{ route('messages.index') }}">
                                         {{ __('Üzeneteim') }}
                                     </a>
@@ -115,8 +125,6 @@
         </footer>
 
         @yield('scripts')
-
-        <script src="{{ asset('js/app.js') }}"></script> {{-- TODO: kell?--}}
     </div>
 </body>
 </html>

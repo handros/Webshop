@@ -5,16 +5,16 @@
                 <tbody>
                     @foreach($comments as $comment)
                         <tr>
-                            <td>
+                            <td class="align-middle">
                                 <p><strong>{{ $comment->user->name }}</strong> - {{ $comment->created_at }}</p>
                                 @if ($comment->rating != null)
                                     <p>Értékelés: {{ $comment->rating }}</p>
                                 @endif
                                 <p>{{ $comment->text }}</p>
                             </td>
-                            <td>
+                            <td class="align-middle">
                                 @auth
-                                    @if(auth()->user()->is_admin || $comment->user_id === auth()->id())
+                                    @if(Auth::user()->is_admin || $comment->user_id === Auth::id())
                                         <div class="btn-group float-right">
                                             <form method="POST" action="{{ route('comments.destroy', $comment) }}">
                                                 @csrf

@@ -62,7 +62,9 @@
                             @checked(is_array(old('labels')) && in_array($label->id, old('labels')))
                         >
                         <label for="{{ $label }}" class="form-check-label">
-                            <span style="background-color: {{ $label->color }}; color: #ffffff; border-radius: 6px; padding: 1px;">{{ $label->name }}</span>
+                            <span class="label-span label-span-background" style="--label-color: {{ $label->color }};">
+                        {{ $label->name }}
+                    </span>
                         </label>
                     </div>
                 @empty
@@ -131,22 +133,4 @@
         </div>
     </form>
 </div>
-@endsection
-
-@section('scripts')
-<script>
-    const coverImageInput = document.querySelector('input#image');
-    const coverPreviewContainer = document.querySelector('#cover_preview');
-    const coverPreviewImage = document.querySelector('img#cover_preview_image');
-
-    coverImageInput.onchange = event => {
-        const [file] = coverImageInput.files;
-        if (file) {
-            coverPreviewContainer.classList.remove('d-none');
-            coverPreviewImage.src = URL.createObjectURL(file);
-        } else {
-            coverPreviewContainer.classList.add('d-none');
-        }
-    }
-</script>
 @endsection

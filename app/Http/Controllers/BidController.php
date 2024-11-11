@@ -95,7 +95,7 @@ class BidController extends Controller
      */
     public function destroy(Bid $bid)
     {
-        if (!Auth::user()->is_admin) {
+        if (Auth::guest() && !Auth::user()->is_admin) {
             abort(401);
         }
 

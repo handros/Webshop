@@ -22,7 +22,7 @@ class MessageController extends Controller
         $messages = Message::where('sender_id', $userId)
             ->orWhere('receiver_id', $userId)
             ->orderBy('created_at', 'desc')
-            ->with(['sender', 'receiver', 'auction'])
+            ->with(['sender', 'receiver', 'auction', 'order'])
             ->get();
 
         $messageCount = $messages->count();
@@ -43,16 +43,22 @@ class MessageController extends Controller
      */
     public function store(Request $request)
     {
+        if(Auth::guest()) {
+            abort(401);
+        }
+
         $data = $request->validate([
             'receiver_id' => 'required|exists:users,id',
-            'auction_id' => 'required|exists:auctions,id',
+            'auction_id' => 'nullable|exists:auctions,id',
+            'order_id' => 'nullable|exists:orders,id',
             'text' => 'required|string|max:500',
         ]);
 
         $message = new Message();
-        $message->sender_id = auth()->id();
+        $message->sender_id = Auth::id();
         $message->receiver_id = $data['receiver_id'];
-        $message->auction_id = $data['auction_id'];
+        $message->auction_id = $data['auction_id'] ?: null;
+        $message->order_id = $data['order_id'] ?: null;
         $message->text = $data['text'];
         $message->save();
 

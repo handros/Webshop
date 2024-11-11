@@ -4,18 +4,17 @@
             <tbody>
                 @foreach($comments as $comment)
                     <tr>
-                        <td>
+                        <td class="align-middle">
                             <p><strong>{{ $comment->user->name }}</strong> - {{ $comment->created_at }}</p>
                             @if ($comment->rating != null)
                                 <p>Értékelés: {{ $comment->rating }}</p>
                             @endif
                             <p>{{ $comment->text }}</p>
                         </td>
-                        <td>
+                        <td class="align-middle">
                             @auth
-                                @if($comment->user_id === auth()->id())
+                                @if($comment->user_id === Auth::id())
                                     <div class="btn-group float-right">
-                                        {{-- <a href="{{ route('comments.edit', $comment) }}" class="btn btn-primary"><i class="far fa-edit"></i></a> --}}
                                         <form method="POST" action="{{ route('comments.destroy', $comment) }}">
                                             @csrf
                                             @method('DELETE')

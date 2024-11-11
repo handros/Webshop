@@ -11,14 +11,14 @@
     @endif
 
     <div class="row justify-content-between">
-        <div class="col-12 col-md-8 text-center">
+        <div class="col-12 col-md-8">
             <h1>Szűrés: <span  style="background-color: {{ $label->color }}; color: #ffffff; border-radius: 6px; padding: 1px;">{{ $label->name }}</span></h1>
         </div>
         <div class="col-12 col-md-4">
             <div class="float-lg-end">
 
                 @auth
-                    @if(auth()->user()->is_admin)
+                    @if(Auth::user()->is_admin)
                         <a role="button" class="btn btn-sm btn-primary" href="{{ route('labels.edit', ['label' => $label->id]) }}"><i class="far fa-edit"></i> Szerkesztés</a>
 
                         <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#delete-confirm-modal"><i class="far fa-trash-alt">
@@ -34,7 +34,6 @@
     <div class="row mt-3">
         <div class="col-12 col-lg-9">
             <div class="row">
-
                 @forelse ($items as $item)
                     <div class="col-12 col-md-6 col-lg-4 mb-3 d-flex align-self-stretch">
                         <div class="card w-100">
@@ -60,14 +59,16 @@
 
                                 @foreach ($item->labels as $label)
                                     <a href="{{ route('labels.show', $label) }}" class="text-decoration-none">
-                                        <span style="background-color: {{ $label->color }}; color: #ffffff; border-radius: 6px; padding: 1px;">{{ $label->name }}</span>
+                                        <span class="label-span label-span-background" style="--label-color: {{ $label->color }};">
+                                            {{ $label->name }}
+                                        </span>
                                     </a>
                                 @endforeach
 
                                 <p class="card-text mt-1">{{ \Illuminate\Support\Str::limit($item->description, 100) }}</p>
                             </div>
                             <div class="card-footer">
-                                <a href="{{ route('items.show', $item) }}" class="btn btn-primary">
+                                <a href="{{ route('items.show', $item) }}" class="btn btn-info">
                                     <span>Részletek</span> <i class="fas fa-angle-right"></i>
                                 </a>
                             </div>
@@ -97,7 +98,9 @@
                         <div class="card-body">
                             @foreach ($labels as $label)
                                 <a href="{{ route('labels.show', $label) }}" class="text-decoration-none">
-                                    <span style="background-color: {{ $label->color }}; color: #ffffff; border-radius: 6px; padding: 1px;">{{ $label->name }}</span>
+                                    <span class="label-span label-span-background" style="--label-color: {{ $label->color }};">
+                        {{ $label->name }}
+                    </span>
                                 </a>
                             @endforeach
                         </div>
