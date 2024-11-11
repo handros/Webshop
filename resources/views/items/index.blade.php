@@ -52,6 +52,23 @@
         </div>
     </div>
 
+    <div class="container mt-4">
+        <div class="d-flex justify-content-center">
+            <a href="{{ route('items.index', ['order_by' => 'created_at', 'sort' => 'desc']) }}" class="btn btn-sm btn-outline-secondary me-2">
+                Legújabb elöl
+            </a>
+            <a href="{{ route('items.index', ['order_by' => 'created_at', 'sort' => 'asc']) }}" class="btn btn-sm btn-outline-secondary me-2">
+                Legújabb hátul
+            </a>
+            <a href="{{ route('items.index', ['order_by' => 'name', 'sort' => 'asc']) }}" class="btn btn-sm btn-outline-primary me-2">
+                ABC (A-Z)
+            </a>
+            <a href="{{ route('items.index', ['order_by' => 'name', 'sort' => 'desc']) }}" class="btn btn-sm btn-outline-primary">
+                ABC (Z-A)
+            </a>
+        </div>
+    </div>
+
     <div class="row mt-3">
         <div class="col-12 col-lg-9">
             <div class="row">

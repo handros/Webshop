@@ -19,10 +19,21 @@ class ItemController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $orderBy = $request->query('order_by', 'created_at');
+        $sortOrder = $request->query('sort', 'desc');
+
+        $items = Item::query()
+            ->when($orderBy, function ($query) use ($orderBy, $sortOrder) {
+                return $query->orderBy($orderBy, $sortOrder);
+            })
+            ->paginate(9);
+
+        $items = $items->appends(['order_by' => $orderBy, 'sort' => $sortOrder]);
+
         return view('items.index', [
-            'items' => Item::orderBy('created_at', 'desc')->paginate(9),
+            'items' => $items,
             'labels' => Label::all(),
             'userCount' => User::count(),
             'labelCount' => Label::count(),

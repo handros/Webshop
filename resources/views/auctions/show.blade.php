@@ -141,7 +141,7 @@
                 <div class="col-12 col-md-8">
                     <h2><i class="fas fa-envelope-open"></i> Üzeneteim ({{ $messageCount }})</h2>
                 </div>
-                <details>
+                <details open>
                     <summary class="mb-3">
                         Üzenetek
                     </summary>

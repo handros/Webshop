@@ -10,9 +10,9 @@
                                 @php
                                     $class = '';
 
-                                        if($bid->user_id === Auth::id() && $bid->amount == $auction->price) {
+                                        if($bid->user_id === Auth::id() && $bid->amount == $highestBid) {
                                             $class = 'table-success';
-                                        } elseif ($bid->user_id === Auth::id() && $bid->amount != $auction->price) {
+                                        } elseif ($bid->user_id === Auth::id() && $bid->amount != $highestBid) {
                                             $class = 'table-warning';
                                         } else {
                                             $class = 'table-danger';

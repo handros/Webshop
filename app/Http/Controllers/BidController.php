@@ -43,6 +43,11 @@ class BidController extends Controller
         ]);
 
         $auction = Auction::find($data['auction_id']);
+
+        if(!$auction->opened || $auction->deadline->endOfDay() < now()) {
+            abort(403);
+        }
+
         $highestBid = Bid::where('auction_id', $auction->id)->max('amount');
         $highestBid = $highestBid ?? $auction->price;
         $minBid = $highestBid + 500;

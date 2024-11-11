@@ -17,7 +17,7 @@
                 </div>
             @elseif(isset($auction))
                 @foreach ($messages as $message)
-                    <details id="message{{ $message->id }}" class="mb-3" open>
+                    <details id="message{{ $message->id }}" class="mb-3">
                         <summary>
                             <strong>{{ $message->sender_id === Auth::id() ? 'Ön' : $message->sender->name }} </strong>
                             <i class="fas fa-angle-right"></i> <strong>{{ $message->receiver_id === Auth::id() ? 'Ön' : $message->receiver->name }} </strong>
