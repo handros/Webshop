@@ -39,7 +39,7 @@
         <div class="form-group row mb-3">
             <label for="description" class="col-sm-2 col-form-label">Leírás*</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control @error('description') is-invalid @enderror" id="description" name="description" value="{{ old('description') }}">
+                <textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description">{{ old('description') }}</textarea>
                 @error('description')
                     <div class="invalid-feedback">
                         {{ $message }}

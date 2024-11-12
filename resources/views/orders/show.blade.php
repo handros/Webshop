@@ -10,14 +10,14 @@
     @endif
 
     <div class="row justify-content-between">
-        <div class="col-12 col-md-8">
+        <div class="col-12 col-lg-10 col-md-8">
             <h1 class="text-center mb-4">Rendelés: #{{ $order->id }} adatai</h1>
             <h2 class="text-center mb-4"> Megrenderlte: <strong>{{ $order->orderer->name }}</strong> - <em class="text-muted"> {{ $order->created_at }}</em></h2>
-            <p class="text-center"><strong>Megadott leírás: </strong>{{ $order->description }} </p>
+            <p class="text-center text-break"><strong>Megadott leírás: </strong>{{ $order->description }} </p>
 
             <div class="text-center mb-4">
                 @foreach ($order->labels as $label)
-                    <span class="label-span label-span-background" style="--label-color: {{ $label->color }};">
+                    <span class="label-span label-span-background me-1" style="--label-color: {{ $label->color }};">
                         {{ $label->name }}
                     </span>
                 @endforeach
@@ -27,7 +27,7 @@
                 <h2 class="text-center mb-4"><span class="badge bg-success"> Elkészült* </span></h2>
                 <p class="text-center">* A további teendők pontosításáért emailban és itt a rendelés alatt üzenetben felveszem Önnel a kapcsolatot!</p>
             @else
-                <h2 class="text-center mb-4"><span class="badge bg-warning"> Készítem* </span></h2>
+                <h2 class="text-center mb-4"><span class="badge bg-warning"> Készül* </span></h2>
                 <p class="text-center">* Értesíteni fogom emailban és itt a rendelés alatt üzenetben, amint elkészül a rendelése!</p>
                 <p class="text-center">Kérdés vagy pontosítás esetén keressen bátran!</p>
             @endif

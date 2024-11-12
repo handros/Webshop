@@ -36,12 +36,12 @@
                 <span>{{ $item->made_in }}</span>
             </p>
 
-            <p class="text-center"> {{ $item->description }} </p>
+            <p class="text-center text-break"> {{ $item->description }} </p>
 
             <div class="mb-3 text-center">
                 @foreach ($item->labels as $label)
                     <a href="{{ route('labels.show', $label) }}" class="text-decoration-none">
-                        <span class="label-span label-span-background" style="--label-color: {{ $label->color }};">
+                        <span class="label-span label-span-background me-1" style="--label-color: {{ $label->color }};">
                         {{ $label->name }}
                     </span>
                     </a>

@@ -72,9 +72,22 @@ class AuctionController extends Controller
     public function show(Auction $auction)
     {
         $userId = Auth::id();
+        
         $highestBid = $auction->bids()->max('amount') ?? $auction->price;
         $minBid = intval($highestBid) + 500;
         $bids = $auction->bids()->orderBy('amount', 'desc')->get();
+
+        $otherUsers = $auction->messages()
+            ->where(function ($query) use ($userId) {
+                $query->where('sender_id', $userId)
+                    ->orWhere('receiver_id', $userId);
+            })
+            ->get()
+            ->map(function ($message) use ($userId) {
+                return $message->sender_id === $userId ? $message->receiver : $message->sender;
+            })
+            ->unique('id')
+            ->values();
 
         $messages = $auction->messages()
             ->where(function ($query) use ($userId) {
@@ -105,6 +118,7 @@ class AuctionController extends Controller
             'open' => $open,
             'bought' => $bought,
             'no_bid_over' => $no_bid_over,
+            'otherUsers' => $otherUsers,
         ]);
     }
 

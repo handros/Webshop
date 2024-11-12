@@ -51,12 +51,11 @@
         <div class="form-group row mb-3">
             <label for="description" class="col-sm-2 col-form-label">Leírás*</label>
             <div class="col-sm-10">
-                <input
-                    type="text"
-                    class="form-control @error('description') is-invalid @enderror"
+                <textarea class="form-control @error('description') is-invalid @enderror"
                     id="description"
-                    name="description"
-                    value="{{ old('description') ?? $item->description ?? '' }}">
+                    name="description">
+                        {{ old('description') ?? $item->description ?? '' }}
+                </textarea>
                 @error('description')
                     <div class="invalid-feedback">
                         {{ $message }}
@@ -104,25 +103,6 @@
                 @enderror
             </div>
         </div>
-
-        {{-- <div class="form-group row mb-3">
-            <label for="on_auction" class="col-sm-2 col-form-label">Aukcióra bocsát</label>
-            <div class="col-sm-4">
-                <div class="form-check form-switch">
-                    <input class="form-check-input" type="hidden" name="on_auction" value="0">
-                    <input class="form-check-input" type="checkbox" id="on_auction" name="on_auction" value="1"
-                        {{ old('on_auction', $item->on_auction ?? false) ? 'checked' : '' }}>
-
-                    @error('on_auction')
-                        <div class="invalid-feedback">
-                            {{ $message }}
-                        </div>
-                    @enderror
-                </div>
-            </div>
-        </div> --}}
-
-
         <div class="text-center">
             <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Mentés</button>
         </div>

@@ -36,7 +36,8 @@
                 <textarea
                     class="form-control @error('description') is-invalid @enderror"
                     id="description"
-                    name="description">{{ old('description') ?? $auction->description ?? '' }}</textarea>
+                    name="description">{{ old('description') ?? $auction->description ?? '' }}
+                </textarea>
                 @error('description')
                     <div class="invalid-feedback">
                         {{ $message }}

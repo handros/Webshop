@@ -38,7 +38,7 @@
                 <p class="text-center">* Mindig frissítse az oldalt az aktuális árért!</p>
             @elseif ($no_bid_over)
                 <h3 class="text-center"><span class="badge bg-danger"> Vége az aukciónak* </span></h3>
-                <p class="text-center">* Az aukció újranyitásáért figyelje a főoldalt, vagy iratkozzon fel a hírlevelekre!</p> {{-- TODO: FELIRATKOZÁS HÍRLEVÉLRE BUTTON --}}
+                <p class="text-center">* Az aukció újranyitásáért figyelje a főoldalt</p>
                 <h3 class="text-center mb-4"><strong>{{ $highestBid }} Ft</strong></h3>
             @elseif ($bought)
                 <h3 class="text-center"><span class="badge bg-success"> Öné a termék* </span></h3>
@@ -49,7 +49,7 @@
                 <h3 class="text-center mb-4"><strong>{{ $highestBid }} Ft</strong></h3>
             @endif
 
-            <p class="text-center"> {{ $auction->description }} </p>
+            <p class="text-center text-break"> {{ $auction->description }} </p>
 
             <hr>
 
@@ -67,14 +67,14 @@
             <div class="text-center mb-4">
                 @foreach ($auction->item->labels as $label)
                     <a href="{{ route('labels.show', $label) }}" class="text-decoration-none">
-                        <span class="label-span label-span-background" style="--label-color: {{ $label->color }};">
+                        <span class="label-span label-span-background me-1" style="--label-color: {{ $label->color }};">
                         {{ $label->name }}
                     </span>
                     </a>
                 @endforeach
             </div>
 
-            <p class="text-center mb-4"> {{ $auction->item->description }} </p>
+            <p class="text-center mb-4 text-break"> {{ $auction->item->description }} </p>
 
             <div class="d-flex justify-content-center mb-3">
                 @if($auction->item->image)

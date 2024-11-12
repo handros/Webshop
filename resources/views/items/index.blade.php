@@ -105,9 +105,9 @@
 
                                 @foreach ($item->labels as $label)
                                     <a href="{{ route('labels.show', $label) }}" class="text-decoration-none">
-                                        <span class="label-span label-span-background" style="--label-color: {{ $label->color }};">
-                        {{ $label->name }}
-                    </span>
+                                        <span class="label-span label-span-background me-1" style="--label-color: {{ $label->color }};">
+                                            {{ $label->name }}
+                                        </span>
                                     </a>
                                 @endforeach
 
@@ -144,7 +144,7 @@
                         <div class="card-body">
                             @foreach ($labels as $label)
                                 <a href="{{ route('labels.show', $label) }}" class="text-decoration-none">
-                                    <span class="label-span label-span-background" style="--label-color: {{ $label->color }};">
+                                    <span class="label-span label-span-background me-1" style="--label-color: {{ $label->color }};">
                         {{ $label->name }}
                     </span>
                                 </a>
