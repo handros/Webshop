@@ -82,7 +82,11 @@ class ItemController extends Controller
         }
         $data = $request->validate([
             'name' => 'required|string|max:30',
-            'made_in' => 'required|numeric|before_or_equal:' . now()->format('Y'),
+            'made_in' => [
+                'required',
+                'numeric',
+                'before_or_equal:' . now()->year,
+            ],
             'description' => 'required|string|max:1000',
             'labels' => 'nullable|array',
             'labels.*' => 'numeric|integer|exists:labels,id',

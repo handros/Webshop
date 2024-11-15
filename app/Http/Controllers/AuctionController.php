@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Auction;
 use App\Models\Item;
+use App\Models\Label;
 use App\Models\Message;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -18,7 +19,17 @@ class AuctionController extends Controller
      */
     public function index()
     {
-        //
+        return view('home', [
+            'items' => Item::all(),
+            'auctions' => Auction::with('item')->orderBy('deadline', 'desc')->paginate(9),
+            'auction_items' => Item::where('on_auction', true)->get(),
+            'labels' => Label::all(),
+            'auctionCount' => Item::where('on_auction', true)->count(),
+            'opened_auctionCount' => Item::where('on_auction', true)
+                ->whereHas('auction', function ($query) {
+                    $query->where('deadline', '>=', now()->startOfDay());
+                })->count(),
+        ]);
     }
 
     /**
@@ -72,7 +83,7 @@ class AuctionController extends Controller
     public function show(Auction $auction)
     {
         $userId = Auth::id();
-        
+
         $highestBid = $auction->bids()->max('amount') ?? $auction->price;
         $minBid = intval($highestBid) + 500;
         $bids = $auction->bids()->orderBy('amount', 'desc')->get();
