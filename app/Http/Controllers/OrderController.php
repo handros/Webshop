@@ -71,7 +71,7 @@ class OrderController extends Controller
             'description' => 'required|string|max:1000',
             'labels' => 'nullable|array',
             'labels.*' => 'numeric|integer|exists:labels,id',
-            'images.*' => 'nullable|image|mimes:jpeg,png,jpg|max:5120',
+            'images.*' => 'nullable|image|mimes:jpeg,png,jpg|max:12288',
         ]);
 
         $order = new Order;
@@ -106,8 +106,12 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
-        if(Auth::guest() || (!Auth::user()->is_admin && $order->orderer_id != Auth::id())) {
+        if(Auth::guest()) {
             abort(401);
+        }
+
+        if(!Auth::user()->is_admin && $order->orderer_id != Auth::id()) {
+            abort(403);
         }
 
         $order->load(['orderer', 'labels']);
@@ -140,8 +144,12 @@ class OrderController extends Controller
      */
     public function update(Request $request, Order $order)
     {
-        if(Auth::guest() || !Auth::user()->is_admin) {
+        if(Auth::guest()) {
             abort(401);
+        }
+
+        if(!Auth::user()->is_admin) {
+            abort(403);
         }
 
         $order->update(['ready' => $request->input('ready', 0)]);
@@ -155,8 +163,12 @@ class OrderController extends Controller
      */
     public function destroy(Order $order)
     {
-        if(Auth::guest() || !Auth::user()->is_admin) {
+        if(Auth::guest()) {
             abort(401);
+        }
+
+        if(!Auth::user()->is_admin) {
+            abort(403);
         }
 
         foreach ($order->images as $image) {

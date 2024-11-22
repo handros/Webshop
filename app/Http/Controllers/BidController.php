@@ -100,14 +100,22 @@ class BidController extends Controller
      */
     public function destroy(Bid $bid)
     {
-        if (Auth::guest() && !Auth::user()->is_admin) {
+        if(Auth::guest()) {
             abort(401);
         }
 
+        if(!Auth::user()->is_admin) {
+            abort(403);
+        }
+
         $highestBid = $bid->amount == $bid->auction->bids()->max('amount');
+        $newPrice = $bid->auction->bids()->max('amount') ?? $bid->amount;
         $bid->delete();
 
-        $bid->auction->price = $bid->auction->bids()->max('amount');
+        if($highestBid) {
+            $bid->auction->price = $newPrice;
+        }
+
         $bid->auction->save();
 
         Session::flash('bid_deleted', $bid);

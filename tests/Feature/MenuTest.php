@@ -92,7 +92,7 @@ class MenuTest extends TestCase
             ->actingAs($user)
             ->get('/users');
 
-        $response->assertStatus(401);
+        $response->assertStatus(403);
     }
 
     public function test_users_screen_can_be_rendered_for_admin_users(): void

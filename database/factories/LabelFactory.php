@@ -18,7 +18,6 @@ class LabelFactory extends Factory
     {
         return [
             'name' => fake()->word(),
-            'display' => false,
             'color' => fake()->hexColor(),
         ];
     }

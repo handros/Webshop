@@ -24,7 +24,7 @@ class AuctionController extends Controller
             'auctions' => Auction::with('item')->orderBy('deadline', 'desc')->paginate(9),
             'auction_items' => Item::where('on_auction', true)->get(),
             'labels' => Label::all(),
-            'auctionCount' => Item::where('on_auction', true)->count(),
+            'auctionCount' => Auction::count(),
             'opened_auctionCount' => Item::where('on_auction', true)
                 ->whereHas('auction', function ($query) {
                     $query->where('deadline', '>=', now()->startOfDay());
@@ -37,9 +37,14 @@ class AuctionController extends Controller
      */
     public function create(Item $item)
     {
-        if(Auth::guest() || !Auth::user()->is_admin) {
+        if(Auth::guest()) {
             abort(401);
         }
+
+        if(!Auth::user()->is_admin || $item->on_auction) {
+            abort(403);
+        }
+
         return view('auctions.create', ['item' => $item]);
     }
 
@@ -48,11 +53,16 @@ class AuctionController extends Controller
      */
     public function store(Request $request)
     {
-        $item = Item::findOrFail($request->item_id);
-
-        if(Auth::guest() || !Auth::user()->is_admin || $item->on_auction) {
+        if(Auth::guest()) {
             abort(401);
         }
+
+        $item = Item::findOrFail($request->item_id);
+
+        if(!Auth::user()->is_admin || $item->on_auction) {
+            abort(403);
+        }
+
         $data = $request->validate([
             'item_id' => 'required|exists:items,id',
             'price' => 'required|integer|min:0',
@@ -138,9 +148,14 @@ class AuctionController extends Controller
      */
     public function edit(Auction $auction)
     {
-        if(Auth::guest() || !Auth::user()->is_admin) {
+        if(Auth::guest()) {
             abort(401);
         }
+
+        if(!Auth::user()->is_admin) {
+            abort(403);
+        }
+
         return view('auctions.edit', [
             'auction' => $auction,
             'auctions' => Auction::all(),
@@ -152,8 +167,12 @@ class AuctionController extends Controller
      */
     public function update(Request $request, Auction $auction)
     {
-        if(Auth::guest() || !Auth::user()->is_admin) {
+        if(Auth::guest()) {
             abort(401);
+        }
+
+        if(!Auth::user()->is_admin) {
+            abort(403);
         }
 
         $data = $request->validate([
@@ -178,8 +197,12 @@ class AuctionController extends Controller
      */
     public function destroy(Auction $auction)
     {
-        if(Auth::guest() || !Auth::user()->is_admin) {
+        if(Auth::guest()) {
             abort(401);
+        }
+
+        if(!Auth::user()->is_admin) {
+            abort(403);
         }
 
         $auction->item->on_auction = false;

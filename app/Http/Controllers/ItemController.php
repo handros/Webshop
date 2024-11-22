@@ -13,6 +13,8 @@ use App\Models\Item;
 use App\Models\User;
 use App\Models\Label;
 use App\Models\Image;
+use App\Models\Auction;
+use App\Models\Order;
 
 class ItemController extends Controller
 {
@@ -38,7 +40,9 @@ class ItemController extends Controller
             'userCount' => User::count(),
             'labelCount' => Label::count(),
             'itemCount' => Item::count(),
-            'auctionCount' => Item::where('on_auction', true)->count(),
+            'auctionCount' => Auction::count(),
+            'orderCount' => Order::count(),
+            'orderReadyCount' => Order::where('ready', true)->count(),
         ]);
     }
 
@@ -64,9 +68,14 @@ class ItemController extends Controller
      */
     public function create()
     {
-        if(Auth::guest() || !Auth::user()->is_admin) {
+        if(Auth::guest()) {
             abort(401);
         }
+
+        if(!Auth::user()->is_admin) {
+            abort(403);
+        }
+
         return view('items.create', [
             'labels' => Label::all(),
         ]);
@@ -77,9 +86,14 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
-        if(Auth::guest() || !Auth::user()->is_admin) {
+        if(Auth::guest()) {
             abort(401);
         }
+
+        if(!Auth::user()->is_admin) {
+            abort(403);
+        }
+
         $data = $request->validate([
             'name' => 'required|string|max:30',
             'made_in' => [
@@ -87,11 +101,11 @@ class ItemController extends Controller
                 'numeric',
                 'before_or_equal:' . now()->year,
             ],
-            'description' => 'required|string|max:1000',
+            'description' => 'nullable|string|max:1000',
             'labels' => 'nullable|array',
             'labels.*' => 'numeric|integer|exists:labels,id',
-            'image' => 'required|image|mimes:jpeg,png,jpg|max:5120',
-            'images.*' => 'nullable|image|mimes:jpeg,png,jpg|max:5120',
+            'image' => 'required|image|mimes:jpeg,png,jpg|max:12288',
+            'images.*' => 'nullable|image|mimes:jpeg,png,jpg|max:12288',
         ]);
 
         $image = null;
@@ -104,7 +118,7 @@ class ItemController extends Controller
         $item = new Item;
         $item->name = $data['name'];
         $item->made_in = $data['made_in'];
-        $item->description = $data['description'];
+        $item->description = $data['description'] ?? '';
         $item->on_auction = false;
         $item->image = $image;
 
@@ -148,9 +162,14 @@ class ItemController extends Controller
      */
     public function edit(string $id)
     {
-        if(Auth::guest() || !Auth::user()->is_admin) {
+        if(Auth::guest()) {
             abort(401);
         }
+
+        if(!Auth::user()->is_admin) {
+            abort(403);
+        }
+
         return view('items.edit', [
             'item' => Item::find($id),
             'labels' => Label::all(),
@@ -162,22 +181,26 @@ class ItemController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        if(Auth::guest() || !Auth::user()->is_admin) {
+        if(Auth::guest()) {
             abort(401);
+        }
+
+        if(!Auth::user()->is_admin) {
+            abort(403);
         }
 
         $item = Item::find($id);
         $data = $request->validate([
             'name' => 'required|string|max:30',
             'made_in' => 'required|numeric|before_or_equal:' . now()->format('Y'),
-            'description' => 'required|string|max:1000',
+            'description' => 'nullable|string|max:1000',
             'labels' => 'nullable|array',
             'labels.*' => 'numeric|integer|exists:labels,id',
         ]);
 
         $item->name = $data['name'];
         $item->made_in = $data['made_in'];
-        $item->description = $data['description'];
+        $item->description = $data['description'] ?? '';
         $item->save();
 
         if(isset($data['labels'])) {
@@ -193,8 +216,12 @@ class ItemController extends Controller
      */
     public function destroy(string $id)
     {
-        if(Auth::guest() || !Auth::user()->is_admin) {
+        if(Auth::guest()) {
             abort(401);
+        }
+
+        if(!Auth::user()->is_admin) {
+            abort(403);
         }
 
         $item = Item::findOrFail($id);

@@ -11,7 +11,10 @@
 
     <div class="row justify-content-between">
         <div class="col-12 col-lg-10 col-md-8">
-            <h1 class="text-center mb-4">Rendelés: #{{ $order->id }} adatai</h1>
+            <h1 class="text-center">Rendelés: #{{ $order->id }} adatai</h1>
+            <div class="">
+                <a class="btn btn-secondary" href="{{ route('orders.index') }}"><i class="fas fa-long-arrow-alt-left"></i> Rendelések</a>
+            </div>
             <h2 class="text-center mb-4"> Megrendelte: <strong>{{ $order->orderer->name }}</strong> - <em class="text-muted"> {{ $order->created_at }}</em></h2>
             <p class="text-center text-break"><strong>Megadott leírás: </strong>{{ $order->description }} </p>
 

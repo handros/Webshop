@@ -31,7 +31,7 @@ class ItemCreateTest extends TestCase
             ->actingAs($user)
             ->get('/items/create');
 
-        $response->assertStatus(401);
+        $response->assertStatus(403);
     }
 
     public function test_item_creation_screen_can_be_rendered_for_admin_user(): void
@@ -84,7 +84,7 @@ class ItemCreateTest extends TestCase
                 'image' => $image,
         ]);
 
-        $response->assertStatus(401);
+        $response->assertStatus(403);
 
         $this->assertDatabaseMissing('items', [
             'name' => 'User Item',

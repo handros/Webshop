@@ -34,14 +34,16 @@ class MessageSeeder extends Seeder
         }
 
         $orders = Order::all();
-        for($i = 0; $i < 6; $i++) {
-            $sender = $users->random();
-            $receiver = $users->where('id', '!=', $sender->id)->random();
+        for($i = 0; $i < 10; $i++) {
             $order = $orders->random();
 
+            $isSenderAdmin = rand(0, 1);
+            $senderId = $isSenderAdmin ? 1 : $order->orderer_id;
+            $receiverId = $isSenderAdmin ? $order->orderer_id : 1;
+
             Message::factory()->create([
-                'sender_id' => $sender->id,
-                'receiver_id' => $receiver->id,
+                'sender_id' => $senderId,
+                'receiver_id' => $receiverId,
                 'auction_id' => null,
                 'order_id' => $order->id,
             ]);

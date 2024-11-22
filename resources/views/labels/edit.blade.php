@@ -5,7 +5,7 @@
 <div class="container">
     <h1>{{ $label->name }} szerkesztése</h1>
     <div class="mb-4">
-        <a href="{{ route('labels.show', $label) }}"><i class="fas fa-long-arrow-alt-left"></i> Mégse</a>
+        <a class="btn btn-secondary" href="{{ route('labels.show', $label) }}"><i class="fas fa-long-arrow-alt-left"></i> Mégse</a>
     </div>
 
     <form action="{{ route('labels.update', $label) }}" method="POST" enctype="multipart/form-data">

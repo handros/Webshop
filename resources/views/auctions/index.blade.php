@@ -48,7 +48,7 @@
                                         : 'images/no_product_image.png'
                                 )
                             }}"
-                                class="card-img-top"
+                                class="card-img-top card-cover"
                                 alt="Item cover"
                             >
                             <div class="card-body">
@@ -70,8 +70,8 @@
                                 @foreach ($auction->item->labels as $label)
                                     <a href="{{ route('labels.show', $label) }}" class="text-decoration-none">
                                         <span class="label-span label-span-background me-1" style="--label-color: {{ $label->color }};">
-                        {{ $label->name }}
-                    </span>
+                                            {{ $label->name }}
+                                        </span>
                                     </a>
                                 @endforeach
 

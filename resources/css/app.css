@@ -3,6 +3,12 @@ body {
     padding-top: 60px;
 }
 
+/* Card cover image height*/
+.card-cover {
+    height: 300px;
+    object-fit: cover;
+}
+
 /* Gallery */
 .gallery-cell {
     display: flex;

@@ -49,7 +49,7 @@
         </div>
 
         <div class="form-group row mb-3">
-            <label for="description" class="col-sm-2 col-form-label">Leírás*</label>
+            <label for="description" class="col-sm-2 col-form-label">Leírás</label>
             <div class="col-sm-10">
                 <textarea class="form-control @error('description') is-invalid @enderror"
                     id="description"
@@ -84,8 +84,8 @@
                         >
                         <label for="{{ $label }}" class="form-check-label">
                             <span class="label-span label-span-background" style="--label-color: {{ $label->color }};">
-                        {{ $label->name }}
-                    </span>
+                                {{ $label->name }}
+                            </span>
                         </label>
                     </div>
                 @empty

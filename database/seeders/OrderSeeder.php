@@ -14,7 +14,7 @@ class OrderSeeder extends Seeder
      */
     public function run(): void
     {
-        $orderers = User::inRandomOrder()->take(3)->get();
+        $orderers = User::where('id', '!=', 1)->inRandomOrder()->take(3)->get();
         foreach ($orderers as $orderer) {
             Order::factory()->create([
                 'orderer_id' => $orderer->id,

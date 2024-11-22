@@ -40,7 +40,7 @@ class ItemEditTest extends TestCase
             ->actingAs($user)
             ->get("/items/{$item->id}/edit");
 
-        $response->assertStatus(401);
+        $response->assertStatus(403);
     }
 
     public function test_item_editor_screen_can_be_rendered_for_admin_user(): void
@@ -113,7 +113,7 @@ class ItemEditTest extends TestCase
                 'made_in' => 2023,
             ]);
 
-        $response->assertStatus(401);
+        $response->assertStatus(403);
 
         $item->refresh();
 

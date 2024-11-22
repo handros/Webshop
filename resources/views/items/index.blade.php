@@ -54,10 +54,10 @@
 
     <div class="container mt-4">
         <div class="d-flex justify-content-center">
-            <a href="{{ route('items.index', ['order_by' => 'created_at', 'sort' => 'desc']) }}" class="btn btn-sm btn-outline-secondary me-2">
+            <a href="{{ route('items.index', ['order_by' => 'created_at', 'sort' => 'desc']) }}" class="btn btn-sm btn-outline-primary me-2">
                 Legújabb elöl
             </a>
-            <a href="{{ route('items.index', ['order_by' => 'created_at', 'sort' => 'asc']) }}" class="btn btn-sm btn-outline-secondary me-2">
+            <a href="{{ route('items.index', ['order_by' => 'created_at', 'sort' => 'asc']) }}" class="btn btn-sm btn-outline-primary me-2">
                 Legújabb hátul
             </a>
             <a href="{{ route('items.index', ['order_by' => 'name', 'sort' => 'asc']) }}" class="btn btn-sm btn-outline-primary me-2">
@@ -82,7 +82,7 @@
                                         : 'images/no_product_image.png'
                                 )
                             }}"
-                                class="card-img-top"
+                                class="card-img-top card-cover"
                                 alt="Kép"
                             >
                             <div class="card-body">
@@ -163,10 +163,11 @@
                                 <div class="card-body">
                                     <div class="small">
                                         <ul class="fa-ul">
+                                            <li><span class="fa-li"><i class="fas fa-shopping-cart"></i></span>Rendelések: {{ $orderReadyCount }}/{{ $orderCount }}</li>
+                                            <li><span class="fa-li"><i class="fas fa-atom"></i></span>Termékek: {{ $itemCount }}</li>
+                                            <li><span class="fa-li"><i class="fas fa-fire"></i></span>Aukción: {{ $auctionCount }}</li>
                                             <li><span class="fa-li"><i class="fas fa-user"></i></span>Felhasználók: {{ $userCount }}</li>
                                             <li><span class="fa-li"><i class="fas fa-layer-group"></i></span>Címkék: {{ $labelCount }}</li>
-                                            <li><span class="fa-li"><i class="fas fa-file-alt"></i></span>Termékek: {{ $itemCount }}</li>
-                                            <li><span class="fa-li"><i class="fas fa-fire"></i></span>Aukción: {{ $auctionCount }}</li>
                                         </ul>
                                     </div>
                                 </div>

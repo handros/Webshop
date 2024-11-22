@@ -5,22 +5,15 @@
 <div class="container">
     <h1>Címke létrehozása</h1>
     <div class="mb-4">
-        <a href="{{ route('items.index') }}"><i class="fas fa-long-arrow-alt-left"></i> Termékek</a>
+        <a class="btn btn-secondary" href="{{ route('items.index') }}"><i class="fas fa-long-arrow-alt-left"></i> Termékek</a>
     </div>
-
-    @if (Session::has('label_created'))
-        <div class="alert alert-success" role="alert">
-            {{ Session::get('label_created')->name }} nevű címke létrehozva.
-        </div>
-    @endif
-
 
     <form action="{{ route('labels.store') }}" method="POST">
         @csrf
 
         <div class="form-group row mb-3">
             <label for="name" class="col-sm-2 col-form-label">Név*</label>
-            <div class="col-sm-10">
+            <div class="col-sm-3">
                 <input
                     type="text"
                     class="form-control @error('name') is-invalid @enderror"

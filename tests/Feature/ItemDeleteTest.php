@@ -27,7 +27,7 @@ class ItemDeleteTest extends TestCase
         ]);
     }
 
-    public function test_item_cant_be_deleted_by_user(): void
+    public function test_item_cant_be_deleted_by_not_admin_user(): void
     {
         $user = User::factory()->create([
             'is_admin' => false,
@@ -38,7 +38,7 @@ class ItemDeleteTest extends TestCase
             ->actingAs($user)
             ->delete("/items/{$item->id}");
 
-        $response->assertStatus(401);
+        $response->assertStatus(403);
 
         $this->assertDatabaseHas('items', [
             'id' => $item->id,

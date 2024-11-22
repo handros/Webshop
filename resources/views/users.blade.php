@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('title', 'Felhasználók')
 
 @section('content')
 @if (Auth::user()->is_admin)

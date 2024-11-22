@@ -45,7 +45,7 @@
                                         : 'images/no_product_image.png'
                                 )
                             }}"
-                                class="card-img-top"
+                                class="card-img-top card-cover"
                                 alt="Kép"
                             >
                             <div class="card-body">

@@ -7,12 +7,14 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
+    <link rel="icon" type="image/png" href="{{ asset('images/icon.png') }}">
+
     <!-- Custom title -->
     <title>
         @if (View::hasSection('title'))
             @yield('title') |
         @endif
-        {{ config('app.name', 'Jewelry') }}
+        {{ config('app.name', 'Jewellery') }}
     </title>
 
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
@@ -22,7 +24,7 @@
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm fixed-top">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Jewelry') }}
+                    {{ config('app.name', 'Jewellery') }}
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -38,7 +40,7 @@
                             <a class="nav-link" href="{{ route('items.index') }}">Termékek</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('about') }}">Kapcsolat</a>
+                            <a class="nav-link" href="{{ route('about') }}">Rólam</a>
                         </li>
                     </ul>
 
@@ -110,7 +112,7 @@
                 <hr>
                 <div class="d-flex flex-column align-items-center">
                     <div>
-                        <span class="small">Jewelry</span>
+                        <span class="small">Jewellery</span>
                         <span class="mx-1">·</span>
                         <span class="small">Laravel {{ app()->version() }}</span>
                         <span class="mx-1">·</span>

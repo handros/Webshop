@@ -24,9 +24,14 @@ class LabelController extends Controller
      */
     public function create()
     {
-        if(Auth::guest() || !Auth::user()->is_admin) {
+        if(Auth::guest()) {
             abort(401);
         }
+
+        if(!Auth::user()->is_admin) {
+            abort(403);
+        }
+
         return view('labels.create');
     }
 
@@ -35,21 +40,25 @@ class LabelController extends Controller
      */
     public function store(Request $request)
     {
-        if(Auth::guest() || !Auth::user()->is_admin) {
+        if(Auth::guest()) {
             abort(401);
+        }
+
+        if(!Auth::user()->is_admin) {
+            abort(403);
         }
 
         $names = Label::pluck('name')->toArray();
 
         $data = $request->validate([
             'name' => 'required|string|max:30|not_in:' . implode(',', $names),
-            'color' => 'required|regex:/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/',
+            'color' => ['required', 'regex:/^#(?:[0-9a-fA-F]{3}){1,2}$/'],
         ]);
 
         $label = Label::create($data);
 
         Session::flash('label_created', $label);
-        return Redirect::route('labels.create');
+        return Redirect::route('items.index');
     }
 
     /**
@@ -71,8 +80,12 @@ class LabelController extends Controller
      */
     public function edit(string $id)
     {
-        if(Auth::guest() || !Auth::user()->is_admin) {
+        if(Auth::guest()) {
             abort(401);
+        }
+
+        if(!Auth::user()->is_admin) {
+            abort(403);
         }
         return view('labels.edit', [
             'label' => Label::find($id),
@@ -84,8 +97,12 @@ class LabelController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        if(Auth::guest() || !Auth::user()->is_admin) {
+        if(Auth::guest()) {
             abort(401);
+        }
+
+        if(!Auth::user()->is_admin) {
+            abort(403);
         }
 
         $label = Label::find($id);
@@ -94,7 +111,7 @@ class LabelController extends Controller
 
         $data = $request->validate([
             'name' => 'required|string|max:30|not_in:' . implode(',', $names),
-            'color' => 'required|regex:/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/',
+            'color' => ['required', 'regex:/^#(?:[0-9a-fA-F]{3}){1,2}$/'],
         ]);
 
         $label->update($data);
@@ -108,8 +125,12 @@ class LabelController extends Controller
      */
     public function destroy(string $id)
     {
-        if(Auth::guest() || !Auth::user()->is_admin) {
+        if(Auth::guest()) {
             abort(401);
+        }
+
+        if(!Auth::user()->is_admin) {
+            abort(403);
         }
 
         $label = Label::findOrFail($id);

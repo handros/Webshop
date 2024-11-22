@@ -6,7 +6,7 @@
 
     <h1>Termék létrehozása</h1>
     <div class="mb-4">
-        <a href="{{ route('items.index') }}"><i class="fas fa-long-arrow-alt-left"></i> Termékek</a>
+        <a class="btn btn-secondary" href="{{ route('items.index') }}"><i class="fas fa-long-arrow-alt-left"></i> Termékek</a>
     </div>
 
     <form action="{{ route('items.store') }}" method="POST" enctype="multipart/form-data">
@@ -14,7 +14,7 @@
 
         <div class="form-group row mb-3">
             <label for="name" class="col-sm-2 col-form-label">Név*</label>
-            <div class="col-sm-10">
+            <div class="col-sm-3">
                 <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ old('name') }}">
                 @error('name')
                     <div class="invalid-feedback">
@@ -37,7 +37,7 @@
         </div>
 
         <div class="form-group row mb-3">
-            <label for="description" class="col-sm-2 col-form-label">Leírás*</label>
+            <label for="description" class="col-sm-2 col-form-label">Leírás</label>
             <div class="col-sm-10">
                 <textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description">{{ old('description') }}</textarea>
                 @error('description')
@@ -63,8 +63,8 @@
                         >
                         <label for="{{ $label }}" class="form-check-label">
                             <span class="label-span label-span-background" style="--label-color: {{ $label->color }};">
-                        {{ $label->name }}
-                    </span>
+                                {{ $label->name }}
+                            </span>
                         </label>
                     </div>
                 @empty

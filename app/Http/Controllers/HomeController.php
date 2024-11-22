@@ -45,8 +45,12 @@ class HomeController extends Controller
     }
 
     public function users() {
-        if(Auth::guest() || !Auth::user()->is_admin) {
+        if(Auth::guest()) {
             abort(401);
+        }
+
+        if(!Auth::user()->is_admin) {
+            abort(403);
         }
 
         $users = User::orderBy('name')->get();
