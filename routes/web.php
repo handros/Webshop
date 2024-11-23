@@ -22,15 +22,10 @@ use App\Http\Middleware\CheckUploadSize;
 |
 */
 
-// Route::get('/', [ItemController::class, 'index'])->name('home');
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/about', [HomeController::class, 'about'])->name('about');
 Route::get('/users', [HomeController::class, 'users'])->name('users');
 Route::get('/search', [ItemController::class, 'search'])->name('items.search');
-
-
-// -----------------------------------------
-
 
 Route::resource('items', ItemController::class);
 Route::resource('labels', LabelController::class);
@@ -40,8 +35,5 @@ Route::resource('orders', OrderController::class);
 Route::resource('bids', BidController::class);
 Route::resource('messages', MessageController::class);
 Route::get('/auctions/create/{item}', [AuctionController::class, 'create'])->name('auctions.create');
-
-// -----------------------------------------
-
 
 Auth::routes();
