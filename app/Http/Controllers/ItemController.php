@@ -58,9 +58,7 @@ class ItemController extends Controller
             })
             ->paginate(9);
 
-            $labels = Label::all();
-
-        return view('items.search', compact('items', 'labels'));
+        return view('items.search', compact('items', 'query'));
     }
 
     /**

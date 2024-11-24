@@ -50,6 +50,15 @@
                             >
                             <div class="card-body">
                                 <h5 class="card-title mb-0"> {{ $item->name }} </h5>
+
+                                @if ($item->on_auction)
+                                        <p class="small mb-0">
+                                            <span>
+                                                <i class="fas fa-fire"></i> Aukción
+                                            </span>
+                                        </p>
+                                @endif
+
                                 <p class="small mb-0">
                                     <span>
                                         <i class="far fa-calendar-alt"></i>
@@ -57,10 +66,10 @@
                                     </span>
                                 </p>
 
-                                @foreach ($item->labels as $label)
-                                    <a href="{{ route('labels.show', $label) }}" class="text-decoration-none">
-                                        <span class="label-span label-span-background me-1" style="--label-color: {{ $label->color }};">
-                                            {{ $label->name }}
+                                @foreach ($item->labels as $lab)
+                                    <a href="{{ route('labels.show', $lab) }}" class="text-decoration-none">
+                                        <span class="label-span label-span-background me-1" style="--label-color: {{ $lab->color }};">
+                                            {{ $lab->name }}
                                         </span>
                                     </a>
                                 @endforeach
@@ -96,11 +105,11 @@
                             Címkék
                         </div>
                         <div class="card-body">
-                            @foreach ($labels as $label)
-                                <a href="{{ route('labels.show', $label) }}" class="text-decoration-none">
-                                    <span class="label-span label-span-background me-1" style="--label-color: {{ $label->color }};">
-                        {{ $label->name }}
-                    </span>
+                            @foreach ($labels as $lab)
+                                <a href="{{ route('labels.show', $lab) }}" class="text-decoration-none">
+                                    <span class="label-span label-span-background me-1" style="--label-color: {{ $lab->color }};">
+                                        {{ $lab->name }}
+                                    </span>
                                 </a>
                             @endforeach
                         </div>

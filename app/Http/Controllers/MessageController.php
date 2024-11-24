@@ -19,13 +19,20 @@ class MessageController extends Controller
             abort(401);
         }
         $userId = Auth::id();
-        $messages = Message::where('sender_id', $userId)
+        $allMessages = Message::where('sender_id', $userId)
             ->orWhere('receiver_id', $userId)
             ->orderBy('created_at', 'desc')
             ->with(['sender', 'receiver', 'auction', 'order'])
             ->get();
 
-        $messageCount = $messages->count();
+        $messageCount = $allMessages->count();
+
+
+        $messages = Message::where('sender_id', $userId)
+            ->orWhere('receiver_id', $userId)
+            ->orderBy('created_at', 'desc')
+            ->with(['sender', 'receiver', 'auction', 'order'])
+            ->paginate(10);
 
         return view('messages.index', compact('messages', 'messageCount'));
     }

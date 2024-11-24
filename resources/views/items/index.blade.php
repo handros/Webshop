@@ -89,13 +89,13 @@
                                 <h5 class="card-title mb-1"> {{ $item->name }} </h5>
 
                                 @if ($item->on_auction)
-
                                         <p class="small mb-0">
                                             <span>
                                                 <i class="fas fa-fire"></i> Aukción
                                             </span>
                                         </p>
                                 @endif
+                                
                                 <p class="small mb-0">
                                     <span>
                                         <i class="far fa-calendar-alt"></i>

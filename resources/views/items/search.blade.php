@@ -2,7 +2,25 @@
 
 @section('content')
 <div class="container">
-    <h1>Keresési eredmények</h1>
+    <h1>Keresési eredmények: <i>{{ $query }}</i></h1>
+    <div class="mb-4">
+        <a class="btn btn-secondary" href="{{ route('items.index') }}"><i class="fas fa-long-arrow-alt-left"></i> Termékek</a>
+    </div>
+
+    <div class="container d-flex justify-content-center mt-5">
+        <div class="col-12 col-lg-6">
+            <form action="{{ route('items.search') }}" method="GET" class="d-flex">
+                <input
+                    type="text"
+                    name="query"
+                    class="form-control me-2"
+                    placeholder="Keresés név vagy címke szerint"
+                    value="{{ request('query') }}"
+                >
+                <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button>
+            </form>
+        </div>
+    </div>
 
     <div class="row mt-3">
         <div class="col-12 col-lg-12">
@@ -23,6 +41,15 @@
                             >
                             <div class="card-body">
                                 <h5 class="card-title mb-0"> {{ $item->name }} </h5>
+
+                                @if ($item->on_auction)
+                                        <p class="small mb-0">
+                                            <span>
+                                                <i class="fas fa-fire"></i> Aukción
+                                            </span>
+                                        </p>
+                                @endif
+
                                 <p class="small mb-0">
                                     <span>
                                         <i class="far fa-calendar-alt"></i>
@@ -50,7 +77,7 @@
                 @empty
                     <div class="col-12">
                         <div class="alert alert-warning" role="alert">
-                            Nem található termék erre a címkére!
+                            Nem található olyan termék, ahol a nevében vagy egy címkéjében szerepelne ez: {{ $query }}!
                         </div>
                     </div>
                 @endforelse

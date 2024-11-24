@@ -4,7 +4,7 @@
 @section('content')
 <div class="container">
 
-    <h1>Rendelés</h1>
+    <h1>Új rendelés</h1>
     <div class="mb-4">
         <a class="btn btn-secondary" href="{{ route('orders.index') }}"><i class="fas fa-long-arrow-alt-left"></i> Rendelések</a>
     </div>

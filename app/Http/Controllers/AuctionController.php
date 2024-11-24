@@ -152,7 +152,7 @@ class AuctionController extends Controller
             abort(401);
         }
 
-        if(!Auth::user()->is_admin) {
+        if(!Auth::user()->is_admin && ($auction->item_id != null)) {
             abort(403);
         }
 
@@ -171,7 +171,7 @@ class AuctionController extends Controller
             abort(401);
         }
 
-        if(!Auth::user()->is_admin) {
+        if(!Auth::user()->is_admin && ($auction->item_id != null)) {
             abort(403);
         }
 
