@@ -27,7 +27,7 @@
                 <i class="fas fa-exclamation-triangle"></i><strong> Elfogadja</strong>, hogy a <em><strong>Licitálás</strong></em> gomb lenyomása esetleges fizetési kötelezettséggel jár (amennyiben Ön nyeri a licitet)!
             </form>
         @else
-            <p>Lejárt a határidő <strong>({{ $auction->deadline->endOfDay()->format('Y-m-d') }})</strong></p>
+            <p><em>Az aukcióra nem tud licitálni, mert lejárt a határidő, vagy előbb lezártam az aukciót.</em></p>
         @endif
 
     @else

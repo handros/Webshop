@@ -94,8 +94,8 @@ class AuctionController extends Controller
     {
         $userId = Auth::id();
 
-        $highestBid = $auction->bids()->max('amount') ?? $auction->price;
-        $minBid = intval($highestBid) + 500;
+        $highestBid = $auction->getHighestBid();
+        $minBid = $auction->getMinBid();
         $bids = $auction->bids()->orderBy('amount', 'desc')->get();
 
         $otherUsers = $auction->messages()
@@ -120,12 +120,9 @@ class AuctionController extends Controller
 
         $receiverId = null;
 
-        $open = $auction->opened && $auction->deadline->endOfDay() >= now();
-        $bought = Auth::check()
-                && (!$auction->opened || $auction->deadline->endOfDay() < now())
-                && $auction->bids()->exists()
-                && $auction->bids()->where('amount', $highestBid)->first()->user_id === $userId;
-        $no_bid_over = (!$auction->opened || $auction->deadline->endOfDay() < now()) && !$auction->bids()->exists();
+        $open = $auction->isOpen();
+        $bought = $auction->isBoughtBy($userId);
+        $noBidOver = $auction->isNoBidOver();
 
         return view('auctions.show', [
             'auction' => $auction,
@@ -138,7 +135,7 @@ class AuctionController extends Controller
             'messageCount' => $messages->count(),
             'open' => $open,
             'bought' => $bought,
-            'no_bid_over' => $no_bid_over,
+            'noBidOver' => $noBidOver,
             'otherUsers' => $otherUsers,
         ]);
     }

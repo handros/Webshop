@@ -47,7 +47,7 @@ class ItemController extends Controller
     }
 
     /**
-     * Search based on name of the Item || Label.
+     * Search based on name of an Item or Label.
      */
     public function search(Request $request) {
         $query = $request->input('query');

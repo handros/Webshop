@@ -36,7 +36,7 @@
                 <h3 class="text-center">Határidő: <span class="badge bg-success"> {{ $auction->deadline->endOfDay() }} </span></h3>
                 <h3 class="text-center mb-4">Jelenlegi ár: <strong>{{ $highestBid }} Ft*</strong></h3>
                 <p class="text-center">* Mindig frissítse az oldalt az aktuális árért!</p>
-            @elseif ($no_bid_over)
+            @elseif ($noBidOver)
                 <h3 class="text-center"><span class="badge bg-danger"> Vége az aukciónak* </span></h3>
                 <p class="text-center">* Az aukció újranyitásáért figyelje a főoldalt</p>
                 <h3 class="text-center mb-4"><strong>{{ $highestBid }} Ft</strong></h3>

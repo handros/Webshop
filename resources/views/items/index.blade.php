@@ -33,7 +33,7 @@
 
     @if (Session::has('label_created'))
         <div class="alert alert-success" role="alert">
-            {{ Session::get('label_created')->name }} törölve.
+            {{ Session::get('label_created')->name }} létrehozva.
         </div>
     @endif
 
@@ -95,7 +95,7 @@
                                             </span>
                                         </p>
                                 @endif
-                                
+
                                 <p class="small mb-0">
                                     <span>
                                         <i class="far fa-calendar-alt"></i>

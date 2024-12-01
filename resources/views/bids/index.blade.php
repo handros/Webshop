@@ -7,18 +7,7 @@
                     <table class="table">
                         <tbody>
                             @foreach($bids as $bid)
-                                @php
-                                    $class = '';
-
-                                        if($bid->user_id === Auth::id() && $bid->amount == $highestBid) {
-                                            $class = 'table-success';
-                                        } elseif ($bid->user_id === Auth::id() && $bid->amount != $highestBid) {
-                                            $class = 'table-warning';
-                                        } else {
-                                            $class = 'table-danger';
-                                        }
-                                @endphp
-                                <tr class="{{ $class }}">
+                                <tr class="{{ $bid->getCssClass($highestBid) }}">
                                     <td class="align-middle">
                                         <p><strong>{{ $bid->user->name }}</strong></p>
                                     </td>

@@ -30,8 +30,6 @@ class OrderController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
 
-        $myOrderCount = $myOrders->count();
-
         $orders = Order::with('orderer')
             ->orderBy('created_at', 'desc')
             ->get();
@@ -40,7 +38,7 @@ class OrderController extends Controller
             'orders' => $orders,
             'myOrders' => $myOrders,
             'orderCount' => Order::count(),
-            'myOrderCount' => $myOrderCount,
+            'myOrderCount' => $myOrders->count(),
         ]);
     }
 

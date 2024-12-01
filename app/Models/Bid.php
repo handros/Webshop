@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
+
 
 class Bid extends Model
 {
@@ -21,5 +23,15 @@ class Bid extends Model
 
     public function user() {
         return $this->belongsTo(User::class);
+    }
+
+    public function getCssClass(int $highestBid): string {
+        if ($this->user_id === Auth::id() && $this->amount == $highestBid) {
+            return 'table-success';
+        } elseif ($this->user_id === Auth::id()) {
+            return 'table-warning';
+        } else {
+            return 'table-danger';
+        }
     }
 }

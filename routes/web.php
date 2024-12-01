@@ -31,9 +31,9 @@ Route::resource('items', ItemController::class);
 Route::resource('labels', LabelController::class);
 Route::resource('comments', CommentController::class);
 Route::resource('auctions', AuctionController::class);
+Route::get('/auctions/create/{item}', [AuctionController::class, 'create'])->name('auctions.create');
 Route::resource('orders', OrderController::class);
 Route::resource('bids', BidController::class);
 Route::resource('messages', MessageController::class);
-Route::get('/auctions/create/{item}', [AuctionController::class, 'create'])->name('auctions.create');
 
 Auth::routes();

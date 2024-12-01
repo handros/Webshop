@@ -53,10 +53,8 @@ class HomeController extends Controller
             abort(403);
         }
 
-        $users = User::orderBy('name')->get();
-
         return view('users', [
-            'users' => $users,
+            'users' => User::orderBy('name')->get(),
         ]);
     }
 }

@@ -18,6 +18,7 @@ class MessageController extends Controller
         if(Auth::guest()) {
             abort(401);
         }
+        
         $userId = Auth::id();
         $allMessages = Message::where('sender_id', $userId)
             ->orWhere('receiver_id', $userId)
@@ -26,7 +27,6 @@ class MessageController extends Controller
             ->get();
 
         $messageCount = $allMessages->count();
-
 
         $messages = Message::where('sender_id', $userId)
             ->orWhere('receiver_id', $userId)
